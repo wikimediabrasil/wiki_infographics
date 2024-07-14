@@ -1,32 +1,32 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from "react-router"
 
+import { useNavigate } from "react-router";
+import api from "../../api/axios";
 
 const Delete = ({ id }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const deleteTodo = () => {
-    fetch(`http://127.0.0.1:8000/api/${id}`, {
-      method: "DELETE",
-      body: JSON.stringify({
-        id: id
-      })
-    }).then(response => response.json())
-    .then(data => {
-      console.log(data)
-      navigate("/")
-    })
-  }
+  const deleteTodo = async () => {
+    try {
+      await api.delete(`/api/${id}`, {
+        data: { id: id }
+      });
+      navigate("/todos");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  let styles = { backgroundColor: "red",
+  let styles = { 
+    backgroundColor: "red",
     color: "white"
-  }
+  };
 
   return (
     <>      
       <button style={styles} onClick={deleteTodo}>Delete</button>
     </>
-  )
-}
+  );
+};
 
-export default Delete
+export default Delete;

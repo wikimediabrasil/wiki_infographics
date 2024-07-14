@@ -8,7 +8,7 @@ const Card = ({ listOfTodos }) => {
       {listOfTodos.map(todo => (
           <ul key={todo.id}>
             <li>
-              <Link to={`/${todo.id}`}>{todo.content}</Link>
+              <Link to={`/todos/${todo.id}`}>{todo.content}</Link>
             </li>
           </ul>
         )
