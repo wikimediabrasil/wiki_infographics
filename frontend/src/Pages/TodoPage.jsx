@@ -14,9 +14,9 @@ const TodoPage = () => {
     const checkUser = async () => {
       try {
         const response = await api.get("/user-info");
-        if (response.data.username) {
-          setUserName(response.data.username)
-          console.log("user authenticated " + response.data.username);
+        if (response.data.user_info) {
+          setUserName(response.data.user_info.username)
+          console.log("user authenticated " + response.data.user_info.username);
         } else {
           console.log('User is not authenticated');
         }

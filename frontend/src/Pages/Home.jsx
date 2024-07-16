@@ -10,11 +10,11 @@ const Home = () => {
     const checkUser = async () => {
       try {
         const response = await api.get("/user-info");
-        if (response.data.username) {
-          console.log("user authenticated " + response.data.username);
+        if (response.data.user_info) {
+          console.log("user authenticated " + response.data.user_info.username);
           navigate("/todos")
         } else {
-          console.log('User is not authenticated');
+          console.error('User is not authenticated');
         }
       } catch (error) {
         console.error('Error checking authentication', error);

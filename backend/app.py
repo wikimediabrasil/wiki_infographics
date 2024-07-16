@@ -5,8 +5,10 @@ import configparser
 from flask_cors import CORS
 from flask_babel import Babel
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, request, json, session, redirect, url_for, flash, render_template
+from flask import Flask, jsonify, request, json, session, redirect, url_for
 
+from query.query import query
+from query.check_avail_charts import check_avail_charts
 
 __dir__ = os.path.dirname(__file__)
 app = Flask(__name__)
@@ -25,15 +27,15 @@ def require_login():
     Function to enforce login requirement before accessing certain routes.
     This function will be executed before every request. It checks if the 
     endpoint being accessed is one of the public routes. If not, it verifies 
-    whether the user is authenticated by checking the 'username' in the session.
+    whether the user is authenticated by checking the 'user_info' in the session.
     If the user is not authenticated and tries to access a protected route, 
     it returns a 401 Unauthorized response with an error message.
     """
     # List of routes that do not require authentication
-    public_routes = ('index', 'login', 'logout', 'oauth_callback', 'static', 'set_locale')
+    public_routes = ('testing', 'index', 'login', 'logout', 'oauth_callback', 'static', 'set_locale')
 
     # Check if the current endpoint is not in the public routes and the user is not authenticated
-    if request.endpoint not in public_routes and 'username' not in session:
+    if request.endpoint not in public_routes and 'user_info' not in session:
         
         return jsonify({"error": "Authentication required. Please log in."}), 401
 
@@ -149,7 +151,7 @@ def oauth_callback():
     - Ensures the query string is present.
     - Creates a consumer token for OAuth.
     - Attempts to complete the OAuth process and retrieve the access token.
-    - Identifies the user and stores the access token and username in the session.
+    - Identifies the user and stores the access token and user_info in the session.
     :return: JSON response indicating success or failure of authentication.
     """
 
@@ -177,7 +179,12 @@ def oauth_callback():
         return jsonify({"error": "OAuth authentication failed"}), 500
     else:
         session['access_token'] = dict(zip(access_token._fields, access_token))
-        session['username'] = identity['username']
+
+        # To get both "username" and "email" of user you may choose the
+        # "User identity verification only with access to real name and email address, 
+        # no ability to read pages or act on a user's behalf" option in the section(Types of grants),
+        # while creating new consumer in Wikimedia
+        session['user_info'] = {"username": identity['username'], 'email': identity['email']}
 
     return jsonify({"msg": "Authenticaction sucessfull"})
 
@@ -199,14 +206,15 @@ def get_user_info():
     """
     Retrieves the logged-in user's information.
     This function:
-    - Checks if the username is stored in the session.
-    - Returns the username if it exists.
+    - Checks if the user_info is stored in the session.
+    - Returns the user_info if it exists.
     - Returns an authentication prompt message if the user is not logged in.
-    :return: JSON response with username or authentication prompt.
+    :return: JSON response with user_info or authentication prompt.
     """
-    username = session.get("username", None)
-    if username:
-        return jsonify({"username": username})
+    user_info = session.get("user_info", None)
+    if user_info:
+
+        return jsonify({"user_info": user_info})
     
     return jsonify({"error": "Authentication required. Please log in."}), 401
 
@@ -215,56 +223,82 @@ def get_user_info():
 # QUERY
 # ==================================================================================================================== #
 
-@app.route('/', methods=['GET'])
-def home():
-    username = session.get('username', None)
-
-    return jsonify({"username": username})
 
 
-@app.route("/api", methods=["GET"])
-def get_all():
-    todos = [todo_serializer(todo) for todo in Todo.query.all()]
+@app.route('/query', methods=['POST'])
+def query_endpoint():
+    """
+    Handle the SPARQL query and return chart data.
+    """
+    sparql_string = request.json.get('sparql_string')
+    if not sparql_string:
+        return jsonify({"error": "No query provided"}), 400
 
-    return jsonify(todos)
-
-
-@app.route("/api/create", methods=["POST"])
-def create():
-    request_data = json.loads(request.data)
-    todo = Todo(content=request_data["content"])
-
-    db.session.add(todo)
-    db.session.commit()
-
-    return jsonify({'msg': "Todo created successfully"}), 201
-
-
-@app.route("/api/<int:id>", methods=["GET"])
-def show(id):
-
-    return jsonify(todo_serializer(Todo.query.get_or_404(id)))
+    try:
+        processed_data = query(sparql_string)
+        charts_data = check_avail_charts(processed_data)
+        return jsonify(charts_data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
-@app.route("/api/<int:id>", methods=["DELETE"])
-def delete(id):
-    todo = Todo.query.get_or_404(id)
-    db.session.delete(todo)
-    db.session.commit()
 
-    return jsonify({'msg': "Deleted successfully"}), 204
+# @app.route('/', methods=['GET'])
+# def home():
+#     user_info = session.get('user_info', None)
+
+#     return jsonify({"user_info": user_info})
+
+# @app.route('/', methods=['GET'])
+# def testing():
+#     status = query()
+
+#     return jsonify({"status": status})
 
 
-@app.route("/api/<int:id>", methods=["PUT"])
-def update(id):
-    request_data = json.loads(request.data)
-    todo = db.session.get(Todo, id)
-    if not todo:
-        return jsonify({"error": "Todo not found"}), 404
-    todo.content = request_data.get("content", todo.content)
-    db.session.commit()
+# @app.route("/api", methods=["GET"])
+# def get_all():
+#     todos = [todo_serializer(todo) for todo in Todo.query.all()]
 
-    return jsonify({'msg': "Updated successfully"}), 200
+#     return jsonify(todos)
+
+
+# @app.route("/api/create", methods=["POST"])
+# def create():
+#     request_data = json.loads(request.data)
+#     todo = Todo(content=request_data["content"])
+
+#     db.session.add(todo)
+#     db.session.commit()
+
+#     return jsonify({'msg': "Todo created successfully"}), 201
+
+
+# @app.route("/api/<int:id>", methods=["GET"])
+# def show(id):
+
+#     return jsonify(todo_serializer(Todo.query.get_or_404(id)))
+
+
+# @app.route("/api/<int:id>", methods=["DELETE"])
+# def delete(id):
+#     todo = Todo.query.get_or_404(id)
+#     db.session.delete(todo)
+#     db.session.commit()
+
+#     return jsonify({'msg': "Deleted successfully"}), 204
+
+
+# @app.route("/api/<int:id>", methods=["PUT"])
+# def update(id):
+#     request_data = json.loads(request.data)
+#     todo = db.session.get(Todo, id)
+#     if not todo:
+#         return jsonify({"error": "Todo not found"}), 404
+#     todo.content = request_data.get("content", todo.content)
+#     db.session.commit()
+
+#     return jsonify({'msg': "Updated successfully"}), 200
 
 
 if __name__ == '__main__':

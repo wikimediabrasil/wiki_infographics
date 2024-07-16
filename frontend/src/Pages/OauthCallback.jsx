@@ -11,6 +11,7 @@ const OauthCallback = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     /**
      * Authenticate the user via OAuth.
      * Sends the query string to the backend for authentication.
