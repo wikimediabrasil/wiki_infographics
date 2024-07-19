@@ -231,14 +231,17 @@ def query_endpoint():
     Handle the SPARQL query and return chart data.
     """
     sparql_string = request.json.get('sparql_string')
+
     if not sparql_string:
         return jsonify({"error": "No query provided"}), 400
 
     try:
         processed_data = query(sparql_string)
         charts_data = check_avail_charts(processed_data)
+
         return jsonify(charts_data)
     except Exception as e:
+        
         return jsonify({"error": str(e)}), 500
 
 

@@ -2,33 +2,41 @@ import { useEffect } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router";
 
+/**
+ * Home component for user authentication and login.
+ * 
+ * This component:
+ * - Checks if the user is authenticated on mount.
+ * - Redirects authenticated users to the "/infographics" route.
+ * - Provides a button to initiate login with Wikimedia.
+ * 
+ * @returns {JSX.Element} The Home component.
+ */
 const Home = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkUser = async () => {
       try {
+        // Check user authentication status
         const response = await api.get("/user-info");
         if (response.data.user_info) {
-          console.log("user authenticated " + response.data.user_info.username);
-          navigate("/todos")
+          console.log("User authenticated: " + response.data.user_info.username);
+          navigate("/infographics");
         } else {
-          console.error('User is not authenticated');
+          console.error("User is not authenticated");
         }
       } catch (error) {
-        console.error('Error checking authentication', error);
+        console.error("Error checking authentication", error);
       }
     };
     checkUser();
-  },[navigate])
-
-
+  }, [navigate]);
 
   const login = async () => {
     try {
+      // Initiate login process
       const response = await api.get('/login');
-      console.log(response.data.redirect_url)
       window.location.href = response.data.redirect_url;
     } catch (error) {
       console.error('Error logging in', error);
@@ -36,9 +44,14 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>Welcome to the Todo App</h1>
-      <button onClick={login}>Login with Wikimedia</button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-4xl font-bold mb-6 text-center">Welcome to Wiki Infographics</h1>
+      <button 
+        onClick={login} 
+        className="px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition duration-300"
+      >
+        Login with Wikimedia
+      </button>
     </div>
   );
 };

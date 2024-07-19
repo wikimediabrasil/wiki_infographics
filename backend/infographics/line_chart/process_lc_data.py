@@ -1,3 +1,4 @@
+from infographics.convert_dtypes import convert_dtypes
 
 def process_lc_data(data):
     """

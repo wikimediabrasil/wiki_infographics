@@ -1,50 +1,70 @@
-import { useEffect } from 'react';
-// import { useNavigate } from 'react-router';
+import { useState } from 'react';
 import api from '../api/axios';
 
+import NavBar from '../Components/NavBar/navBar';
+import CodeEditor from '../Components/CodeEditor/codeEditor';
+import { ChartTable } from '../Components/Table/table';
+import Overlay from '../Components/Overlay/overlay';
 
 /**
- * OauthCallback Component
- * Handles the OAuth callback authentication process.
+ * Infographics component for displaying data visualization.
+ * 
+ * This component:
+ * - Manages state for chart data, code input, and loading status.
+ * - Provides a CodeEditor for users to input SPARQL queries.
+ * - Fetches chart data based on the query and displays it in a ChartTable.
+ * - Displays an overlay during data loading.
+ * 
+ * @returns {JSX.Element} The Infographics component.
  */
 const Infographics = () => {
+  const [chartData, setChartData] = useState({});
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    
-    /**
-     * Authenticate the user via OAuth.
-     * Sends the query string to the backend for authentication.
-     */
-    const generateInfographics = async () => {
-      try {
-        const sparql_query = `SELECT ?state ?capitalLabel ?population ?year
-                   WHERE {
-                        ?state wdt:P31 wd:Q485258;       
-                          wdt:P17 wd:Q155;         
-                          wdt:P36 ?capital.       
-                        ?capital p:P1082 ?statement. 
-                        ?statement ps:P1082 ?population;
-                          pq:P585 ?year_aux. 
-                        BIND(YEAR(?year_aux) AS ?year)
- 
-                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                        }
-                        ORDER BY ?capitalLabel ?year`;
+  /**
+   * Updates the code state when the CodeEditor value changes.
+   * 
+   * @param {string} newCode - The updated code from CodeEditor.
+   */
+  const handleCodeChange = (newCode) => {
+    setCode(newCode);
+  };
 
-        const response = await api.post('/query', { sparql_string: sparql_query });
-        console.log(response.data);
-      
-      } catch (err) {
-        console.log("Error occured while " + err);
-      }
-    };
-    generateInfographics();
-  }, []);
+
+  /**
+   * Fetches chart data based on the SPARQL query from the code state.
+   * Sets the chart data and handles loading state.
+   */
+  const getChartData = async () => {
+    try {
+      setLoading(true);
+      const sparql_query = code;
+      const response = await api.post('/query', { sparql_string: sparql_query });
+      setChartData(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.error(err.response?.data?.error || err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   return (
     <>
-      <h4> Sending SPARQL Query..... </h4>
-      <h4> Receiving Data..... </h4>
+      <NavBar />
+      <div className="min-h-screen px-4 py-8 mx-auto bg-gray-100 container">
+        <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
+          <div className="lg:col-span-2 row-span-1 border overflow-x-auto">
+            <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} />
+          </div>
+          <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto">
+            {loading && <Overlay />}
+            <ChartTable tableData={chartData.table} />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

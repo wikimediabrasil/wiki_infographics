@@ -15,11 +15,8 @@ def check_avail_charts(data):
 
     charts_data["table"] = process_table(data)
 
-    # Example logic to determine available charts based on data columns
-    # if 'state' in data.columns and 'population' in data.columns and 'year' in data.columns:
     charts_data['bar_chart_race'] = process_bcr_data(data)
     
-    # if 'state' in data.columns and 'year' in data.columns:
     charts_data['line_chart'] = process_lc_data(data)
     
     return charts_data
