@@ -5,6 +5,8 @@ import NavBar from '../Components/NavBar/navBar';
 import CodeEditor from '../Components/CodeEditor/codeEditor';
 import { ChartTable } from '../Components/Table/table';
 import Overlay from '../Components/Overlay/overlay';
+import { Notification } from '../Components/Notification/notification';
+
 
 /**
  * Infographics component for displaying data visualization.
@@ -21,6 +23,7 @@ const Infographics = () => {
   const [chartData, setChartData] = useState({});
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   /**
    * Updates the code state when the CodeEditor value changes.
@@ -43,23 +46,30 @@ const Infographics = () => {
       const response = await api.post('/query', { sparql_string: sparql_query });
       setChartData(response.data);
       console.log(response.data);
-    } catch (err) {
-      console.error(err.response?.data?.error || err);
+    } catch (error) {
+      setError(error?.response?.data?.error || "Error fetching data")
+      console.error(error?.response?.data?.error || error);
     } finally {
       setLoading(false);
     }
   };
   
+  const handleClearError = () => {
+    setError("");
+  }
+
 
   return (
     <>
+
       <NavBar />
-      <div className="min-h-screen px-4 py-8 mx-auto bg-gray-100 container">
+      <div className="min-h-screen px-4 py-8 mx-auto bg-gray-100 container mt-4">
+        {error && <Notification message={error} clearError={handleClearError}/>}
         <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
-          <div className="lg:col-span-2 row-span-1 border overflow-x-auto">
+          <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white">
             <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} />
           </div>
-          <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto">
+          <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto bg-white">
             {loading && <Overlay />}
             <ChartTable tableData={chartData.table} />
           </div>

@@ -186,7 +186,7 @@ def oauth_callback():
         # while creating new consumer in Wikimedia
         session['user_info'] = {"username": identity['username'], 'email': identity['email']}
 
-    return jsonify({"msg": "Authenticaction sucessfull"})
+    return jsonify({"msg": "Authentication successful"})
 
 
 @app.route('/logout')
@@ -242,7 +242,7 @@ def query_endpoint():
         return jsonify(charts_data)
     except Exception as e:
         
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "Error in query"}), 500
 
 
 
