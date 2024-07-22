@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import api from '../api/axios';
 
+import { Notification } from '../Components/Notification/notification';
 
 /**
  * OauthCallback Component
@@ -9,6 +10,7 @@ import api from '../api/axios';
  */
 const OauthCallback = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     /**
@@ -20,20 +22,29 @@ const OauthCallback = () => {
         const queryString = window.location.search.substring(1);
         const response = await api.post('/oauth-callback', { queryString: queryString });
         console.log(response.data.msg);
-        if (response.data.msg === "Authenticaction sucessfull") {
-          navigate("/todos");
+        if (response.data.msg === "Authentication successful") {
+          navigate("/infographics");
         }
-      } catch (err) {
-        navigate("/");
+      } catch (error) {
+        setError(error?.response?.data?.error || "Error Authenticating User")
+        console.error(error?.response?.data?.error || error);
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
       }
     };
     oauthAuthenticate();
   }, [navigate]);
 
+  const handleClearError = () => {
+    setError("");
+  }
+
   return (
-    <>
-      <h4> Authenticating..... </h4>
-    </>
+    <div className="flex items-center justify-center min-h-screen">
+      {error && <Notification message={error} clearError={handleClearError}/>}
+      <h2 className="text-2xl font-bold">Authenticating.....</h2>
+    </div>
   );
 };
 

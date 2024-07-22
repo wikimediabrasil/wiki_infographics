@@ -2,28 +2,36 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  // Link
 } from "react-router-dom";
-// import { useEffect } from "react";
-// import api from "./api/axios";
 
-import TodoPage from './Pages/TodoPage';
-import Show from "./Pages/Show";
 import Home from "./Pages/Home";
 import OauthCallback from "./Pages/OauthCallback";
+import Infographics from "./Pages/Infographics";
+import ProtectedRoutes from "./Components/ProtectedRoutes/protectedRoutes";
 import './App.css';
+
 
 const App = () => {
 
   return (
+
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} /> 
+        <Route path="/" element={<Home />} />
         <Route path="/oauth-callback" element={<OauthCallback />} /> 
-        <Route path="/todos" element={<TodoPage/>} /> 
-        <Route path="/todos/:id" element={<Show/>} /> 
+
+        <Route
+          path="/infographics"
+          element={
+            <ProtectedRoutes>
+              <Infographics />
+            </ProtectedRoutes>
+          }
+        />
+        
       </Routes>
-    </Router> 
+    </Router>
+
   )
 }
 
