@@ -40,20 +40,21 @@ function NavBar() {
         </Navbar.Link>
 
         <Navbar.Link href="#">Examples</Navbar.Link>
-        <Navbar.Link >
+
+        <div className="block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white">
           <Dropdown label="Help" inline>
             <Dropdown.Item>Help Portal</Dropdown.Item>
             <Dropdown.Item>User Manual</Dropdown.Item>
           </Dropdown>
-        </Navbar.Link>
+        </div>
 
-        <Navbar.Link >
+        <div className="block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white">
           <Dropdown label="More Tools" inline>
             <Dropdown.Item>Wikimedia Toolforge</Dropdown.Item>
           </Dropdown>
-        </Navbar.Link>
+        </div>
         
-        <Navbar.Link >
+        <div className="block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white">
           <div className="flex">
             <HiMiniLanguage className="text-xl"/>
             <Dropdown label="English" inline>
@@ -61,7 +62,7 @@ function NavBar() {
               <Dropdown.Item>PT</Dropdown.Item>
             </Dropdown>
           </div>
-        </Navbar.Link>
+        </div>
         
       </Navbar.Collapse>
     </Navbar>

@@ -22,7 +22,7 @@ import { Notification } from '../Components/Notification/notification';
 const Infographics = () => {
   const [chartData, setChartData] = useState({});
   const [code, setCode] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
   /**
@@ -41,7 +41,7 @@ const Infographics = () => {
    */
   const getChartData = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const sparql_query = code;
       const response = await api.post('/query', { sparql_string: sparql_query });
       setChartData(response.data);
@@ -50,7 +50,7 @@ const Infographics = () => {
       setError(error?.response?.data?.error || "Error fetching data")
       console.error(error?.response?.data?.error || error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
   
@@ -67,10 +67,10 @@ const Infographics = () => {
         {error && <Notification message={error} clearError={handleClearError}/>}
         <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
           <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white">
-            <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} />
+            <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading}/>
           </div>
           <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto bg-white">
-            {loading && <Overlay />}
+            {isLoading && <Overlay />}
             <ChartTable tableData={chartData.table} />
           </div>
         </div>

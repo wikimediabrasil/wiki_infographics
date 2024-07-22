@@ -7,14 +7,14 @@ import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css";
 
-import { HiPlay } from "react-icons/hi"
+import { HiPlay, HiStop  } from "react-icons/hi"
 
 /**
  * A simple code editor with syntax highlighting.
  * @param {function} onCodeChange - Updates parent component with new code.
  * @param {function} handleFetchChartData - Handles fetching chart data.
  */
-function CodeEditor({ onCodeChange, handleFetchChartData }) {
+function CodeEditor({ onCodeChange, handleFetchChartData, isLoading }) {
   const [code, setCode] = useState("");
 
   const handleValueChange = (newCode) => {
@@ -39,7 +39,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData }) {
         />
       </div>
       <div className="flex mt-2 text-3xl cursor-pointer">
-        <HiPlay onClick={handleFetchChartData} />
+        {isLoading ? <HiStop/> : <HiPlay onClick={handleFetchChartData} />}  
       </div>
     </>
   );
