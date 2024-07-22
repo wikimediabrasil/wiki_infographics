@@ -23,8 +23,8 @@ const Home = () => {
       try {
         // Check user authentication status
         const response = await api.get("/user-info");
-        if (response.data.user_info) {
-          console.log("User authenticated: " + response.data.user_info.username);
+        if (response.data.username) {
+          console.log("User authenticated: " + response.data.username);
           navigate("/infographics");
         } else {
           console.error("User is not authenticated");

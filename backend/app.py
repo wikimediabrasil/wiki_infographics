@@ -27,7 +27,7 @@ def require_login():
     Function to enforce login requirement before accessing certain routes.
     This function will be executed before every request. It checks if the 
     endpoint being accessed is one of the public routes. If not, it verifies 
-    whether the user is authenticated by checking the 'user_info' in the session.
+    whether the user is authenticated by checking the 'username' in the session.
     If the user is not authenticated and tries to access a protected route, 
     it returns a 401 Unauthorized response with an error message.
     """
@@ -35,7 +35,7 @@ def require_login():
     public_routes = ('testing', 'index', 'login', 'logout', 'oauth_callback', 'static', 'set_locale')
 
     # Check if the current endpoint is not in the public routes and the user is not authenticated
-    if request.endpoint not in public_routes and 'user_info' not in session:
+    if request.endpoint not in public_routes and 'username' not in session:
         
         return jsonify({"error": "Authentication required. Please log in."}), 401
 
@@ -151,7 +151,7 @@ def oauth_callback():
     - Ensures the query string is present.
     - Creates a consumer token for OAuth.
     - Attempts to complete the OAuth process and retrieve the access token.
-    - Identifies the user and stores the access token and user_info in the session.
+    - Identifies the user and stores the access token and username in the session.
     :return: JSON response indicating success or failure of authentication.
     """
 
@@ -180,11 +180,7 @@ def oauth_callback():
     else:
         session['access_token'] = dict(zip(access_token._fields, access_token))
 
-        # To get both "username" and "email" of user you may choose the
-        # "User identity verification only with access to real name and email address, 
-        # no ability to read pages or act on a user's behalf" option in the section(Types of grants),
-        # while creating new consumer in Wikimedia
-        session['user_info'] = {"username": identity['username'], 'email': identity['email']}
+        session['username'] = identity['username']
 
     return jsonify({"msg": "Authentication successful"})
 
@@ -206,15 +202,15 @@ def get_user_info():
     """
     Retrieves the logged-in user's information.
     This function:
-    - Checks if the user_info is stored in the session.
-    - Returns the user_info if it exists.
+    - Checks if the username is stored in the session.
+    - Returns the username if it exists.
     - Returns an authentication prompt message if the user is not logged in.
-    :return: JSON response with user_info or authentication prompt..
+    :return: JSON response with username or authentication prompt..
     """
-    user_info = session.get("user_info", None)
-    if user_info:
+    username = session.get("username", None)
+    if username:
 
-        return jsonify({"user_info": user_info})
+        return jsonify({"username": username})
     
     return jsonify({"error": "Authentication required. Please log in."}), 401
 
@@ -248,9 +244,9 @@ def query_endpoint():
 
 # @app.route('/', methods=['GET'])
 # def home():
-#     user_info = session.get('user_info', None)
+#     usrname = session.get('username', None)
 
-#     return jsonify({"user_info": user_info})
+#     return jsonify({"username": username})
 
 # @app.route('/', methods=['GET'])
 # def testing():

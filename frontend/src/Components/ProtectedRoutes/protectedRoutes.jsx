@@ -18,7 +18,7 @@ const ProtectedRoutes = ({ children }) => {
     const checkUser = async () => {
       try {
         const response = await api.get("/user-info");
-        if (response.data.user_info) {
+        if (response.data.username) {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
