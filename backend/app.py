@@ -209,7 +209,7 @@ def get_user_info():
     - Checks if the user_info is stored in the session.
     - Returns the user_info if it exists.
     - Returns an authentication prompt message if the user is not logged in.
-    :return: JSON response with user_info or authentication prompt.
+    :return: JSON response with user_info or authentication prompt..
     """
     user_info = session.get("user_info", None)
     if user_info:
