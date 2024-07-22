@@ -35,7 +35,6 @@ def require_login():
 
     # Check if the current endpoint is not in the public routes and the user is not authenticated
     if request.endpoint not in public_routes and 'username' not in session:
-    if request.endpoint not in public_routes and 'username' not in session:
         
         return jsonify({"error": "Authentication required. Please log in."}), 401
 
@@ -209,18 +208,11 @@ def get_user_info():
     - Checks if the username is stored in the session.
     - Returns the username if it exists.
     - Returns an authentication prompt message if the user is not logged in.
-<<<<<<< HEAD
     :return: JSON response with username or authentication prompt..
     """
     username = session.get("username", None)
     if username:
 
-=======
-    :return: JSON response with username or authentication prompt.
-    """
-    username = session.get("username", None)
-    if username:
->>>>>>> 47f50f2e95236bc5ea7cf7e1a1ba10015903b259
         return jsonify({"username": username})
     
     return jsonify({"error": "Authentication required. Please log in."}), 401
