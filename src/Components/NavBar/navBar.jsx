@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 "use client";
 import api from "../../api/axios";
 import { Button, Navbar, Dropdown } from "flowbite-react";
@@ -11,7 +12,7 @@ import wiki_infographics_logo from "../../assets/wiki_infographics_logo.png"
  * Navigation bar component.
  * @returns {JSX.Element} The NavBar component.
  */
-function NavBar() {
+function NavBar({username}) {
 
   const logout = async () => {
     try {
@@ -30,6 +31,7 @@ function NavBar() {
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Wiki Infographics</span>
       </Navbar.Brand>
       <div className="flex md:order-2">
+        <div className="hidden lg:block mr-2 mt-2 md:p-0 border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white">{username}</div>
         <Button onClick={logout}>Log Out</Button>
         <Navbar.Toggle />
       </div>
@@ -62,6 +64,10 @@ function NavBar() {
               <Dropdown.Item>PT</Dropdown.Item>
             </Dropdown>
           </div>
+        </div>
+
+        <div className="block lg:hidden py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white">
+          {username}
         </div>
         
       </Navbar.Collapse>
