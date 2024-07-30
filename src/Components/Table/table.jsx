@@ -11,30 +11,30 @@ import { formatURL } from "./tableUtils"; // Utility for URL formatting
  * @returns {JSX.Element} The ChartTable component.
  */
 export function ChartTable({ tableData }) {
-
   if (!tableData) {
-    return <div className="flex items-center justify-center mt-7"><InfoAlert/></div>;
+    return <div className="flex items-center justify-center mt-7"><InfoAlert /></div>;
   }
 
   // Extract headers from list of columns
   const headers = tableData.columns;
   const columns = headers.map(header => ({
-    data: header,
-    title: header,
-    render: (data) => {
-      // Format only if the data is a URL
+    name: header,
+    selector: row => row[header], // Ensure this matches the key in your data
+    sortable: true,
+    cell: row => {
+      const data = row[header];
       if (data && (data.startsWith('http://') || data.startsWith('https://'))) {
-        return formatURL(data);
+        return <a href={data} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{formatURL(data)}</a>;
       }
-      // For non-URL data, just return it as is
       return data;
-    },
-    type: 'html' // Ensure DataTables interprets this column as HTML
+    }
   }));
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <ReactDataTables data={tableData.data} columns={columns} />
+      <ReactDataTables columns={columns} data={tableData.data} headers={headers}/>
     </div>
   );
 }
+
+export default ChartTable;

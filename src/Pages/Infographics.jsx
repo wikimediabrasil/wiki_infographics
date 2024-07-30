@@ -67,7 +67,6 @@ const Infographics = () => {
       const sparql_query = code;
       const response = await api.post('/query', { sparql_string: sparql_query });
       setChartData(response.data.data);
-      console.log(response.data);
     } catch (error) {
       setError(error?.response?.data?.error || "Error fetching data")
       console.error(error?.response?.data?.error || error);

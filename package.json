@@ -13,16 +13,15 @@
   "dependencies": {
     "@react-spring/web": "^9.7.3",
     "axios": "^1.7.2",
-    "datatables.net": "^2.1.0",
-    "datatables.net-dt": "^2.1.0",
     "flowbite-react": "^0.10.1",
-    "jquery": "^3.7.1",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-router": "^6.23.1",
     "react-router-dom": "^6.23.1",
-    "react-simple-code-editor": "^0.14.1"
+    "react-simple-code-editor": "^0.14.1",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
