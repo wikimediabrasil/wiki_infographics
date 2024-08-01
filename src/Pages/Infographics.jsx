@@ -46,7 +46,7 @@ const Infographics = () => {
     checkUser();
   }, []);
 
-
+  
   /**
    * Updates the code state when the CodeEditor value changes.
    * 

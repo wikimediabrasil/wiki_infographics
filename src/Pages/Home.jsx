@@ -17,6 +17,7 @@ import { Notification } from "../Components/Notification/notification";
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  
 
   useEffect(() => {
     const checkUser = async () => {
