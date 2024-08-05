@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 
-import { InfoAlert } from "../Alert/alert";
+
 import ReactDataTables from "./reactDataTables";
 import { formatURL } from "./tableUtils"; // Utility for URL formatting
 
@@ -11,9 +11,6 @@ import { formatURL } from "./tableUtils"; // Utility for URL formatting
  * @returns {JSX.Element} The ChartTable component.
  */
 export function ChartTable({ tableData }) {
-  if (!tableData) {
-    return <div className="flex items-center justify-center mt-7"><InfoAlert /></div>;
-  }
 
   // Extract headers from list of columns
   const headers = tableData.columns;

@@ -32,7 +32,7 @@ export function Notification({ message, clearError }) {
               <HiExclamation className="h-5 w-5" />
             </div>
             <div className="ml-3 text-sm font-normal text-red-600">{message}</div>
-            <Toast.Toggle />
+            <Toast.Toggle onClick={clearError} />
           </Toast>
         </div>
       )}

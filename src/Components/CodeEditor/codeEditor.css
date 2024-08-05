@@ -1,0 +1,9 @@
+.lineDecoration {
+  border-bottom: 2px solid red;
+  /* Underline style for the entire line */
+}
+
+.columnDecoration {
+  background-color: rgba(255, 0, 0, 0.3);
+  /* Background color for the specific column */
+}

@@ -67,6 +67,15 @@ export function ReactDataTables({ columns, data, headers }) {
     setFilteredData(filtered);
   }, [filterText, data, columns, headers]);
 
+  // fix for the svg("v") element in the pagination displaying twice
+  useEffect(() => {
+    const paginationContainer = document.querySelector('.rdt_Pagination');
+    const svgElement = paginationContainer?.querySelector('svg');
+    if (svgElement) {
+      svgElement.style.display = 'none';
+    }
+  }, []);
+
   const subHeaderComponent = (
     <FilterComponent
       filterText={filterText}
