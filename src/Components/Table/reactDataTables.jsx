@@ -40,7 +40,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       onChange={onFilter}
       className="border p-2 rounded"
     />
-    <button type="button" onClick={onClear} className="border p-2 rounded ml-2 text-white bg-black">
+    <button type="button" onClick={onClear} className="border p-2 rounded  text-white bg-cyan-700">
       X
     </button>
   </div>

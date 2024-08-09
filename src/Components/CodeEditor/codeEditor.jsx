@@ -39,7 +39,14 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
+    
+    // Schedule the cursor positioning after a short delay
+    setTimeout(() => {
+      editor.setPosition({ lineNumber: 2, column: 1 });
+      editor.focus();
+    }, 0);
   };
+  
 
   /**
    * Parses an error message to extract line and column numbers.
@@ -111,6 +118,9 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           theme="light"
           onChange={handleValueChange}
           onMount={handleEditorDidMount}
+          defaultValue={`# Write your SPARQL query here...
+            
+            `}
           value={code}
           options={{
             inlineSuggest: true,

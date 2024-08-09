@@ -6,6 +6,8 @@ import CodeEditor from '../Components/CodeEditor/codeEditor';
 import { ChartTable } from '../Components/Table/table';
 import Overlay from '../Components/Overlay/overlay';
 import { InfoAlert, ErrorAlert } from "../Components/Alert/alert";
+import { ButtonWithIcon, DropDownButton } from "../Components/Button/button"
+import { downloadCSV } from '../Components/Table/tableUtils';
 
 
 /**
@@ -25,6 +27,7 @@ const Infographics = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("")
+  const [isDownloadng, setIsDownloading] = useState(false)
 
 
   useEffect(() => {
@@ -77,6 +80,12 @@ const Infographics = () => {
     }
   };
   
+  const handleDownloadCSV = () => {
+    setIsDownloading(true)
+    downloadCSV(chartData.table);
+    setTimeout(() => setIsDownloading(false), 2000);
+  }
+
   const handleClearError = () => {
     setError("");
   }
@@ -96,6 +105,10 @@ const Infographics = () => {
             {isLoading && <Overlay />}
             {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={error} /></div>}
             {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={"No data available"} /></div>}
+            {chartData.table && <div className="flex justify-between items-center h-12 border-b-4 px-4 py-1">
+              <DropDownButton />
+              <ButtonWithIcon handleDownloadCSV={handleDownloadCSV} isDownloadng={isDownloadng}/>
+            </div>}
             {chartData.table && <ChartTable tableData={chartData.table} />}
           </div>
         </div>
