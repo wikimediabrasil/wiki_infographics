@@ -5,7 +5,9 @@ import NavBar from '../Components/NavBar/navBar';
 import CodeEditor from '../Components/CodeEditor/codeEditor';
 import { ChartTable } from '../Components/Table/table';
 import Overlay from '../Components/Overlay/overlay';
-import { Notification } from '../Components/Notification/notification';
+import { InfoAlert, ErrorAlert } from "../Components/Alert/alert";
+import { ButtonWithIcon, DropDownButton } from "../Components/Button/button"
+import { downloadCSV } from '../Components/Table/tableUtils';
 
 
 /**
@@ -25,6 +27,7 @@ const Infographics = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("")
+  const [isDownloadng, setIsDownloading] = useState(false)
 
 
   useEffect(() => {
@@ -39,14 +42,13 @@ const Infographics = () => {
           console.error("User is not authenticated");
         }
       } catch (error) {
-        setError(error?.response?.data?.error || "You are Not logged in")
         console.error(error?.response?.data?.error || error);
       }
     };
     checkUser();
   }, []);
 
-
+  
   /**
    * Updates the code state when the CodeEditor value changes.
    * 
@@ -64,18 +66,26 @@ const Infographics = () => {
   const getChartData = async () => {
     try {
       setIsLoading(true);
-      const sparql_query = code;
-      const response = await api.post('/query', { sparql_string: sparql_query });
+      const sparql_query = encodeURIComponent(code);
+      const response = await api.get(`/query?query=${sparql_query}`) //GET request is required for better line error response
+      handleClearError();
       setChartData(response.data.data);
-      console.log(response.data);
     } catch (error) {
+      handleClearError()
       setError(error?.response?.data?.error || "Error fetching data")
+      setChartData({})
       console.error(error?.response?.data?.error || error);
     } finally {
       setIsLoading(false);
     }
   };
   
+  const handleDownloadCSV = () => {
+    setIsDownloading(true)
+    downloadCSV(chartData.table);
+    setTimeout(() => setIsDownloading(false), 2000);
+  }
+
   const handleClearError = () => {
     setError("");
   }
@@ -86,14 +96,20 @@ const Infographics = () => {
 
       <NavBar username={username}/>
       <div className="min-h-screen px-4 py-8 mx-auto bg-gray-100 container mt-4">
-        {error && <Notification message={error} clearError={handleClearError}/>}
+        {/* {error && <Notification message={error} clearError={handleClearError}/>} */}
         <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
           <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white">
-            <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading}/>
+            <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading} errorMessage={error}/>
           </div>
           <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto bg-white">
             {isLoading && <Overlay />}
-            <ChartTable tableData={chartData.table} />
+            {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={error} /></div>}
+            {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={"No data available"} /></div>}
+            {chartData.table && <div className="flex justify-between items-center h-12 border-b-4 px-4 py-1">
+              <DropDownButton />
+              <ButtonWithIcon handleDownloadCSV={handleDownloadCSV} isDownloadng={isDownloadng}/>
+            </div>}
+            {chartData.table && <ChartTable tableData={chartData.table} />}
           </div>
         </div>
       </div>

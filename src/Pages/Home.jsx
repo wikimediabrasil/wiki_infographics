@@ -17,6 +17,7 @@ import { Notification } from "../Components/Notification/notification";
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  
 
   useEffect(() => {
     const checkUser = async () => {
@@ -43,7 +44,7 @@ const Home = () => {
       const response = await api.get('/login');
       window.location.href = response.data.redirect_url;
     } catch (error) {
-      setError(error?.response?.data?.error || "An Error Occured while logging in")
+      setError(error?.response?.data?.error || "An Error Occurred while logging in")
       console.error(error?.response?.data?.error || error);
     }
   };

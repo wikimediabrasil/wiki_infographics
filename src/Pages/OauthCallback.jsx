@@ -11,7 +11,6 @@ import { Notification } from '../Components/Notification/notification';
 const OauthCallback = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  
 
   useEffect(() => {
     /**
@@ -24,13 +23,13 @@ const OauthCallback = () => {
         const response = await api.post('/oauth-callback', { queryString: queryString });
         console.log(response.data.msg);
         if (response.data.msg === "Authentication successful") {
-          navigate("/infographics", { state: { data: response.data.data.username } });
+          navigate("/infographics", { replace: true });
         }
       } catch (error) {
-        setError(error?.response?.data?.error || "Error Authenticating User")
+        setError(error?.response?.data?.error || "Error Authenticating User");
         console.error(error?.response?.data?.error || error);
         setTimeout(() => {
-          navigate("/");
+          navigate("/", { replace: true });
         }, 5000);
       }
     };
