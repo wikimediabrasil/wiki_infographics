@@ -3,7 +3,7 @@
 
 
 import ReactDataTables from "./reactDataTables";
-import { formatURL } from "./tableUtils"; // Utility for URL formatting
+import { formatURL, formatDate } from "./tableUtils"; // Utility for URL formatting
 
 /**
  * ChartTable component for displaying data in a DataTable.
@@ -22,6 +22,12 @@ export function ChartTable({ tableData }) {
       const data = row[header];
       if (data && (data.startsWith('http://') || data.startsWith('https://'))) {
         return <a href={data} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{formatURL(data)}</a>;
+      } else if (typeof data === 'string' && data.includes('T')) {
+        // Check if data is a valid ISO date string and format it
+        const parsedDate = Date.parse(data);
+        if (!isNaN(parsedDate)) {
+          return formatDate(data);
+        }
       }
       return data;
     }

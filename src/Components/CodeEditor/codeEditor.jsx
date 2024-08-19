@@ -42,7 +42,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
     
     // Schedule the cursor positioning after a short delay
     setTimeout(() => {
-      editor.setPosition({ lineNumber: 2, column: 1 });
+      editor.setPosition({ lineNumber: 3, column: 1 });
       editor.focus();
     }, 0);
   };
@@ -118,7 +118,9 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           theme="light"
           onChange={handleValueChange}
           onMount={handleEditorDidMount}
-          defaultValue={`# Write your SPARQL query here...
+          defaultValue={
+            `# Write your SPARQL query here...
+# Note! Bar chart race requires the table structure like | itemName(category) | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
             
             `}
           value={code}
@@ -132,7 +134,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           }}
         />
       </div>
-      <div className="flex mt-2 text-3xl cursor-pointer">
+      <div className="flex mt-2 pl-2 text-4xl cursor-pointer">
         {isLoading ? <HiStop /> : <HiPlay onClick={handleFetchChartData} />}  
       </div>
     </>
