@@ -18,12 +18,41 @@ export function ButtonWithIcon({handleDownloadCSV, isDownloadng}) {
 }
 
 
-export function DropDownButton() {
+
+export function DropDownButton({updateModalState, handleCDisplay, isBarChartRaceEnabled}) {
+  const [openModal, setOpenModal] = useState(true);
   const [dropDownLabel, updateDropdownLabel] = useState("Chart types")
+
+  const handleModalState = () => {
+    setOpenModal(true);
+    updateModalState(openModal);
+  }
+  const chartDisplay = () => {
+    
+      handleCDisplay("Table");
+    
+  }
+
   return (
     <Dropdown label={dropDownLabel} size="sm" outline>
-      <Dropdown.Item icon={BsTable} onClick={() => updateDropdownLabel("Table")} > Table </Dropdown.Item>
-      <Dropdown.Item icon={BsBarChartSteps} onClick={() => updateDropdownLabel("Bar chart race")} > Bar chart race </Dropdown.Item>
+      <Dropdown.Item 
+        icon={BsTable} 
+        onClick={() => {updateDropdownLabel("Table"); chartDisplay()}}
+      > 
+        Table 
+      </Dropdown.Item>
+      <Dropdown.Item 
+        icon={BsBarChartSteps} 
+        onClick={() => {
+          if (isBarChartRaceEnabled) {
+            updateDropdownLabel("Bar chart race");
+            handleModalState();
+          }
+        }} 
+        className={!isBarChartRaceEnabled ? 'opacity-50 cursor-not-allowed' : ''}
+      > 
+        Bar chart race 
+      </Dropdown.Item>
     </Dropdown>
   );
 }
