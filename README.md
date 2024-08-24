@@ -64,9 +64,9 @@ Contributions are welcome! To contribute to Wiki Infographics, follow these step
 
 ## Todos
 
-- [ ] Save users Successful SPARQL Queries
-- [ ] Export Bar chart race video functionality Or Embed Bar chart race chart functionality
-- [ ] Improve Accessibility
+- [ ] Save users successful SPARQL queries
+- [ ] Export Bar chart race video functionality Or embed bar chart race chart functionality
+- [ ] Improve accessibility
 
 ## License
 
