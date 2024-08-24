@@ -1,87 +1,106 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState, useEffect } from "react";
-import { startYear, endYear, initializeChart, updateChart } from "./barChartRaceUtils";
+import { initializeChart, updateChart } from "./barChartRaceUtils";
 import * as d3 from "d3";
 import "./barChartRace.css";
 import 'font-awesome/css/font-awesome.min.css';
 
-const BarChartRace = ({title, barRaceData}) => {
-  const svgRef = useRef(null);
-  const currentKeyframeRef = useRef(0); // useRef for currentKeyframe
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [year, setYear] = useState(startYear);
-  const [dataset, setDataset] = useState(null);
-  const [currentKeyframeState, setCurrentKeyFrameState] = useState(0)
-  const keyframesRef = useRef([]);
-  const timeoutRef = useRef(null);
-  const inputRef = useRef(null);
+/**
+ * BarChartRace component visualizes a bar chart race with play/pause and year selection controls.
+ *
+ * @param {Object} props - Component props
+ * @param {string} props.title - Title of the chart
+ * @param {Array} props.barRaceData - Data for the bar chart race
+ */
+const BarChartRace = ({ title, barRaceData }) => {
+  const svgRef = useRef(null); // Reference to the SVG element
+  const currentKeyframeRef = useRef(0); // Tracks the current keyframe
+  const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
+  const [startYear, setStartYear] = useState(0); // Minimum year in data
+  const [endYear, setEndYear] = useState(0); // Maximum year in data
+  const [year, setYear] = useState(startYear); // Current selected year
+  const [dataset, setDataset] = useState(null); // Processed data
+  const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
+  const keyframesRef = useRef([]); // Stores all keyframes
+  const timeoutRef = useRef(null); // Handles animation timing
+  const inputRef = useRef(null); // Reference to range input
 
-  
   useEffect(() => {
     const fetchDataAsync = () => {
-
-      if(barRaceData){
+      if (barRaceData) {
+        // Convert dates to Date objects and values to integers
         const data = barRaceData.map(d => ({
           ...d,
-          date: new Date(d.date)
+          date: new Date(d.date),
+          value: parseInt(d.value, 10)
         }));
         setDataset(data);
+
+        // Find and set the minimum and maximum years
+        const years = data.map(d => d.date.getFullYear());
+        setStartYear(Math.min(...years));
+        setEndYear(Math.max(...years));
       }
-    }
+    };
     fetchDataAsync();
   }, [barRaceData]);
 
   useEffect(() => {
-    const container = document.getElementById("container");
-    const width = container.clientWidth;
     if (dataset) {
+      const container = document.getElementById("container");
+
+      // Cleanup previous SVG element
+      if (container) {
+        container.innerHTML = "";
+      }
+
+      const width = container.clientWidth;
       const keyframes = initializeChart(svgRef, dataset, width, title);
       keyframesRef.current = keyframes;
 
-       // Display the first keyframe to initialize the chart
-      const firstKeyframe = keyframes[0];
-      updateChart(firstKeyframe, svgRef.current.transition().duration(0), inputRef, null)
+      // Initialize chart with the first keyframe.
+      updateChart(keyframes[0], svgRef.current.transition().duration(0), inputRef, null);
     }
-  }, [dataset]);
+    const currentSvg = svgRef.current;
+    // Cleanup function to remove SVG on component unmount or before re-render
+    return () => {
+      if (currentSvg) {
+        currentSvg.remove();
+      }
+    };
+
+  }, [dataset, title]);
 
   const startAnimation = () => {
     if (currentKeyframeRef.current < keyframesRef.current.length) {
-      const transition = svgRef.current
-        .transition()
-        .duration(250)
-        .ease(d3.easeLinear);
-
+      const transition = svgRef.current.transition().duration(250).ease(d3.easeLinear);
       const keyframe = keyframesRef.current[currentKeyframeRef.current];
-      // Update chart based on keyframe data and increment range input
+      
       updateChart(keyframe, transition, inputRef, null);
       currentKeyframeRef.current += 1;
-      setCurrentKeyFrameState(keyframe)
+      setCurrentKeyFrameState(keyframe);
 
-      // Manually update the range input to keep it in sync with the keyframe
-      inputRef.current.value = keyframe[0].getFullYear(); // Assuming keyframe[0] is the date object
+      // Sync range input with keyframe
+      inputRef.current.value = keyframe[0].getFullYear();
       setYear(keyframe[0].getFullYear());
 
-      // Delay next frame based on transition duration
-      timeoutRef.current = setTimeout(() => {
-        startAnimation();
-      }, 250);
+      // Continue animation after delay
+      timeoutRef.current = setTimeout(startAnimation, 250);
     } else {
       setIsPlaying(false);
     }
   };
+
   const playPause = () => {
     if (isPlaying) {
-      const transition = svgRef.current
-        .transition()
-        .duration(250)
-        .ease(d3.easeLinear);
       clearTimeout(timeoutRef.current);
-      updateChart(currentKeyframeState, transition, inputRef, null)
+      const transition = svgRef.current.transition().duration(250).ease(d3.easeLinear);
+      updateChart(currentKeyframeState, transition, inputRef, null);
     } else {
       startAnimation();
     }
-    if(!(year >= endYear)){
-
+    
+    if (!(year >= endYear)) {
       setIsPlaying(!isPlaying);
     }
   };
@@ -89,16 +108,12 @@ const BarChartRace = ({title, barRaceData}) => {
   const onRangeChange = (event) => {
     const selectedYear = parseInt(event.target.value, 10);
     setYear(selectedYear);
-    const frameIndex = keyframesRef.current.findIndex(
-      (frame) => frame[0].getFullYear() === selectedYear
-    );
-
+    
+    const frameIndex = keyframesRef.current.findIndex(frame => frame[0].getFullYear() === selectedYear);
+    
     if (frameIndex !== -1) {
-      const transition = svgRef.current
-        .transition()
-        .duration(250)
-        .ease(d3.easeLinear);
-      currentKeyframeRef.current = frameIndex; // Set currentKeyframeRef directly
+      const transition = svgRef.current.transition().duration(250).ease(d3.easeLinear);
+      currentKeyframeRef.current = frameIndex; // Set current keyframe
       updateChart(keyframesRef.current[frameIndex], transition, inputRef, null);
     }
   };
