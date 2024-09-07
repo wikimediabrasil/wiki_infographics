@@ -50,7 +50,20 @@ Before you begin, ensure you have met the following requirements:
 
 You should now be able to access the project at http://localhost:5173 in your web browser
 
-To connect backend with this frontend go to this repository [wiki_infographics-backend](https://github.com/WikiMovimentoBrasil/wiki_infographics-backend)
+To connect backend with this frontend go to this repository
+[wiki_infographics-backend](https://github.com/WikiMovimentoBrasil/wiki_infographics-backend)
+
+## Running in toolforge
+
+### Rebuild the image (after a code change)
+```
+> ssh login.toolforge.org
+> toolforge~# become <yourtool>
+> yourtool@toolforge~# toolforge build start <url_for_this_repo>
+> yourtool@toolforge~# toolforge webservice buildservice restart
+```
+
+More info on buildservice (debugging, etc.) [here](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Build_Service)
 
 ## Contributing
 

@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "yarn install && yarn build && node server.js"
+    "start": "node server.cjs"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
