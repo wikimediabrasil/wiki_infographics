@@ -8,13 +8,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "yarn install && yarn build && node server.js"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
     "@react-spring/web": "^9.7.3",
     "axios": "^1.7.2",
     "d3": "^7.9.0",
+    "express": "^4.19.2",
     "flowbite-react": "^0.10.1",
     "font-awesome": "^4.7.0",
     "highcharts": "^11.4.6",
