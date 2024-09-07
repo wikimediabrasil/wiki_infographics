@@ -35,7 +35,7 @@ const Infographics = () => {
   const [chartTitle, setChartTiltle] = useState("");
   const [isBarChartRaceEnabled, setIsBarChartRaceEnabled] = useState(false)
 
-  console.log(chartData)
+  
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -132,7 +132,7 @@ const Infographics = () => {
       <div className="min-h-screen px-4 py-8 mx-auto bg-gray-100 container mt-4">
         {/* {error && <Notification message={error} clearError={handleClearError}/>} */}
         <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
-          <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white max-h-[770px]">
+          <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white max-h-[790px]">
             <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading} errorMessage={error}/>
             <div className='mt-11'>
               <AlertWithContent/>
@@ -144,12 +144,12 @@ const Infographics = () => {
             {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={error} /></div>}
             {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={"No data available"} /></div>}
             {chartData.table && <div className="flex justify-between items-center h-12 border-b-4 px-4 py-1">
-              <DropDownButton updateModalState={changeModalState} handleCDisplay={handleChartDisplay} isBarChartRaceEnabled={isBarChartRaceEnabled}/>
+              <DropDownButton updateModalState={changeModalState} handleCDisplay={handleChartDisplay} isBarChartRaceEnabled={isBarChartRaceEnabled} chartType={chartType}/>
               <ButtonWithIcon handleDownloadCSV={handleDownloadCSV} isDownloadng={isDownloadng}/>
             </div>}
             <InfoModal  currState={openModal} onCloseModal={onCloseModal} handleChartDisplay={handleChartDisplay} handleChartTitle={handleChartTitle}/>
             {chartData.table && chartType == "Table" && <ChartTable tableData={chartData.table} />}
-            {chartType == "Bar chart race" && <BarChartRace title={chartTitle} barRaceData={chartData.bar_chart_race} />}
+            {chartType == "Bar chart race" && !error && Object.keys(chartData).length > 0 && <BarChartRace title={chartTitle} barRaceData={chartData.bar_chart_race} />}
           </div>
         </div>
       </div>

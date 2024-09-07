@@ -62,6 +62,12 @@ Contributions are welcome! To contribute to Wiki Infographics, follow these step
 4. Push to the branch: git push origin feature/your-feature
 5. Create a pull request on GitHub
 
+## Todos
+
+- [ ] Save users successful SPARQL queries
+- [ ] Export Bar chart race video functionality Or embed bar chart race chart functionality
+- [ ] Improve accessibility
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/license/mit) - see the LICENSE file for details.

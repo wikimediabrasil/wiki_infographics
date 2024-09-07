@@ -19,25 +19,24 @@ export function ButtonWithIcon({handleDownloadCSV, isDownloadng}) {
 
 
 
-export function DropDownButton({updateModalState, handleCDisplay, isBarChartRaceEnabled}) {
+export function DropDownButton({updateModalState, handleCDisplay, isBarChartRaceEnabled, chartType}) {
   const [openModal, setOpenModal] = useState(true);
-  const [dropDownLabel, updateDropdownLabel] = useState("Chart types")
+
 
   const handleModalState = () => {
     setOpenModal(true);
     updateModalState(openModal);
   }
+
   const chartDisplay = () => {
-    
-      handleCDisplay("Table");
-    
+    handleCDisplay("Table");
   }
 
   return (
-    <Dropdown label={dropDownLabel} size="sm" outline>
+    <Dropdown label={chartType} size="sm" outline>
       <Dropdown.Item 
         icon={BsTable} 
-        onClick={() => {updateDropdownLabel("Table"); chartDisplay()}}
+        onClick={() => {chartDisplay()}}
       > 
         Table 
       </Dropdown.Item>
@@ -45,7 +44,6 @@ export function DropDownButton({updateModalState, handleCDisplay, isBarChartRace
         icon={BsBarChartSteps} 
         onClick={() => {
           if (isBarChartRaceEnabled) {
-            updateDropdownLabel("Bar chart race");
             handleModalState();
           }
         }} 

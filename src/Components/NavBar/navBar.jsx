@@ -37,7 +37,7 @@ function NavBar({username}) {
       </div>
       <Navbar.Collapse>
 
-        <Navbar.Link href="#" active>
+        <Navbar.Link href="#" >
           Wikimedia
         </Navbar.Link>
 
