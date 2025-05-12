@@ -1,7 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/react
-# Edit at https://www.toptal.com/developers/gitignore?templates=react
-
-### react ###
 .DS_*
 *.log
 logs
@@ -19,4 +15,14 @@ thumb
 sketch
 .env
 
-# End of https://www.toptal.com/developers/gitignore/api/react
+
+.idea
+__pycache__
+*/__pycache__
+config.yaml
+Lib/
+Scripts/
+.venv/
+venv/
+*.db
+*.sqlite3

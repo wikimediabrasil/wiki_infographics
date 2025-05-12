@@ -1,0 +1,8 @@
+Flask
+flask-babel
+flask-sqlalchemy
+flask-cors
+PyYAML
+mwoauth
+pandas
+pymysql
