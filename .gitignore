@@ -4,6 +4,8 @@ logs
 **/*.backup.*
 **/*.back.*
 /.idea
+/dist
+/client/dist
 
 node_modules
 bower_components
