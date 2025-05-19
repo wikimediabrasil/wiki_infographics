@@ -1,3 +1,6 @@
+# Django collected static files
+/src/static
+
 .DS_*
 *.log
 logs
