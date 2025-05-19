@@ -3,6 +3,7 @@ FROM node:22 AS frontend
 COPY client /client
 WORKDIR /client
 
+RUN npm install
 RUN npm run build
 
 FROM docker-registry.tools.wmflabs.org/toolforge-python311-sssd-web:latest AS runner
