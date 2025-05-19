@@ -19,9 +19,11 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 
+from web import urls as web_urls
 from query import urls as query_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("query/", include(query_urls)),
+    path("web/", include(web_urls)),
+    path("api/query/", include(query_urls)),
 ]
