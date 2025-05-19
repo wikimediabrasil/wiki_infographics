@@ -1,6 +1,10 @@
 # Django collected static files
 /src/static
 
+# Static files and templates from frontend code
+/src/web/static/frontend
+/src/web/templates/index.html
+
 .DS_*
 *.log
 logs
