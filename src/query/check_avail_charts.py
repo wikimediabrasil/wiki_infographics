@@ -1,4 +1,3 @@
-import pandas as pd
 from graphs.bar_chart_race.process_bcr_data import process_bcr_data
 from graphs.table.process_table import process_table
 
