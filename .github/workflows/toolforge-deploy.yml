@@ -34,6 +34,6 @@ jobs:
             become infographics cp -r ./www/python/client/dist/assets ./www/python/src/web/static/frontend/assets
             become infographics webservice python3.11 shell -- webservice-python-bootstrap
             become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
-            become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput
+            become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput --clear
             become infographics webservice python3.11 restart
             become infographics webservice python3.11 status
