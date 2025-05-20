@@ -1,0 +1,39 @@
+name: Toolforge Deploy
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy to Toolforge
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Run deployment commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SSH_PORT }}
+          request_pty: true
+          script: |
+            set -xe
+            become infographics git -C ./www/python/src pull origin main
+            become infographics webservice node18 shell -- npm --prefix ./www/python/client/ install
+            become infographics webservice --mem 1Gi node18 shell -- npm --prefix ./www/python/client/ run build
+            become infographics mkdir -p ./www/python/src/web/templates
+            become infographics mkdir -p ./www/python/src/web/static/frontend
+            become infographics cp ./www/python/client/dist/index.html ./www/python/src/web/templates/index.html
+            become infographics cp -r ./www/python/client/dist/assets ./www/python/src/web/static/frontend/assets
+            become infographics webservice python3.11 shell -- webservice-python-bootstrap
+            become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
+            become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput
+            become infographics webservice python3.11 restart
+            become infographics webservice python3.11 status
