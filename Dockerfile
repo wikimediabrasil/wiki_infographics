@@ -1,4 +1,4 @@
-FROM node:22 AS frontend
+FROM docker-registry.tools.wmflabs.org/toolforge-node18-sssd-web:latest AS frontend
 
 COPY client /client
 WORKDIR /client
