@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 7840:7840
+    environment:
+      - SECRET_KEY=django-insecure-0ldt)=t=w(%l)7b28n=x!#9ciei^yuox3204(#(r!-fh^59+a-
+      - DEBUG=True
+

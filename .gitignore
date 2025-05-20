@@ -1,13 +1,18 @@
-# Created by https://www.toptal.com/developers/gitignore/api/react
-# Edit at https://www.toptal.com/developers/gitignore?templates=react
+# Django collected static files
+/src/static
 
-### react ###
+# Static files and templates from frontend code
+/src/web/static/frontend
+/src/web/templates/index.html
+
 .DS_*
 *.log
 logs
 **/*.backup.*
 **/*.back.*
 /.idea
+/dist
+/client/dist
 
 node_modules
 bower_components
@@ -19,4 +24,14 @@ thumb
 sketch
 .env
 
-# End of https://www.toptal.com/developers/gitignore/api/react
+
+.idea
+__pycache__
+*/__pycache__
+config.yaml
+Lib/
+Scripts/
+.venv/
+venv/
+*.db
+*.sqlite3

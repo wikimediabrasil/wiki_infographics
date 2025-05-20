@@ -15,18 +15,12 @@ const App = () => {
 
   return (
 
-    <Router>
+    <Router basename="/web">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/oauth-callback" element={<OauthCallback />} /> 
-
         <Route
           path="/infographics"
-          element={
-            <ProtectedRoutes>
-              <Infographics />
-            </ProtectedRoutes>
-          }
+          element={ <Infographics /> }
         />
         
       </Routes>

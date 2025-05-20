@@ -28,31 +28,12 @@ const Infographics = () => {
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [username, setUsername] = useState("");
+  const [username, _] = useState("");
   const [isDownloadng, setIsDownloading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [chartType, setChartType] = useState("Table") //Table, Bar chart race, Line chart, etc
   const [chartTitle, setChartTiltle] = useState("");
   const [isBarChartRaceEnabled, setIsBarChartRaceEnabled] = useState(false)
-
-  
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        // Check user authentication status
-        const response = await api.get("/user-info");
-        if (response.data.username) {
-          console.log("User authenticated: " + response.data.username);
-          setUsername(response.data.username);
-        } else {
-          console.error("User is not authenticated");
-        }
-      } catch (error) {
-        console.error(error?.response?.data?.error || error);
-      }
-    };
-    checkUser();
-  }, []);
 
   useEffect(() => {
     if(Object.keys(chartData).length > 0){
