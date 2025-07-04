@@ -6,7 +6,7 @@ import CodeEditor from '../Components/CodeEditor/codeEditor';
 import { ChartTable } from '../Components/Infographics/Table/table';
 import BarChartRace from '../Components/Infographics/BarChartRace/barChartRace';
 import Overlay from '../Components/Overlay/overlay';
-import { InfoAlert, ErrorAlert, AlertWithContent } from "../Components/Alert/alert";
+import { InfoAlert, ErrorAlert } from "../Components/Alert/alert";
 import { ButtonWithIcon, DropDownButton } from "../Components/Button/button"
 import { downloadCSV } from '../Components/Infographics/Table/tableUtils';
 import { InfoModal } from '../Components/Modal/modal';
@@ -110,15 +110,11 @@ const Infographics = () => {
     <>
 
       <NavBar username={username}/>
-      <div className="min-h-screen px-4 py-8 mx-auto bg-gray-100 container mt-4">
+      <div className="px-4 py-8 mx-auto bg-gray-100 container mt-4">
         {/* {error && <Notification message={error} clearError={handleClearError}/>} */}
         <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
           <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white max-h-[790px]">
             <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading} errorMessage={error}/>
-            <div className='mt-11'>
-              <AlertWithContent/>
-            </div>
-            
           </div>
           <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto bg-white">
             {isLoading && <Overlay />}

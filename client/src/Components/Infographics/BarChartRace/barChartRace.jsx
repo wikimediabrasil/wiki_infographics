@@ -139,9 +139,6 @@ const BarChartRace = ({ title, barRaceData }) => {
         />
       </div>
       <div id="container"></div>
-      <p className="highcharts-description pl-2 italic mt-4">
-        Wiki infographics
-      </p>
     </div>
   );
 };

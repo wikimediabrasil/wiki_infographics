@@ -121,8 +121,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           defaultValue={
             `# Write your SPARQL query here...
 # Note! Bar chart race requires the table structure like | itemName(category) | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
-            
-            `}
+`}
           value={code}
           options={{
             inlineSuggest: true,
@@ -134,7 +133,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           }}
         />
       </div>
-      <div className="flex mt-2 pl-2 text-4xl cursor-pointer">
+      <div className="flex mt-2 mb-2 pl-2 text-4xl cursor-pointer" style={{justifyContent: "flex-end"}}>
         {isLoading ? <HiStop /> : <HiPlay onClick={handleFetchChartData} />}  
       </div>
     </>
