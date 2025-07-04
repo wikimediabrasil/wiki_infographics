@@ -12,7 +12,7 @@ To run the tool locally, you need Docker and Docker Compose.
 docker-compose up --build
 ```
 
-Open the app at <https://localhost:7840>.
+Open the app at <http://localhost:7840>.
 
 If you make any changes, you can kill the process and run again, or restart the app container with `docker-compose up -d --build --force-recreate app`.
 
