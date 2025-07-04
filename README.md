@@ -16,12 +16,6 @@ Open the app at <http://localhost:7840>.
 
 If you make any changes, you can kill the process and run again, or restart the app container with `docker-compose up -d --build --force-recreate app`.
 
-## Todos
-
-- [ ] Save users successful SPARQL queries
-- [ ] Export Bar chart race video functionality Or embed bar chart race chart functionality
-- [ ] Improve accessibility
-
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/license/mit) - see the LICENSE file for details.
