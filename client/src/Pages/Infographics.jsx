@@ -65,7 +65,7 @@ const Infographics = () => {
     try {
       setIsLoading(true);
       const sparql_query = encodeURIComponent(code);
-      const response = await api.get(`/query?query=${sparql_query}`) //GET request is required for better line error response
+      const response = await api.get(`/query/?query=${sparql_query}`) //GET request is required for better line error response
       handleClearError();
       setChartData(response.data.data);
       setChartType("Table");
