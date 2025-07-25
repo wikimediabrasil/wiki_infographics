@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'query',
     'web',
+    'graphs',
 ]
 
 MIDDLEWARE = [

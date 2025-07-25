@@ -1,10 +1,7 @@
 import requests_mock
-
 from django.test import TestCase
+
 from query.sparql import df_from_query
-
-
-# Create your tests here.
 
 
 class TestHelper:
@@ -44,7 +41,7 @@ class TestHelper:
 
 class QueryTests(TestCase):
     @requests_mock.Mocker()
-    def test_basic_table(self, mocker):
+    def test_basic_df(self, mocker):
         TestHelper.mock_query_table(mocker)
         df = df_from_query("")
         self.assertEqual(df.columns[0], "item")
