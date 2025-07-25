@@ -3,7 +3,7 @@ import pandas as pd
 import re
 
 
-def sparql_query(sparql_string):
+def df_from_query(sparql_string):
     """
     Query the Wikidata SPARQL endpoint and return the results as a DataFrame.
 
