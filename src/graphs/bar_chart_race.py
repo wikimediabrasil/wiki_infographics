@@ -1,5 +1,42 @@
 import pandas as pd
+from pandas.errors import ParserError
 import re
+
+class BaseDf:
+    def __init__(self, df):
+        self.df = df
+
+    def prepare(self):
+        self.verify_column_count()
+        self.prepare_date_column()
+        self.prepare_value_column()
+
+    def verify_column_count(self):
+        if not (3 <= self.df.shape[1] <= 6):
+            raise BaseDfException("number of columns must be between 3 and 6")
+        
+    def prepare_date_column(self):
+        original_name = self.df.columns[-1]
+        try:
+            self.df[original_name] = pd.to_datetime(self.df[original_name], format="ISO8601")
+        except (ValueError, ParserError):
+            raise BaseDfException("last column must be a date column")
+        self.df.rename(columns={original_name: "date"})
+
+    def prepare_value_column(self):
+        original_name = self.df.columns[-2]
+        try:
+            self.df[original_name] = self.df[original_name].astype("float")
+        except ValueError:
+            raise BaseDfException("second to last column must be a quantity column")
+        self.df.rename(columns={original_name: "value"})
+
+
+class BaseDfException(Exception):
+    def __init__(self, message):
+        self.message = message
+        return super().__init__(message)
+
 
 def process_bar_chart_race(df):
     """
@@ -9,19 +46,11 @@ def process_bar_chart_race(df):
     :return: Processed data suitable for bar chart race or error message
     """
 
-    # RULES
-
-    # 1. Check if the number of columns is between 3 and 6
-    if not (3 <= df.shape[1] <= 6):
-        return {"failed": "data failed bar chart race rule - number of columns must be between 3 and 6"}
-
-    # 2. Check if the last column is a date column
-    if not df.iloc[:, -1].apply(is_datetime_string).any():
-        return {"failed": "data failed bar chart race rule - last column must be a date column"}
-
-    # 3. Check if the second to last column is a number-string column
-    if not df.iloc[:, -2].apply(lambda x: isinstance(x, str) and x.replace('.', '', 1).isdigit()).any():
-        return {"failed": "data failed bar chart race rule - second to last column must be a quantity column"}
+    bdf = BaseDf(df)
+    try:
+        bdf.prepare()
+    except BaseDfException as e:
+        return {"failed": e.message}
 
     # 4. Identify columns with word identifiers
     identifier_columns = identify_word_identifier_columns(df.iloc[:, :-2])
