@@ -6,12 +6,15 @@ WORKDIR /client
 RUN npm install
 RUN npm run build
 
-FROM docker-registry.tools.wmflabs.org/toolforge-python311-sssd-web:latest AS runner
+FROM docker-registry.tools.wmflabs.org/toolforge-python311-sssd-web:latest AS backend
 
 WORKDIR /root/www/python/
 
 COPY src/requirements.txt ./src/requirements.txt
+COPY src/requirements-dev.txt ./src/requirements-dev.txt
+RUN cat ./src/requirements-dev.txt >> ./src/requirements.txt
 RUN webservice-python-bootstrap
+ENV PATH="/root/www/python/venv/bin:${PATH}"
 
 COPY src ./src
 WORKDIR /root/www/python/src/
