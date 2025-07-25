@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-def process_bar_chart_race(data):
+def process_bar_chart_race(df):
     """
     Process data for bar chart race visualization.
 
@@ -12,23 +12,23 @@ def process_bar_chart_race(data):
     # RULES
 
     # 1. Check if the number of columns is between 3 and 6
-    if not (3 <= data.shape[1] <= 6):
+    if not (3 <= df.shape[1] <= 6):
         return {"failed": "data failed bar chart race rule - number of columns must be between 3 and 6"}
 
     # 2. Check if the last column is a date column
-    if not data.iloc[:, -1].apply(is_datetime_string).any():
+    if not df.iloc[:, -1].apply(is_datetime_string).any():
         return {"failed": "data failed bar chart race rule - last column must be a date column"}
 
     # 3. Check if the second to last column is a number-string column
-    if not data.iloc[:, -2].apply(lambda x: isinstance(x, str) and x.replace('.', '', 1).isdigit()).any():
+    if not df.iloc[:, -2].apply(lambda x: isinstance(x, str) and x.replace('.', '', 1).isdigit()).any():
         return {"failed": "data failed bar chart race rule - second to last column must be a quantity column"}
 
     # 4. Identify columns with word identifiers
-    identifier_columns = identify_word_identifier_columns(data.iloc[:, :-2])
+    identifier_columns = identify_word_identifier_columns(df.iloc[:, :-2])
 
-    new_columns = rename_columns(data.columns, identifier_columns)
+    new_columns = rename_columns(df.columns, identifier_columns)
 
-    new_data = data.copy()
+    new_data = df.copy()
     new_data.columns = new_columns
 
     # Select the relevant columns to form the new DataFrame
@@ -147,7 +147,7 @@ def fill_nans(df, fill_NaN=True):
 
     return df_pivoted
 
-def identify_word_identifier_columns(data):
+def identify_word_identifier_columns(df):
     """
     Identify columns with word identifiers.
 
@@ -167,7 +167,7 @@ def identify_word_identifier_columns(data):
         return False
 
     # Identify columns with word identifiers
-    identifier_columns = [i for i in range(data.shape[1]) if data.iloc[:, i].apply(is_non_link_word).any()]
+    identifier_columns = [i for i in range(df.shape[1]) if df.iloc[:, i].apply(is_non_link_word).any()]
     return identifier_columns
 
 def rename_columns(columns, identifier_columns):
