@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
 
-from query.sparql import sparql_query
-from query.check_avail_charts import check_avail_charts
+from query.sparql import df_from_query
+from graphs.utils import charts_from_df
 
 
 @require_safe
@@ -12,11 +12,11 @@ def run_query(request):
     if not query:
         return HttpResponse(status=400)
 
-    data = sparql_query(query)
+    df = df_from_query(query)
 
-    if isinstance(data, dict) and "error" in data:
-        return JsonResponse(data, status=500)
+    if isinstance(df, dict) and "error" in df:
+        return JsonResponse(df, status=500)
 
-    charts_data = check_avail_charts(data)
+    charts_data = charts_from_df(df)
 
     return JsonResponse({"msg": "Successful", "data": charts_data})

@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-def process_bcr_data(data):
+def process_bar_chart_race(data):
     """
     Process data for bar chart race visualization.
 
