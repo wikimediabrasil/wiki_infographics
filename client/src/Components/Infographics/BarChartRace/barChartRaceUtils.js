@@ -53,12 +53,12 @@ export const initializeChart = (svgRef, dataset, width, title) => {
         .padding(0.1);
 
   const scale = d3.scaleOrdinal(d3.schemeTableau10);
-  if (dataset.some((d) => d.category !== undefined)) {
-    const categoryByName = new Map(dataset.map((d) => [d.name, d.category]));
+  if (dataset.elements.some((e) => e.category !== undefined)) {
+    const categoryByName = new Map(dataset.elements.map((e) => [e.name, e.category]));
     scale.domain(categoryByName.values());
-    color = (d) => scale(categoryByName.get(d.name));
+    color = (x) => scale(categoryByName.get(x.name));
   } else {
-    color = (d) => scale(d.name);
+    color = (x) => scale(x.name);
   }
 
   // Initialize update functions

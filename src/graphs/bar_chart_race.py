@@ -74,7 +74,7 @@ class DfProcessor:
         if not identifiers:
             return {name: {} for name in self.df["name"].unique()}
         agg = {col: "first" for col in identifiers}
-        return self.df[["name", *identifiers]].groupby("name").agg(agg).to_dict("index")
+        return self.df[["name", *identifiers]].groupby("name").agg(agg).reset_index().to_dict("records")
 
     def interpolated_df(self):
         df = self.df
