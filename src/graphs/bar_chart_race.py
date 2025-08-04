@@ -2,6 +2,7 @@ import pandas as pd
 from pandas.errors import ParserError
 import re
 
+
 class BaseDf:
     def __init__(self, df: pd.DataFrame):
         self.df = df
@@ -17,12 +18,14 @@ class BaseDf:
     def verify_column_count(self):
         if not (3 <= self.df.shape[1] <= 5):
             raise BaseDfException("number of columns must be between 3 and 5")
-        
+
     def prepare_date_column(self):
         original_name = self.df.columns[-1]
         try:
             # TODO: allow other units of time
-            self.df[original_name] = pd.to_datetime(self.df[original_name], format="ISO8601").dt.year
+            self.df[original_name] = pd.to_datetime(
+                self.df[original_name], format="ISO8601"
+            ).dt.year
         except (ValueError, ParserError):
             raise BaseDfException("last column must be a date column")
         self.df.rename(columns={original_name: "date"}, inplace=True)
@@ -56,7 +59,6 @@ class BaseDf:
         self.df.drop(columns=drop, inplace=True)
 
 
-
 class BaseDfException(Exception):
     def __init__(self, message):
         self.message = message
@@ -72,9 +74,7 @@ class DfProcessor:
         if not identifiers:
             return {name: {} for name in self.df["name"].unique()}
         agg = {col: "first" for col in identifiers}
-        return (
-            self.df[["name", *identifiers]].groupby("name").agg(agg).to_dict("index")
-        )
+        return self.df[["name", *identifiers]].groupby("name").agg(agg).to_dict("index")
 
     def interpolated_df(self):
         df = self.df
@@ -92,28 +92,32 @@ class DfProcessor:
             .melt(ignore_index=False)
             .reset_index()
         )
+        df["value"] = df["value"].fillna(0)
+        df["rank"] = df.groupby("date")["value"].rank(method="dense", ascending=False)
         return df
+
+    def values_by_date(self):
+        ip = self.interpolated_df()
+        vl = []
+        for date in list(sorted(ip["date"].unique())):
+            date = int(date)
+            values = (
+                ip.loc[ip["date"] == date]
+                .drop(columns="date")
+                .sort_values("rank")
+                .to_dict(orient="records")
+            )
+            vl.append({"date": f"{date}-01-01", "values": values})
+        return vl
 
 
 def process_bar_chart_race(df):
-    """
-    Process data for bar chart race visualization.
-
-    :param data: DataFrame containing the processed data
-    :return: Processed data suitable for bar chart race or error message
-    """
-
     bdf = BaseDf(df)
     try:
         bdf.prepare()
     except BaseDfException as e:
         return {"failed": e.message}
-
     proc = DfProcessor(bdf)
-    _elements = proc.elements() # TODO: use this to control category + url
-    ip = proc.interpolated_df()
-    ip["value"] = ip["value"].astype(str)
-    ip["date"] = ip["date"].astype(str) + "-01-01"
-
-    result =  ip.to_dict(orient='records')
-    return result
+    elements = proc.elements()
+    values_by_date = proc.values_by_date()
+    return {"elements": elements, "values_by_date": values_by_date}

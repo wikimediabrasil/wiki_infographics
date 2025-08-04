@@ -7,7 +7,6 @@ import * as d3 from "d3";
 export const margin = { top: 32, right: 16, bottom: 32, left: 0 }; // Added padding/margin
 export const n = 12;
 export const barSize = 48;
-export const k = 10;
 export const duration = 250;
 export let color;
 
@@ -33,19 +32,7 @@ export const initializeChart = (svgRef, dataset, width, title) => {
     .attr("font-weight", "bold")
     .text(title || "");
 
-  // Generate keyframes for animation  
-  const keyframes = [];
-  
-  for (let [[ka, a], [kb, b]] of d3.pairs(getDateValues(dataset))) {
-    for (let i = 0; i < k; ++i) {
-      const t = i / k;
-      keyframes.push([
-        new Date(ka * (1 - t) + kb * t),
-        rank((name) => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t, dataset),
-      ]);
-    }
-    keyframes.push([new Date(kb), rank((name) => b.get(name) || 0, dataset)]);
-  }
+  const keyframes = dataset;
 
   // Create scales and axes
   const nameframes = d3.groups(
@@ -259,40 +246,4 @@ function bars(svgRef, x, y, prev, next) {
           .attr("y", (d) => y(d.rank))
           .attr("width", (d) => x(d.value) - x(0))
       ));
-}
-
-// Rank function
-function rank(valueFunc, dataset) {
-  const data = Array.from(getNames(dataset), (name) => ({
-    name,
-    value: valueFunc(name),
-  }));
-  data.sort((a, b) => d3.descending(a.value, b.value));
-  for (let i = 0; i < data.length; ++i) data[i].rank = Math.min(n, i);
-  return data;
-}
-
-// Extract unique names from dataset
-function getNames(dataset) {
-  const names = new Set(dataset.map((d) => d.name));
-  
-  return names;
-}
-
-// Extract and sort date values from dataset
-function getDateValues(dataset){
-
-  const datevalues = Array.from(
-
-    d3.rollup(
-      dataset,
-      ([d]) => d.value,
-      (d) => +d.date,
-      (d) => d.name
-    )
-  )
-  .map(([date, data]) => [new Date(date), data])
-  .sort(([a], [b]) => d3.ascending(a, b));
-
-  return datevalues;
 }

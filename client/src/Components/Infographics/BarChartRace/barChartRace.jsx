@@ -28,16 +28,11 @@ const BarChartRace = ({ title, barRaceData }) => {
   useEffect(() => {
     const fetchDataAsync = () => {
       if (barRaceData) {
-        // Convert dates to Date objects and values to integers
-        const data = barRaceData.map(d => ({
-          ...d,
-          date: new Date(d.date),
-          value: parseInt(d.value, 10)
-        }));
-        setDataset(data);
+        const dataset = barRaceData.values_by_date.map(d => [new Date(d.date), d.values]);
+        setDataset(dataset);
 
         // Find and set the minimum and maximum years
-        const years = data.map(d => d.date.getFullYear());
+        const years = dataset.map(d => d[0].getFullYear());
         setStartYear(Math.min(...years));
         setEndYear(Math.max(...years));
       }
