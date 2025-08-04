@@ -32,7 +32,7 @@ export const initializeChart = (svgRef, dataset, width, title) => {
     .attr("font-weight", "bold")
     .text(title || "");
 
-  const keyframes = dataset;
+  const keyframes = dataset.keyframes;
 
   // Create scales and axes
   const nameframes = d3.groups(
