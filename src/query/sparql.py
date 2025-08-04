@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import re
 
+from requests.exceptions import JSONDecodeError
 
 def df_from_query(sparql_string):
     """
@@ -16,7 +17,14 @@ def df_from_query(sparql_string):
         error_response = extract_error_message(response.text)
         return {"error": error_response}
 
-    data = response.json()
+    if "java.util.concurrent.TimeoutException" in response.text:
+        return {"error": "Wikidata Query Service Timeout"}
+
+    try:
+        data = response.json()
+    except JSONDecodeError:
+        return {"error": "Something went wrong"}
+
     results = data["results"]["bindings"]
     variables = data["head"]["vars"]
 
@@ -33,7 +41,7 @@ def df_from_query(sparql_string):
 def get_response(sparql_string):
     url = "https://query.wikidata.org/sparql"
     params = {"query": sparql_string, "format": "json"}
-    headers = {"User-agent": "Wiki-Infographics 1.0"}
+    headers = {"User-agent": "Wiki-Infographics 1.0", "Accept": "application/json"}
     return requests.get(url, headers=headers, params=params)
 
 
