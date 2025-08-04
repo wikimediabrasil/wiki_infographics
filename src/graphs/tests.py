@@ -127,11 +127,11 @@ class QueryTests(TestCase):
         elements = proc.elements()
         self.assertEqual(
             elements,
-            {
-                "Porto Alegre": {"url": "http://www.wikidata.org/entity/Q40269"},
-                "Fortaleza": {"url": "http://www.wikidata.org/entity/Q43463"},
-                "São Paulo": {"url": "http://www.wikidata.org/entity/Q174"},
-            },
+            [
+                {"name": "Fortaleza", "url": "http://www.wikidata.org/entity/Q43463"},
+                {"name": "Porto Alegre", "url": "http://www.wikidata.org/entity/Q40269"},
+                {"name": "São Paulo", "url": "http://www.wikidata.org/entity/Q174"},
+            ],
         )
         ip = proc.interpolated_df()
         self.assertEqual(
