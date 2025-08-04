@@ -7,7 +7,6 @@ import * as d3 from "d3";
 export const margin = { top: 32, right: 16, bottom: 32, left: 0 }; // Added padding/margin
 export const n = 12;
 export const barSize = 48;
-export const duration = 250;
 export let color;
 
 // Variables

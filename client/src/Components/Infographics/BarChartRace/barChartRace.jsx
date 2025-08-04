@@ -16,6 +16,7 @@ const BarChartRace = ({ title, barRaceData }) => {
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
   const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
+  const [playSpeed, setPlaySpeed] = useState(5);
   const [startYear, setStartYear] = useState(0); // Minimum year in data
   const [endYear, setEndYear] = useState(0); // Maximum year in data
   const [year, setYear] = useState(startYear); // Current selected year
@@ -24,6 +25,8 @@ const BarChartRace = ({ title, barRaceData }) => {
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
+  const inputSpeedRef = useRef(null); // Reference to speed input
+  const DEFAULT_TRANSITION_DELAY = 250;
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -71,7 +74,10 @@ const BarChartRace = ({ title, barRaceData }) => {
 
   const startAnimation = () => {
     if (currentKeyframeRef.current < keyframesRef.current.length) {
-      const transition = svgRef.current.transition().duration(250).ease(d3.easeLinear);
+      const animationDelay = 1000 / playSpeed;
+
+      const transition = svgRef.current.transition().duration(animationDelay).ease(d3.easeLinear);
+
       const keyframe = keyframesRef.current[currentKeyframeRef.current];
       
       updateChart(keyframe, transition, inputRef, null);
@@ -83,7 +89,7 @@ const BarChartRace = ({ title, barRaceData }) => {
       setYear(keyframe[0].getFullYear());
 
       // Continue animation after delay
-      timeoutRef.current = setTimeout(startAnimation, 250);
+      timeoutRef.current = setTimeout(startAnimation, animationDelay);
     } else {
       setIsPlaying(false);
     }
@@ -92,7 +98,7 @@ const BarChartRace = ({ title, barRaceData }) => {
   const playPause = () => {
     if (isPlaying) {
       clearTimeout(timeoutRef.current);
-      const transition = svgRef.current.transition().duration(250).ease(d3.easeLinear);
+      const transition = svgRef.current.transition().duration(DEFAULT_TRANSITION_DELAY).ease(d3.easeLinear);
       updateChart(currentKeyframeState, transition, inputRef, null);
     } else {
       startAnimation();
@@ -110,10 +116,17 @@ const BarChartRace = ({ title, barRaceData }) => {
     const frameIndex = keyframesRef.current.findIndex(frame => frame[0].getFullYear() === selectedYear);
     
     if (frameIndex !== -1) {
-      const transition = svgRef.current.transition().duration(250).ease(d3.easeLinear);
+      const transition = svgRef.current.transition().duration(DEFAULT_TRANSITION_DELAY).ease(d3.easeLinear);
       currentKeyframeRef.current = frameIndex; // Set current keyframe
       updateChart(keyframesRef.current[frameIndex], transition, inputRef, null);
     }
+  };
+
+  const onPlaySpeedChange = (event) => {
+    const selectedSpeed = parseInt(event.target.value, 10);
+    setPlaySpeed(selectedSpeed);
+    clearTimeout(timeoutRef.current);
+    setIsPlaying(false);
   };
 
   return (
@@ -134,6 +147,16 @@ const BarChartRace = ({ title, barRaceData }) => {
           className="ml-1"
           onChange={onRangeChange}
           ref={inputRef}
+        />
+        <input
+          id="play-speed"
+          type="number"
+          value={playSpeed}
+          min="1"
+          max="10"
+          className="ml-2"
+          onChange={onPlaySpeedChange}
+          ref={inputSpeedRef}
         />
       </div>
       <div id="container"></div>
