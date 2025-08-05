@@ -1,10 +1,37 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div id="race" style="height: 80vh"></div>
+<style>
+  textarea {
+    width: 100%;
+    min-height: 240px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+    font-family: monospace;
+    line-height: 1.5;
+    margin-bottom: 2em;
+  }
+</style>
+
+<div style="padding: 3em;">
+  <div>
+    <h2 style="font-weight: bold;">Bar chart race</h2>
+    <textarea language="sparql" theme="light">
+# Write your SPARQL query here...
+# Bar chart race requires a specific table structure:
+# (1) Just item and itemLabel: item | itemLabel | numeric value | date
+# (2) With category:           item | itemLabel | category | numeric value | date
+</textarea>
+  </div>
+
+  <div id="race" style="height: 80vh"></div>
+</div>
+
 {{bar_race_data|json_script:"barRaceData"}}
 <script type="module">
-  import { race } from "https://cdn.jsdelivr.net/npm/racing-bars";
+  import {race} from "https://cdn.jsdelivr.net/npm/racing-bars";
   const barRaceData = JSON.parse(document.getElementById("barRaceData").textContent);
   race(barRaceData, "#race");
 </script>
