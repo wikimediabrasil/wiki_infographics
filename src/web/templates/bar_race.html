@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="race" style="height: 80vh"></div>
+{{bar_race_data|json_script:"barRaceData"}}
+<script type="module">
+  import { race } from "https://cdn.jsdelivr.net/npm/racing-bars";
+  const barRaceData = JSON.parse(document.getElementById("barRaceData").textContent);
+  race(barRaceData, "#race");
+</script>
+{% endblock content %}

@@ -74,7 +74,13 @@ class DfProcessor:
         if not identifiers:
             return {name: {} for name in self.df["name"].unique()}
         agg = {col: "first" for col in identifiers}
-        return self.df[["name", *identifiers]].groupby("name").agg(agg).reset_index().to_dict("records")
+        return (
+            self.df[["name", *identifiers]]
+            .groupby("name")
+            .agg(agg)
+            .reset_index()
+            .to_dict("records")
+        )
 
     def interpolated_df(self):
         df = self.df
@@ -110,6 +116,18 @@ class DfProcessor:
             vl.append({"date": f"{date}-01-01", "values": values})
         return vl
 
+    def tidy_data(self):
+        """
+        Data required by the JS library.
+
+        Docs: <https://racing-bars.hatemhosny.dev/documentation/data>
+        """
+        ip = self.interpolated_df()
+        ip.drop(columns=["rank"], inplace=True)
+        ip["date"] = ip["date"].astype(str) + "-01-01"
+        ip["value"] = ip["value"].round()
+        return ip.to_dict(orient="records")
+
 
 def process_bar_chart_race(df):
     bdf = BaseDf(df)
@@ -121,3 +139,13 @@ def process_bar_chart_race(df):
     elements = proc.elements()
     values_by_date = proc.values_by_date()
     return {"elements": elements, "values_by_date": values_by_date}
+
+
+def tidy_data(df):
+    bdf = BaseDf(df)
+    try:
+        bdf.prepare()
+    except BaseDfException as e:
+        return {"failed": e.message}
+    proc = DfProcessor(bdf)
+    return proc.tidy_data()
