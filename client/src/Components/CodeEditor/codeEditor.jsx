@@ -19,16 +19,12 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
   const decorationsRef = useRef([]);
   const [searchParams, _] = useSearchParams();
 
-  const queryParam = searchParams.get("query")
-  var defaultCode = '';
-  if (queryParam !== '')  {
-    defaultCode = queryParam;
-  } else {
-    defaultCode = `# Write your SPARQL query here...
-# Note! Bar chart race requires the table structure like | itemName(category)
-# | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
-`
-  };
+  useEffect(() => {
+    const queryParam = searchParams.get("query")
+    if (queryParam !== '')  {
+      handleValueChange(queryParam);
+    };
+  }, [searchParams]);
 
   /**
    * Handles changes in code and clears previous error decorations.
@@ -131,7 +127,10 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           theme="light"
           onChange={handleValueChange}
           onMount={handleEditorDidMount}
-          defaultValue={defaultCode}
+          defaultValue={`# Write your SPARQL query here...
+# Note! Bar chart race requires the table structure like | itemName(category)
+# | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
+`}
           value={code}
           options={{
             inlineSuggest: true,
