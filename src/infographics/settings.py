@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [
 ]
 
 if DEBUG:
-    ALLOWED_HOSTS.append("localhost")
+    ALLOWED_HOSTS.extend(("localhost", "127.0.0.1"))
 
 
 # Application definition
