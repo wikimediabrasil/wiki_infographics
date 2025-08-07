@@ -59,6 +59,9 @@ const BarChartRace = ({ title, speed, barRaceData }) => {
       keyframesRef.current = keyframes;
 
       // Initialize chart with the first keyframe.
+      clearTimeout(timeoutRef.current);
+      setYear(startYear);
+      currentKeyframeRef.current = 0;
       updateChart(keyframes[0], svgRef.current.transition().duration(0), inputRef, null);
     }
     const currentSvg = svgRef.current;
@@ -69,7 +72,7 @@ const BarChartRace = ({ title, speed, barRaceData }) => {
       }
     };
 
-  }, [dataset, title]);
+  }, [dataset, title, speed]);
 
   const startAnimation = () => {
     if (currentKeyframeRef.current < keyframesRef.current.length) {
