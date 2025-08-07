@@ -36,8 +36,3 @@
   width: calc(100% - 90px);
   background: #f8f8f8;
 }
-
-#play-speed {
-  border-color: rgba(2, 117, 255, 1);
-  border-radius: 7px;
-}

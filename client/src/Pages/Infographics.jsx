@@ -33,6 +33,7 @@ const Infographics = () => {
   const [openModal, setOpenModal] = useState(false);
   const [chartType, setChartType] = useState("Table") //Table, Bar chart race, Line chart, etc
   const [chartTitle, setChartTiltle] = useState("");
+  const [chartSpeed, setChartSpeed] = useState(5);
   const [isBarChartRaceEnabled, setIsBarChartRaceEnabled] = useState(false)
 
   useEffect(() => {
@@ -101,6 +102,10 @@ const Infographics = () => {
     setChartTiltle(title);
   }
 
+  const handleChartSpeed = (speed) => {
+    setChartSpeed(speed);
+  }
+
   const handleClearError = () => {
     setError("");
   }
@@ -124,9 +129,9 @@ const Infographics = () => {
               <DropDownButton updateModalState={changeModalState} handleCDisplay={handleChartDisplay} isBarChartRaceEnabled={isBarChartRaceEnabled} chartType={chartType}/>
               <ButtonWithIcon handleDownloadCSV={handleDownloadCSV} isDownloadng={isDownloadng}/>
             </div>}
-            <InfoModal  currState={openModal} onCloseModal={onCloseModal} handleChartDisplay={handleChartDisplay} handleChartTitle={handleChartTitle}/>
+            <InfoModal  currState={openModal} onCloseModal={onCloseModal} handleChartDisplay={handleChartDisplay} handleChartTitle={handleChartTitle} handleChartSpeed={handleChartSpeed}/>
             {chartData.table && chartType == "Table" && <ChartTable tableData={chartData.table} />}
-            {chartType == "Bar chart race" && !error && Object.keys(chartData).length > 0 && <BarChartRace title={chartTitle} barRaceData={chartData.bar_chart_race} />}
+            {chartType == "Bar chart race" && !error && Object.keys(chartData).length > 0 && <BarChartRace title={chartTitle} speed={chartSpeed} barRaceData={chartData.bar_chart_race} />}
           </div>
         </div>
       </div>

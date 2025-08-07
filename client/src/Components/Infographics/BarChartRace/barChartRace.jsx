@@ -10,13 +10,13 @@ import 'font-awesome/css/font-awesome.min.css';
  *
  * @param {Object} props - Component props
  * @param {string} props.title - Title of the chart
+ * @param {number} props.speed - Speed of the chart
  * @param {Array} props.barRaceData - Data for the bar chart race
  */
-const BarChartRace = ({ title, barRaceData }) => {
+const BarChartRace = ({ title, speed, barRaceData }) => {
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
   const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
-  const [playSpeed, setPlaySpeed] = useState(5);
   const [startYear, setStartYear] = useState(0); // Minimum year in data
   const [endYear, setEndYear] = useState(0); // Maximum year in data
   const [year, setYear] = useState(startYear); // Current selected year
@@ -25,7 +25,6 @@ const BarChartRace = ({ title, barRaceData }) => {
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
-  const inputSpeedRef = useRef(null); // Reference to speed input
   const DEFAULT_TRANSITION_DELAY = 250;
 
   useEffect(() => {
@@ -74,7 +73,7 @@ const BarChartRace = ({ title, barRaceData }) => {
 
   const startAnimation = () => {
     if (currentKeyframeRef.current < keyframesRef.current.length) {
-      const animationDelay = 1000 / playSpeed;
+      const animationDelay = 1000 / speed;
 
       const transition = svgRef.current.transition().duration(animationDelay).ease(d3.easeLinear);
 
@@ -122,13 +121,6 @@ const BarChartRace = ({ title, barRaceData }) => {
     }
   };
 
-  const onPlaySpeedChange = (event) => {
-    const selectedSpeed = parseInt(event.target.value, 10);
-    setPlaySpeed(selectedSpeed);
-    clearTimeout(timeoutRef.current);
-    setIsPlaying(false);
-  };
-
   return (
     <div id="parent-container" className="relative p-4">
       <div id="play-controls" className="flex items-center mb-4">
@@ -147,16 +139,6 @@ const BarChartRace = ({ title, barRaceData }) => {
           className="ml-1"
           onChange={onRangeChange}
           ref={inputRef}
-        />
-        <input
-          id="play-speed"
-          type="number"
-          value={playSpeed}
-          min="1"
-          max="10"
-          className="ml-2"
-          onChange={onPlaySpeedChange}
-          ref={inputSpeedRef}
         />
       </div>
       <div id="container"></div>
