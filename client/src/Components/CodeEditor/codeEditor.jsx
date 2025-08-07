@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { HiPlay, HiStop } from "react-icons/hi";
+import { useSearchParams } from 'react-router-dom';
 import "./codeEditor.css";
 
 /**
@@ -16,6 +17,18 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
   const decorationsRef = useRef([]);
+  const [searchParams, _] = useSearchParams();
+
+  const queryParam = searchParams.get("query")
+  var defaultCode = '';
+  if (queryParam !== '')  {
+    defaultCode = queryParam;
+  } else {
+    defaultCode = `# Write your SPARQL query here...
+# Note! Bar chart race requires the table structure like | itemName(category)
+# | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
+`
+  };
 
   /**
    * Handles changes in code and clears previous error decorations.
@@ -118,10 +131,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           theme="light"
           onChange={handleValueChange}
           onMount={handleEditorDidMount}
-          defaultValue={
-            `# Write your SPARQL query here...
-# Note! Bar chart race requires the table structure like | itemName(category) | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
-`}
+          defaultValue={defaultCode}
           value={code}
           options={{
             inlineSuggest: true,
