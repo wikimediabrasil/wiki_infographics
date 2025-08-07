@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
-import { Button, Modal, TextInput, HelperText } from "flowbite-react";
+import { Button, Modal, TextInput, Label, Select, HelperText } from "flowbite-react";
+// Components documentation: https://flowbite-react.com/docs/components/forms
 import { useEffect, useState } from "react";
 
 
-export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed}) {
+export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed }) {
   const [openModal, setOpenModal] = useState(false);
   const [chartTitle, setChartTitle] = useState("");
   const [chartSpeed, setChartSpeed] = useState(5);
 
   useEffect(() => {
     setOpenModal(currState);
-  },[currState])
+  }, [currState])
 
   const handleTitleChange = (event) => {
     setChartTitle(event.target.value);
@@ -18,8 +19,9 @@ export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleC
   }
 
   const handleSpeedChange = (event) => {
-    setChartSpeed(event.target.value);
-    handleChartSpeed(event.target.value);
+    var value = event.target.value;
+    setChartSpeed(value);
+    handleChartSpeed(value);
   }
 
   const handleChartType = () => {
@@ -28,20 +30,34 @@ export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleC
 
   return (
     <>
-      <Modal show={openModal}  size="sm" onClose={() => {setOpenModal(false); onCloseModal()}}>
+      <Modal show={openModal} size="sm" onClose={() => { setOpenModal(false); onCloseModal() }}>
         <Modal.Header>Bar chart race setup</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            
+
             <div className="max-w-md">
-              <TextInput id="chartTitle" placeholder="Optional" value={chartTitle} onChange={handleTitleChange} maxLength={50} addon="Title" />
+              <div className="mb-2 block">
+                <Label htmlFor="chartTitle">Title</Label>
+              </div>
+              <TextInput id="chartTitle" placeholder="Optional" value={chartTitle} onChange={handleTitleChange} maxLength={50} />
             </div>
 
             <div className="max-w-md">
-              <TextInput id="chartSpeed" type="number" min="1" max="10" placeholder="Speed in units per second" value={chartSpeed} onChange={handleSpeedChange} addon="Speed" required />
-              <HelperText>Speed in units per second.</HelperText>
+              <div className="mb-2 block">
+                <Label htmlFor="chartUnit">Speed unit</Label>
+              </div>
+              <Select id="chartUnit" required>
+                <option>Years</option>
+              </Select>
             </div>
-            
+
+            <div className="max-w-md">
+              <div className="mb-2 block">
+                <Label htmlFor="chartSpeed">Speed in units per second</Label>
+              </div>
+              <TextInput id="chartSpeed" type="number" min="1" max="10" placeholder="Speed in units per second" value={chartSpeed} onChange={handleSpeedChange} required />
+            </div>
+
           </div>
         </Modal.Body>
         <Modal.Footer>
