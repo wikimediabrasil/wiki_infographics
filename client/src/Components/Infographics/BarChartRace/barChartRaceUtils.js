@@ -14,7 +14,7 @@ export let color;
 let updateBars, updateAxis, updateLabels, updateTicker, x;
 
 // Function to initialize the chart
-export const initializeChart = (svgRef, dataset, width, title) => {
+export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray) => {
   const chartMargin = 30; // Adjust this value to increase the space
 
    // Create SVG element
@@ -52,7 +52,7 @@ export const initializeChart = (svgRef, dataset, width, title) => {
         .rangeRound([margin.top, margin.top + barSize * (n + 1 + 0.1)])
         .padding(0.1);
 
-  const scale = d3.scaleOrdinal(d3.schemeTableau10);
+  const scale = d3.scaleOrdinal(colorPaletteArray);
   if (dataset.elements.some((e) => e.category !== undefined)) {
     const categoryByName = new Map(dataset.elements.map((e) => [e.name, e.category]));
     scale.domain(categoryByName.values());

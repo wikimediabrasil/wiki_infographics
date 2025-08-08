@@ -11,9 +11,10 @@ import 'font-awesome/css/font-awesome.min.css';
  * @param {Object} props - Component props
  * @param {string} props.title - Title of the chart
  * @param {number} props.speed - Speed of the chart
+ * @param {string} props.colorPalette - List of colors for the chart
  * @param {Array} props.barRaceData - Data for the bar chart race
  */
-const BarChartRace = ({ title, speed, barRaceData }) => {
+const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
   const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
@@ -54,8 +55,14 @@ const BarChartRace = ({ title, speed, barRaceData }) => {
         container.innerHTML = "";
       }
 
+      // Prepare color palette
+      var colorPaletteArray = d3.schemeTableau10;
+      if (colorPalette.length > 6 && colorPalette.includes("#")) {
+        colorPaletteArray = colorPalette.replace(" ", "").split(",");
+      };
+
       const width = container.clientWidth;
-      const keyframes = initializeChart(svgRef, dataset, width, title);
+      const keyframes = initializeChart(svgRef, dataset, width, title, colorPaletteArray);
       keyframesRef.current = keyframes;
 
       // Initialize chart with the first keyframe.
@@ -72,7 +79,7 @@ const BarChartRace = ({ title, speed, barRaceData }) => {
       }
     };
 
-  }, [dataset, title, speed]);
+  }, [dataset, title, speed, colorPalette]);
 
   const startAnimation = () => {
     if (currentKeyframeRef.current < keyframesRef.current.length) {
