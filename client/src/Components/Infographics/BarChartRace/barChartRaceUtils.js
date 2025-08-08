@@ -6,6 +6,7 @@ import * as d3 from "d3";
 // Constants
 export const margin = { top: 32, right: 16, bottom: 32, left: 0 }; // Added padding/margin
 export const n = 12;
+export const max_rank = n;
 export const barSize = 48;
 export let color;
 
@@ -47,7 +48,7 @@ export const initializeChart = (svgRef, dataset, width, title) => {
   x = d3.scaleLinear([0, 1], [margin.left, width - margin.right]);
   const y = d3
         .scaleBand()
-        .domain(d3.range(n + 1))
+        .domain(d3.range(max_rank + 2))
         .rangeRound([margin.top, margin.top + barSize * (n + 1 + 0.1)])
         .padding(0.1);
 
@@ -111,6 +112,10 @@ function ticker(svgRef, width, keyframes) {
   };  
 }
 
+function cap_at_max_rank(rank) {
+  return Math.min(rank, max_rank);
+}
+
 // Labels function
 function labels(svgRef, x, y, prev, next) {
   let label = svgRef
@@ -131,7 +136,7 @@ function labels(svgRef, x, y, prev, next) {
               "transform",
               (d) =>
                 `translate(${x((prev.get(d) || d).value)},${y(
-                  (prev.get(d) || d).rank
+                  cap_at_max_rank((prev.get(d) || d).rank)
                 )})`
             )
             .attr("y", y.bandwidth() / 2)
@@ -156,7 +161,7 @@ function labels(svgRef, x, y, prev, next) {
               "transform",
               (d) =>
                 `translate(${x((next.get(d) || d).value)},${y(
-                  (next.get(d) || d).rank
+                  cap_at_max_rank((next.get(d) || d).rank)
                 )})`
             )
             .call((g) =>
@@ -170,7 +175,7 @@ function labels(svgRef, x, y, prev, next) {
       .call((bar) =>
         bar
           .transition(transition)
-          .attr("transform", (d) => `translate(${x(d.value)},${y(d.rank)})`)
+          .attr("transform", (d) => `translate(${x(d.value)},${y(cap_at_max_rank(d.rank))})`)
           .call((g) =>
             g
               .select("tspan")
@@ -221,7 +226,7 @@ function bars(svgRef, x, y, prev, next) {
 
   return ([, data], transition) =>
     (bar = bar
-      .data(data.slice(0, n), (d) => d.name)
+      .data(data.slice(0, max_rank), (d) => d.name)
       .join(
         (enter) =>
           enter
@@ -229,20 +234,20 @@ function bars(svgRef, x, y, prev, next) {
             .attr("fill", color)
             .attr("height", y.bandwidth())
             .attr("x", x(0))
-            .attr("y", (d) => y((prev.get(d) || d).rank))
+            .attr("y", (d) => y(cap_at_max_rank((prev.get(d) || d).rank)))
             .attr("width", (d) => x((prev.get(d) || d).value) - x(0)),
         (update) => update,
         (exit) =>
           exit
             .transition(transition)
             .remove()
-            .attr("y", (d) => y((next.get(d) || d).rank))
+            .attr("y", (d) => y(cap_at_max_rank((next.get(d) || d).rank)))
             .attr("width", (d) => x((next.get(d) || d).value) - x(0))
       )
       .call((bar) =>
         bar
           .transition(transition)
-          .attr("y", (d) => y(d.rank))
+          .attr("y", (d) => y(cap_at_max_rank(d.rank)))
           .attr("width", (d) => x(d.value) - x(0))
       ));
 }
