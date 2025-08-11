@@ -82,13 +82,21 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   }, [dataset, title, speed, colorPalette]);
 
   const startAnimation = () => {
-    if (currentKeyframeRef.current < keyframesRef.current.length) {
+    if (canIncreaseAnimationTick()) {
       const animationDelay = 1000 / speed;
+      increaseAnimationTick(animationDelay);
+      // Continue animation after delay
+      timeoutRef.current = setTimeout(startAnimation, animationDelay);
+    } else {
+      setIsPlaying(false);
+    }
+  };
 
+  const increaseAnimationTick = (animationDelay) => {
+    if (canIncreaseAnimationTick()) {
       const transition = svgRef.current.transition().duration(animationDelay).ease(d3.easeLinear);
-
       const keyframe = keyframesRef.current[currentKeyframeRef.current];
-      
+
       updateChart(keyframe, transition, inputRef, null);
       currentKeyframeRef.current += 1;
       setCurrentKeyFrameState(keyframe);
@@ -96,13 +104,15 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
       // Sync range input with keyframe
       inputRef.current.value = keyframe[0].getFullYear();
       setYear(keyframe[0].getFullYear());
-
-      // Continue animation after delay
-      timeoutRef.current = setTimeout(startAnimation, animationDelay);
+      return true;
     } else {
-      setIsPlaying(false);
-    }
+      return false;
+    };
   };
+
+  const canIncreaseAnimationTick = () => {
+    return currentKeyframeRef.current < keyframesRef.current.length;
+  }
 
   const playPause = () => {
     if (isPlaying) {
