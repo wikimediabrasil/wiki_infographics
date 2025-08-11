@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState, useEffect } from "react";
+import { HiOutlineDownload  } from "react-icons/hi";
+import { Button } from "flowbite-react";
 import { initializeChart, updateChart } from "./barChartRaceUtils";
 import * as d3 from "d3";
 import "./barChartRace.css";
 import 'font-awesome/css/font-awesome.min.css';
+import api from '../../../api/axios';
 
 /**
  * BarChartRace component visualizes a bar chart race with play/pause and year selection controls.
@@ -23,6 +26,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const [year, setYear] = useState(startYear); // Current selected year
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
+  const [isDownloadingVideo, setIsDownloadingVideo] = useState(false);
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
@@ -70,6 +74,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
       setYear(startYear);
       currentKeyframeRef.current = 0;
       updateChart(keyframes[0], svgRef.current.transition().duration(0), inputRef, null);
+      setIsDownloadingVideo(false);
     }
     const currentSvg = svgRef.current;
     // Cleanup function to remove SVG on component unmount or before re-render
@@ -80,6 +85,13 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     };
 
   }, [dataset, title, speed, colorPalette]);
+
+  useEffect(() => {
+    const playButton = document.getElementById("play-pause-button");
+    const playRange = document.getElementById("play-range");
+    playButton.disabled = isDownloadingVideo;
+    playRange.disabled = isDownloadingVideo;
+  }, [isDownloadingVideo]);
 
   const startAnimation = () => {
     if (canIncreaseAnimationTick()) {
@@ -130,15 +142,44 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
 
   const onRangeChange = (event) => {
     const selectedYear = parseInt(event.target.value, 10);
-    setYear(selectedYear);
-    
-    const frameIndex = keyframesRef.current.findIndex(frame => frame[0].getFullYear() === selectedYear);
-    
+    setAnimationToYear(selectedYear);
+  };
+
+  const setAnimationToYear = (year, delay = DEFAULT_TRANSITION_DELAY) => {
+    const frameIndex = keyframesRef.current.findIndex(frame => frame[0].getFullYear() === year);
     if (frameIndex !== -1) {
-      const transition = svgRef.current.transition().duration(DEFAULT_TRANSITION_DELAY).ease(d3.easeLinear);
+      setYear(year);
+      const transition = svgRef.current.transition().duration(delay).ease(d3.easeLinear);
       currentKeyframeRef.current = frameIndex; // Set current keyframe
       updateChart(keyframesRef.current[frameIndex], transition, inputRef, null);
     }
+  }
+
+  const handleDownloadVideo = async () => {
+    setIsDownloadingVideo(true);
+    var video_id;
+    await api.post('/video/create/').then((response) => {
+      if (response.status == 201) { video_id = response.data.id };
+    }).catch((error) => {
+      console.log(`error while creating video: ${error}`);
+    });
+    if (video_id === undefined) {
+      setIsDownloadingVideo(false);
+      return;
+    };
+    setAnimationToYear(startYear, 0);
+    const total_frames = endYear - startYear + 1;
+    const frame_endpoint = `/video/${video_id}/frame/`;
+    for (let frame_index = 0; frame_index < total_frames; frame_index++) {
+      const svg = document.getElementById("container").getHTML();
+      await api.postForm(frame_endpoint, { index: frame_index, svg: svg }).then((response) => {
+        if (response.status == 201) {
+          console.log(`created video frame with index=${frame_index}`);
+        };
+      });
+      increaseAnimationTick(0);
+    };
+    setIsDownloadingVideo(false);
   };
 
   return (
@@ -160,6 +201,9 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
           onChange={onRangeChange}
           ref={inputRef}
         />
+        <Button size="xs" className="ml-2" color="info" onClick={handleDownloadVideo} isProcessing={isDownloadingVideo}>
+          <HiOutlineDownload className="h-5 w-5" />
+        </Button>
       </div>
       <div id="container"></div>
     </div>

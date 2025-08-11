@@ -31,6 +31,11 @@
   background-color: rgba(2, 117, 255, 0.5);
 }
 
+#play-pause-button:disabled {
+  background-color: rgba(203, 203, 203, 1);
+  border: 1px solid rgba(190, 190, 190, 1);
+}
+
 #play-range {
   transform: translateY(2.5px);
   width: calc(100% - 90px);

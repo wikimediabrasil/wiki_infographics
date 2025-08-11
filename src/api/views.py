@@ -2,8 +2,10 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.db.utils import IntegrityError
+from django.utils.datastructures import MultiValueDictKeyError
 
 from api.sparql import df_from_query
 from graphs.utils import charts_from_df
@@ -27,18 +29,23 @@ def run_query(request):
     return JsonResponse({"msg": "Successful", "data": charts_data})
 
 
+@csrf_exempt
 @require_POST
 def create_video(request):
     video = Video.objects.create()
     return JsonResponse({"id": video.id}, status=201)
 
 
+@csrf_exempt
 @require_POST
 def post_video_frame(request, id):
     data = request.POST
     video = get_object_or_404(Video, id=id)
-    index = data["index"]
-    svg_content = data["svg"]
+    try:
+        index = data["index"]
+        svg_content = data["svg"]
+    except MultiValueDictKeyError:
+        return JsonResponse({"msg": "missing parameters"}, status=400)
     try:
         VideoFrame.objects.create(video=video, index=index, svg_content=svg_content)
     except IntegrityError:

@@ -34,8 +34,11 @@ ALLOWED_HOSTS = [
     "infographics.toolforge.org",
 ]
 
+CSRF_TRUSTED_ORIGINS = []
+
 if DEBUG:
     ALLOWED_HOSTS.extend(("localhost", "127.0.0.1"))
+    CSRF_TRUSTED_ORIGINS.extend(("http://localhost:5173",))
 
 
 # Application definition
