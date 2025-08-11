@@ -1,7 +1,7 @@
 import requests_mock
 from django.test import TestCase
 
-from query.sparql import df_from_query
+from api.sparql import df_from_query
 
 
 class TestHelper:

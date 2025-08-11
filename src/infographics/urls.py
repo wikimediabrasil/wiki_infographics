@@ -21,7 +21,7 @@ from django.urls import include
 from django.views.generic.base import RedirectView
 
 from web import urls as web_urls
-from query import urls as query_urls
+from api import urls as api_urls
 
 redirect_to_web = RedirectView.as_view(url="/web/")
 
@@ -29,5 +29,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", redirect_to_web),
     path("web/", include(web_urls)),
-    path("api/query/", include(query_urls)),
+    path("api/query/", include(api_urls)),
 ]

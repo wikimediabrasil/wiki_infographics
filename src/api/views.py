@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
 
-from query.sparql import df_from_query
+from api.sparql import df_from_query
 from graphs.utils import charts_from_df
 
 
