@@ -29,5 +29,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", redirect_to_web),
     path("web/", include(web_urls)),
-    path("api/query/", include(api_urls)),
+    path("api/", include(api_urls)),
 ]

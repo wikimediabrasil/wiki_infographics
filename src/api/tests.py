@@ -2,6 +2,8 @@ import requests_mock
 from django.test import TestCase
 
 from api.sparql import df_from_query
+from video.models import Video
+from video.models import VideoFrame
 
 
 class TestHelper:
@@ -51,3 +53,22 @@ class QueryTests(TestCase):
         self.assertEqual(df["itemLabel"][0], "Campo Novo")
         self.assertEqual(df["itemLabel"][1], "Lomba do Pinheiro")
         self.assertEqual(df["item"].count(), 2)
+
+
+class VideoTests(TestCase):
+    def test_basic_video_endpoints(self):
+        res = self.client.post("/api/video/create/")
+        video = Video.objects.get()
+        self.assertEqual(res.status_code, 201)
+        self.assertEqual(res.json(), {"id": video.id})
+        endpoint = f"/api/video/{video.id}/frame/"
+        res = self.client.post(endpoint, data={"index": 0, "svg": "<svg></svg>>"})
+        self.assertEqual(res.status_code, 201)
+        res = self.client.post(endpoint, data={"index": 1, "svg": "<svg></svg>>"})
+        self.assertEqual(res.status_code, 201)
+        res = self.client.post(endpoint, data={"index": 2, "svg": "<svg></svg>>"})
+        self.assertEqual(res.status_code, 201)
+        self.assertEqual(video.frames.count(), 3)
+        res = self.client.post(endpoint, data={"index": 2, "svg": "<svg></svg>>"})
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(res.json(), {"msg": "index already in use"})

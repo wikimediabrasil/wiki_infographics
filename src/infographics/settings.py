@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'api',
     'web',
     'graphs',
+    'video',
 ]
 
 MIDDLEWARE = [
