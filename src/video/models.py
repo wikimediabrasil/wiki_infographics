@@ -14,7 +14,7 @@ class Video(models.Model):
     def generate_video(self):
         if self.get_frames().exists():
             tempdir = "/tmp/infographics"
-            i = 0 
+            i = 0
             for frame in self.get_frames():
                 index = f"{i:06d}"
                 svg_path = os.path.join(tempdir, f"{index}.svg")
@@ -26,14 +26,9 @@ class Video(models.Model):
                     subprocess.run(["magick", svg_path, png_path])
                     logger.info(f"[{self.id}] generated {png_path}")
                 i += 1
-            subprocess.run(
-                [
-                    "ffmpeg",
-                    "-i",
-                    "%06d.png",
-                    "output.mp4",
-                ]
-            )
+            input = os.path.join(tempdir, "%06d.png")
+            output = os.path.join(tempdir, "output.webm")
+            subprocess.run(["ffmpeg", "-i", input, output])
             logger.info(f"[{self.id}] generated output.mp4")
 
     def get_frames(self):
