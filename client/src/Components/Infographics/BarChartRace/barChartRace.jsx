@@ -27,12 +27,12 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const [year, setYear] = useState(startYear); // Current selected year
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
-  const [animationDelay, setAnimationDelay] = useState(DEFAULT_TRANSITION_DELAY);
   const [isDownloadingVideo, setIsDownloadingVideo] = useState(false);
-  const [videoId, setVideoId] = useState(null);
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
+  var videoId;
+  var animationDelay = DEFAULT_TRANSITION_DELAY;
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -96,7 +96,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   }, [isDownloadingVideo]);
 
   useEffect(() => {
-    setAnimationDelay(1000 / speed);
+    animationDelay = 1000 / speed;
   }, [speed])
 
   const startAnimation = () => {
@@ -166,22 +166,20 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   }
 
   const handleDownloadVideoStart = async () => {
-    if (isDownloadingVideo) {
-      clearTimeout(timeoutRef.current);
-      setIsDownloadingVideo(false);
-    } else {
+    if (!isDownloadingVideo) {
       await api.post('/video/create/').then((response) => {
         if (response.status == 201) {
-          const videoId = response.data.id;
-          setVideoId(videoId);
+          videoId = response.data.id;
           setIsDownloadingVideo(true);
           setAnimationToYear(startYear);
-          timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 3);
+          timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 2);
         };
       }).catch((error) => {
         console.log(`error while creating video: ${error}`);
-        setIsDownloadingVideo(false);
+        stopDownload();
       });
+    } else {
+      stopDownload();
     }
   };
 
@@ -202,11 +200,16 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
       increaseAnimationTick(transition);
       timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 1.5);
     } else {
-      setIsPlaying(false);
-      setIsDownloadingVideo(false);
-      setVideoId(null);
+      stopDownload();
     }
   };
+
+  const stopDownload = () => {
+    clearTimeout(timeoutRef.current);
+    setIsPlaying(false);
+    setIsDownloadingVideo(false);
+    videoId = null;
+  }
 
   return (
     <div id="parent-container" className="relative p-4">
