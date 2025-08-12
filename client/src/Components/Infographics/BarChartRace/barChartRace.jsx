@@ -18,6 +18,7 @@ import api from '../../../api/axios';
  * @param {Array} props.barRaceData - Data for the bar chart race
  */
 const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
+  const DEFAULT_TRANSITION_DELAY = 250;
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
   const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
@@ -26,11 +27,12 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const [year, setYear] = useState(startYear); // Current selected year
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
+  const [animationDelay, setAnimationDelay] = useState(DEFAULT_TRANSITION_DELAY);
   const [isDownloadingVideo, setIsDownloadingVideo] = useState(false);
+  const [videoId, setVideoId] = useState(null);
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
-  const DEFAULT_TRANSITION_DELAY = 250;
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -93,20 +95,26 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     playRange.disabled = isDownloadingVideo;
   }, [isDownloadingVideo]);
 
+  useEffect(() => {
+    setAnimationDelay(1000 / speed);
+  }, [speed])
+
   const startAnimation = () => {
     if (canIncreaseAnimationTick()) {
-      const animationDelay = 1000 / speed;
-      increaseAnimationTick(animationDelay);
-      // Continue animation after delay
+      const transition = getTransition(animationDelay);
+      increaseAnimationTick(transition);
       timeoutRef.current = setTimeout(startAnimation, animationDelay);
     } else {
       setIsPlaying(false);
     }
   };
 
-  const increaseAnimationTick = (animationDelay) => {
+  const getTransition = (delay) => {
+    return svgRef.current.transition().duration(delay).ease(d3.easeLinear);
+  }
+
+  const increaseAnimationTick = (transition) => {
     if (canIncreaseAnimationTick()) {
-      const transition = svgRef.current.transition().duration(animationDelay).ease(d3.easeLinear);
       const keyframe = keyframesRef.current[currentKeyframeRef.current];
 
       updateChart(keyframe, transition, inputRef, null);
@@ -129,7 +137,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const playPause = () => {
     if (isPlaying) {
       clearTimeout(timeoutRef.current);
-      const transition = svgRef.current.transition().duration(DEFAULT_TRANSITION_DELAY).ease(d3.easeLinear);
+      const transition = getTransition(DEFAULT_TRANSITION_DELAY);
       updateChart(currentKeyframeState, transition, inputRef, null);
     } else {
       startAnimation();
@@ -145,41 +153,59 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     setAnimationToYear(selectedYear);
   };
 
-  const setAnimationToYear = (year, delay = DEFAULT_TRANSITION_DELAY) => {
+  const setAnimationToYear = (year) => {
     const frameIndex = keyframesRef.current.findIndex(frame => frame[0].getFullYear() === year);
     if (frameIndex !== -1) {
+      clearTimeout(timeoutRef.current);
+      setIsPlaying(false);
       setYear(year);
-      const transition = svgRef.current.transition().duration(delay).ease(d3.easeLinear);
+      const transition = getTransition(DEFAULT_TRANSITION_DELAY);
       currentKeyframeRef.current = frameIndex; // Set current keyframe
       updateChart(keyframesRef.current[frameIndex], transition, inputRef, null);
     }
   }
 
-  const handleDownloadVideo = async () => {
-    setIsDownloadingVideo(true);
-    var video_id;
-    await api.post('/video/create/').then((response) => {
-      if (response.status == 201) { video_id = response.data.id };
-    }).catch((error) => {
-      console.log(`error while creating video: ${error}`);
-    });
-    if (video_id === undefined) {
+  const handleDownloadVideoStart = async () => {
+    if (isDownloadingVideo) {
+      clearTimeout(timeoutRef.current);
       setIsDownloadingVideo(false);
-      return;
-    };
-    setAnimationToYear(startYear, 0);
-    const total_frames = endYear - startYear + 1;
-    const frame_endpoint = `/video/${video_id}/frame/`;
-    for (let frame_index = 0; frame_index < total_frames; frame_index++) {
-      const svg = document.getElementById("container").getHTML();
-      await api.postForm(frame_endpoint, { index: frame_index, svg: svg }).then((response) => {
+    } else {
+      await api.post('/video/create/').then((response) => {
         if (response.status == 201) {
-          console.log(`created video frame with index=${frame_index}`);
+          const videoId = response.data.id;
+          setVideoId(videoId);
+          setIsDownloadingVideo(true);
+          setAnimationToYear(startYear);
+          timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 3);
+        };
+      }).catch((error) => {
+        console.log(`error while creating video: ${error}`);
+        setIsDownloadingVideo(false);
+      });
+    }
+  };
+
+  const startDownloadAnimation = () => {
+    if (canIncreaseAnimationTick()) {
+      const frameEndpoint = `/video/${videoId}/frame/`;
+      const transition = getTransition(animationDelay).tween("capture", () => {
+        return async (time) => {
+          const frameIndex = Math.round(100 * (1.1 * currentKeyframeRef.current + time));
+          const svgString = document.getElementById("container").getHTML();
+          await api.postForm(frameEndpoint, { index: frameIndex, svg: svgString }).then((response) => {
+            if (response.status == 201) {
+              console.log(`video ${videoId} / created frame ${frameIndex}`);
+            };
+          });
         };
       });
-      increaseAnimationTick(0);
-    };
-    setIsDownloadingVideo(false);
+      increaseAnimationTick(transition);
+      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 1.5);
+    } else {
+      setIsPlaying(false);
+      setIsDownloadingVideo(false);
+      setVideoId(null);
+    }
   };
 
   return (
@@ -201,7 +227,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
           onChange={onRangeChange}
           ref={inputRef}
         />
-        <Button size="xs" className="ml-2" color="info" onClick={handleDownloadVideo} isProcessing={isDownloadingVideo}>
+        <Button size="xs" className="ml-2" color="info" onClick={handleDownloadVideoStart} isProcessing={isDownloadingVideo}>
           <HiOutlineDownload className="h-5 w-5" />
         </Button>
       </div>
