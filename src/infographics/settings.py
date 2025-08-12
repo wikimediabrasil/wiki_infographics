@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+import subprocess
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -140,3 +141,12 @@ STATIC_ROOT = os.getenv("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+def check_external_software():
+    for commands in (
+        ["ffmpeg", "-version"],
+        ["magick", "--version"],
+    ):
+        subprocess.run(commands, check=True, capture_output=True)
+
+check_external_software()
