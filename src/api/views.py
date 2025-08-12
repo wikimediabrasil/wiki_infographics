@@ -42,12 +42,9 @@ def post_video_frame(request, id):
     data = request.POST
     video = get_object_or_404(Video, id=id)
     try:
-        index = data["index"]
+        ordering = data["ordering"]
         svg_content = data["svg"]
     except MultiValueDictKeyError:
         return JsonResponse({"msg": "missing parameters"}, status=400)
-    try:
-        VideoFrame.objects.create(video=video, index=index, svg_content=svg_content)
-    except IntegrityError:
-        return JsonResponse({"msg": "index already in use"}, status=400)
+    VideoFrame.objects.create(video=video, ordering=ordering, svg_content=svg_content)
     return HttpResponse(status=201)

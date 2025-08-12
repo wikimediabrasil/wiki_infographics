@@ -190,11 +190,11 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
       const frameEndpoint = `/video/${videoId}/frame/`;
       const transition = getTransition(animationDelay).tween("capture", () => {
         return async (time) => {
-          const frameIndex = Math.round(100 * (1.1 * currentKeyframeRef.current + time));
+          const ordering = currentKeyframeRef.current + 0.95 * time;
           const svgString = document.getElementById("container").getHTML();
-          await api.postForm(frameEndpoint, { index: frameIndex, svg: svgString }).then((response) => {
+          await api.postForm(frameEndpoint, { ordering: ordering, svg: svgString }).then((response) => {
             if (response.status == 201) {
-              console.log(`video ${videoId} / created frame ${frameIndex}`);
+              console.log(`video ${videoId} / ordering ${ordering}`);
             };
           });
         };

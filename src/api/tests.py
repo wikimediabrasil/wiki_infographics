@@ -3,7 +3,6 @@ from django.test import TestCase
 
 from api.sparql import df_from_query
 from video.models import Video
-from video.models import VideoFrame
 
 
 class TestHelper:
@@ -62,13 +61,13 @@ class VideoTests(TestCase):
         self.assertEqual(res.status_code, 201)
         self.assertEqual(res.json(), {"id": video.id})
         endpoint = f"/api/video/{video.id}/frame/"
-        res = self.client.post(endpoint, data={"index": 0, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"ordering": 0.32, "svg": "<svg></svg>>"})
         self.assertEqual(res.status_code, 201)
-        res = self.client.post(endpoint, data={"index": 1, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"ordering": 1.43333, "svg": "<svg></svg>>"})
         self.assertEqual(res.status_code, 201)
-        res = self.client.post(endpoint, data={"index": 2, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"ordering": 2.0909099, "svg": "<svg></svg>>"})
         self.assertEqual(res.status_code, 201)
         self.assertEqual(video.frames.count(), 3)
-        res = self.client.post(endpoint, data={"index": 2, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"svg": "<svg></svg>>"})
         self.assertEqual(res.status_code, 400)
-        self.assertEqual(res.json(), {"msg": "index already in use"})
+        self.assertEqual(res.json(), {"msg": "missing parameters"})
