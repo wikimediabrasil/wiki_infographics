@@ -12,8 +12,10 @@ logger = logging.getLogger("django")
 def video_file_path(video, filename):
     return f"video/{video.id}/{filename}"
 
+
 def video_frame_png_path(frame, filename):
     return f"video/{frame.video.id}/frame/{frame.id}/{filename}"
+
 
 class Video(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -31,12 +33,15 @@ class Video(models.Model):
             dir_obj = tempfile.TemporaryDirectory(prefix="infographics-")
             dir = dir_obj.name
             for frame in self.frames.order_by("index"):
-                frame.generate_png()
                 istr = f"{frame.index:06d}"
                 shutil.copy(frame.png.path, os.path.join(dir, f"{istr}.png"))
             input = os.path.join(dir, "%06d.png")
             output = os.path.join(dir, "output.webm")
-            subprocess.run(["ffmpeg", "-i", input, output])
+            subprocess.run(
+                ["ffmpeg", "-i", input, output],
+                check=True,
+                capture_output=True,
+            )
             logger.info(f"[{self.id}] generated file")
             with open(output, "rb") as f:
                 self.file.save(f"video-{self.id}.webm", f)
@@ -50,12 +55,36 @@ class Video(models.Model):
             i += 1
         VideoFrame.objects.bulk_update(frames, ["index"])
 
-    def png_complete_ratio(self):
-        with_png = self.frames.exclude(png="").count()
-        total = self.frames.all().count()
-        return with_png / total if total > 0 else 0
 
+class VideoFrameManager(models.Manager):
+    def create_from_svg(self, svg_content, *args, **kwargs):
+        """
+        Creates a VideoFrame converting the svg content to a png.
 
+        # Raises
+
+        - `subprocess.CalledProcessError` if conversion fails.
+        """
+        frame = self.create(*args, **kwargs)
+        dir = tempfile.TemporaryDirectory(prefix="infographics-")
+        svg_path = os.path.join(dir.name, "frame.svg")
+        png_path = os.path.join(dir.name, "frame.png")
+        with open(svg_path, "w") as f:
+            f.write(svg_content)
+        subprocess.run(
+            [
+                "rsvg-convert",
+                svg_path,
+                "-o",
+                png_path,
+                "--background-color",
+                "white",
+            ],
+            check=True,
+            capture_output=True,
+        )
+        with open(png_path, "rb") as f:
+            frame.png.save(f"frame-{frame.id}.png", f)
 
 
 class VideoFrame(models.Model):
@@ -64,7 +93,6 @@ class VideoFrame(models.Model):
 
     video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name="frames")
     ordering = models.FloatField(help_text="Ordering from the front end")
-    svg_content = models.TextField(blank=True)
 
     index = models.PositiveIntegerField(
         blank=True,
@@ -77,13 +105,4 @@ class VideoFrame(models.Model):
         help_text="Generated from svg",
     )
 
-    def generate_png(self):
-        if not self.png:
-            dir = tempfile.TemporaryDirectory(prefix="infographics-")
-            svg_path = os.path.join(dir.name, "frame.svg")
-            png_path = os.path.join(dir.name, "frame.png")
-            with open(svg_path, "w") as f:
-                f.write(self.svg_content)
-            subprocess.run(["magick", svg_path, png_path])
-            with open(png_path, "rb") as f:
-                self.png.save(f"frame-{self.id}.png", f)
+    objects = VideoFrameManager()

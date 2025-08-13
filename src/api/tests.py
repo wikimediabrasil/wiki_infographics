@@ -55,19 +55,27 @@ class QueryTests(TestCase):
 
 
 class VideoTests(TestCase):
+    TEST_SVG = """<svg><circle r="45" cx="50" cy="50"/></svg>"""
+
     def test_basic_video_endpoints(self):
         res = self.client.post("/api/video/create/")
         video = Video.objects.get()
         self.assertEqual(res.status_code, 201)
         self.assertEqual(res.json(), {"id": video.id})
         endpoint = f"/api/video/{video.id}/frame/"
-        res = self.client.post(endpoint, data={"ordering": 0.32, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"ordering": 0.32, "svg": self.TEST_SVG})
         self.assertEqual(res.status_code, 201)
-        res = self.client.post(endpoint, data={"ordering": 1.43333, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"ordering": 1.43333, "svg": self.TEST_SVG})
         self.assertEqual(res.status_code, 201)
-        res = self.client.post(endpoint, data={"ordering": 2.0909099, "svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"ordering": 2.0909099, "svg": self.TEST_SVG})
         self.assertEqual(res.status_code, 201)
         self.assertEqual(video.frames.count(), 3)
-        res = self.client.post(endpoint, data={"svg": "<svg></svg>>"})
+        res = self.client.post(endpoint, data={"svg": self.TEST_SVG})
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.json(), {"msg": "missing parameters"})
+        res = self.client.post(endpoint, data={"ordering": 1.234, "svg": "<svg>Empty svg</svg>"})
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(res.json(), {"msg": "failed to convert svg to png"})
+        endpoint = "/api/video/0/frame/"
+        res = self.client.post(endpoint, data={"ordering": 0.32, "svg": self.TEST_SVG})
+        self.assertEqual(res.status_code, 404)

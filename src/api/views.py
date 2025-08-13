@@ -1,3 +1,5 @@
+from subprocess import CalledProcessError
+
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
@@ -43,8 +45,11 @@ def post_video_frame(request, id):
     video = get_object_or_404(Video, id=id)
     try:
         ordering = data["ordering"]
-        svg_content = data["svg"]
+        svg = data["svg"]
     except MultiValueDictKeyError:
         return JsonResponse({"msg": "missing parameters"}, status=400)
-    VideoFrame.objects.create(video=video, ordering=ordering, svg_content=svg_content)
+    try:
+        VideoFrame.objects.create_from_svg(svg, video=video, ordering=ordering)
+    except CalledProcessError:
+        return JsonResponse({"msg": "failed to convert svg to png"}, status=400)
     return HttpResponse(status=201)
