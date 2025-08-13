@@ -32,7 +32,6 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
   var videoId;
-  var animationDelay = DEFAULT_TRANSITION_DELAY;
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -95,15 +94,15 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     playRange.disabled = isDownloadingVideo;
   }, [isDownloadingVideo]);
 
-  useEffect(() => {
-    animationDelay = 1000 / speed;
-  }, [speed])
+  const animationDelay = () => {
+    return 1000 / speed;
+  };
 
   const startAnimation = () => {
     if (canIncreaseAnimationTick()) {
-      const transition = getTransition(animationDelay);
+      const transition = getTransition(animationDelay());
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startAnimation, animationDelay);
+      timeoutRef.current = setTimeout(startAnimation, animationDelay());
     } else {
       setIsPlaying(false);
     }
@@ -172,7 +171,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
           videoId = response.data.id;
           setIsDownloadingVideo(true);
           setAnimationToYear(startYear);
-          timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 2);
+          timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 2);
         };
       }).catch((error) => {
         console.log(`error while creating video: ${error}`);
@@ -186,7 +185,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const startDownloadAnimation = () => {
     if (canIncreaseAnimationTick()) {
       const frameEndpoint = `/video/${videoId}/frame/`;
-      const transition = getTransition(animationDelay).tween("capture", () => {
+      const transition = getTransition(animationDelay()).tween("capture", () => {
         return async (time) => {
           const ordering = currentKeyframeRef.current + 0.95 * time;
           const svgString = document.getElementById("container").getHTML();
@@ -198,7 +197,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
         };
       });
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay * 1.5);
+      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 1.5);
     } else {
       stopDownload();
     }
