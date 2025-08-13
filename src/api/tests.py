@@ -106,3 +106,6 @@ class VideoTests(TestCase):
         self.assertEqual(res["Content-Disposition"], 'filename="video.webm"')
         self.assertEqual(res["Access-Control-Expose-Headers"], "Content-Disposition")
         self.assertEqual(res["Content-Type"], "video/webm")
+        video.refresh_from_db()
+        self.assertIsNotNone(video.file)
+        self.assertEqual(video.file_framerate, 36)
