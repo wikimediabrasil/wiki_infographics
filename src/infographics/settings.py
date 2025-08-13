@@ -147,7 +147,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 def check_external_software():
     for commands in (
         ["ffmpeg", "-version"],
-        ["magick", "--version"],
+        ["rsvg-convert", "--version"],
     ):
         subprocess.run(commands, check=True, capture_output=True)
 
