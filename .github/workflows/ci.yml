@@ -27,7 +27,7 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt update
-        sudo apt install -y librsvg ffmpeg
+        sudo apt install -y librsvg2-bin ffmpeg
 
     - name: Install dependencies
       run: |
