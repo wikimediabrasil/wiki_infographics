@@ -5,7 +5,6 @@ import tempfile
 import logging
 
 from django.db import models
-from django.db import transaction
 
 logger = logging.getLogger("django")
 
@@ -33,7 +32,10 @@ class Video(models.Model):
         """
         Generates the video using the png frames.
 
-        Ffmpeg documentation: <https://trac.ffmpeg.org/wiki/Slideshow>
+        Ffmpeg documentation:
+
+        Images to video: <https://trac.ffmpeg.org/wiki/Slideshow>
+        Webm encoding: <https://trac.ffmpeg.org/wiki/Encode/VP9>
         """
         if self.file and self.file_framerate == framerate:
             return
@@ -41,14 +43,27 @@ class Video(models.Model):
             dir_obj = tempfile.TemporaryDirectory(prefix="infographics-")
             dir = dir_obj.name
             self.generate_frames_indexes()
-            for frame in self.frames.order_by("index").exclude(png=""):
+            for frame in self.frames.order_by("index").exclude(png="").exclude(index__isnull=True):
                 istr = f"{frame.index:06d}"
                 shutil.copy(frame.png.path, os.path.join(dir, f"{istr}.png"))
             input = os.path.join(dir, "%06d.png")
             output = os.path.join(dir, "output.webm")
             logger.info(f"[{self.id}] generating...")
             subprocess.run(
-                ["ffmpeg", "-framerate", framerate, "-i", input, "-vf", "fps=30", output],
+                [
+                    "ffmpeg",
+                    "-framerate",
+                    str(framerate),
+                    "-i",
+                    input,
+                    "-cpu-used",
+                    "7", # 8 is only marginally faster but produces bigger files
+                    "-deadline",
+                    "realtime",
+                    "-vf",
+                    "fps=30",
+                    output,
+                ],
                 check=True,
                 capture_output=True,
             )

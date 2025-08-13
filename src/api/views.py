@@ -60,9 +60,11 @@ def post_video_frame(request, id):
 def generate_video(request, id):
     data = request.GET
     try:
-        framerate = data["framerate"]
+        framerate = int(data["framerate"])
     except MultiValueDictKeyError:
         return JsonResponse({"msg": "missing parameters"}, status=400)
+    except (TypeError, ValueError):
+        return JsonResponse({"msg": "invalid framerate"}, status=400)
     video = get_object_or_404(Video, id=id)
     video.generate_video(framerate)
     video_data = video.file.read()

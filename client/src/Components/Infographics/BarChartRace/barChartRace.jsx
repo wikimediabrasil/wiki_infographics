@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState, useEffect } from "react";
-import { HiOutlineDownload  } from "react-icons/hi";
-import { Button } from "flowbite-react";
+import { Alert } from "flowbite-react";
 import { initializeChart, updateChart } from "./barChartRaceUtils";
 import * as d3 from "d3";
 import "./barChartRace.css";
@@ -17,7 +16,7 @@ import api from '../../../api/axios';
  * @param {string} props.colorPalette - List of colors for the chart
  * @param {Array} props.barRaceData - Data for the bar chart race
  */
-const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
+const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVideo, setIsDownloadingVideo }) => {
   const DEFAULT_TRANSITION_DELAY = 250;
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
@@ -27,11 +26,12 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   const [year, setYear] = useState(startYear); // Current selected year
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
-  const [isDownloadingVideo, setIsDownloadingVideo] = useState(false);
+  const [downloadTimeLeft, setDownloadTimeLeft] = useState(null);
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const inputRef = useRef(null); // Reference to range input
-  var videoId;
+  const abortControllerRef = useRef(null);
+  const videoIdRef = useRef(null);
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -86,13 +86,6 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     };
 
   }, [dataset, title, speed, colorPalette]);
-
-  useEffect(() => {
-    const playButton = document.getElementById("play-pause-button");
-    const playRange = document.getElementById("play-range");
-    playButton.disabled = isDownloadingVideo;
-    playRange.disabled = isDownloadingVideo;
-  }, [isDownloadingVideo]);
 
   const animationDelay = () => {
     return 1000 / speed;
@@ -164,14 +157,20 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     }
   }
 
-  const handleDownloadVideoStart = async () => {
-    if (!isDownloadingVideo) {
-      await api.post('/video/create/').then((response) => {
+  useEffect(() => {
+    const playControls = document.getElementById("play-controls");
+    const container = document.getElementById("container");
+    playControls.style.display = isDownloadingVideo ? "none" : "flex";
+    container.style.display = isDownloadingVideo ? "none" : "block";
+    if (isDownloadingVideo) {
+      api.post('/video/create/').then((response) => {
         if (response.status == 201) {
-          videoId = response.data.id;
-          setIsDownloadingVideo(true);
+          videoIdRef.current = response.data.id;
           setAnimationToYear(startYear);
+          startTimeLeft();
           timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 2);
+        } else {
+          stopDownload();
         };
       }).catch((error) => {
         console.log(`error while creating video: ${error}`);
@@ -180,10 +179,10 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     } else {
       stopDownload();
     }
-  };
+  }, [isDownloadingVideo]);
 
   const startDownloadAnimation = () => {
-    const frameEndpoint = `/video/${videoId}/frame/`;
+    const frameEndpoint = `/video/${videoIdRef.current}/frame/`;
     if (canIncreaseAnimationTick()) {
       const transition = getTransition(animationDelay()).tween("capture", () => {
         return async (time) => {
@@ -196,10 +195,11 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
       timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 1.1);
     } else {
       const svgString = document.getElementById("container").getHTML();
+      abortControllerRef.current = new AbortController();
       setTimeout(async () => {
         await api.postForm(frameEndpoint, { ordering: currentKeyframeRef.current + 1, svg: svgString }).then(async (_) => {
           const framerate = 36; // measured experimentally
-          await api.get(`/video/${videoId}/generate/?framerate=${framerate}`, { responseType: 'blob' }).then((response) => {
+          await api.get(`/video/${videoIdRef.current}/generate/?framerate=${framerate}`, { responseType: 'blob', signal: abortControllerRef.current.signal }).then((response) => {
             const fileNameMatch = response.headers["content-disposition"].match(/filename="(.+)"/);
             let fileName = "video.webm";
             if (fileNameMatch.length === 2) { fileName = fileNameMatch[1] };
@@ -224,11 +224,46 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
     clearTimeout(timeoutRef.current);
     setIsPlaying(false);
     setIsDownloadingVideo(false);
-    videoId = null;
+    setDownloadTimeLeft(null);
+    videoIdRef.current = null;
+    if (abortControllerRef.current !== null) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    };
+  }
+
+  const startTimeLeft = () => {
+    const keyframeCount = keyframesRef.current.length
+    const chartPlayingTime = Math.ceil(keyframeCount / speed);
+    // this is proportional to the amount of images generated;
+    const videoCompilationTime = keyframeCount;
+    // sum chart playing and video compilation
+    setDownloadTimeLeft(chartPlayingTime + videoCompilationTime);
+    setTimeout(decreaseTimeLeft, 1000);
+  }
+
+  const decreaseTimeLeft = () => {
+    setDownloadTimeLeft(t => {
+      if (t >= 1) {
+        setTimeout(decreaseTimeLeft, 1000);
+        return t - 1;
+      } else {
+        return null;
+      }
+    });
+  }
+
+  const TimeLeftAlert = () =>{
+    if (downloadTimeLeft !== null && downloadTimeLeft >= 0) {
+      return (
+        <Alert><span className="font-medium">Your video is being compiled, please wait {downloadTimeLeft} seconds...</span></Alert>
+      )
+    }
   }
 
   return (
     <div id="parent-container" className="relative p-4">
+      <TimeLeftAlert/>
       <div id="play-controls" className="flex items-center mb-4">
         <button
           id="play-pause-button"
@@ -246,9 +281,6 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
           onChange={onRangeChange}
           ref={inputRef}
         />
-        <Button size="xs" className="ml-2" color="info" onClick={handleDownloadVideoStart} isProcessing={isDownloadingVideo}>
-          <HiOutlineDownload className="h-5 w-5" />
-        </Button>
       </div>
       <div id="container"></div>
     </div>
