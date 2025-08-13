@@ -5,6 +5,7 @@ import tempfile
 import logging
 
 from django.db import models
+from django.db import transaction
 
 logger = logging.getLogger("django")
 
@@ -14,7 +15,7 @@ def video_file_path(video, filename):
 
 
 def video_frame_png_path(frame, filename):
-    return f"video/{frame.video.id}/frame/{frame.id}/{filename}"
+    return f"video/{frame.video.id}/frame/{filename}"
 
 
 class Video(models.Model):
@@ -26,23 +27,33 @@ class Video(models.Model):
         blank=True,
         help_text="Generated from compiling frames",
     )
+    file_framerate = models.PositiveIntegerField(blank=True, null=True)
 
-    def generate_video(self):
-        self.generate_frames_indexes()
+    def generate_video(self, framerate: int):
+        """
+        Generates the video using the png frames.
+
+        Ffmpeg documentation: <https://trac.ffmpeg.org/wiki/Slideshow>
+        """
+        if self.file and self.file_framerate == framerate:
+            return
         if self.frames.exists():
             dir_obj = tempfile.TemporaryDirectory(prefix="infographics-")
             dir = dir_obj.name
-            for frame in self.frames.order_by("index"):
+            self.generate_frames_indexes()
+            for frame in self.frames.order_by("index").exclude(png=""):
                 istr = f"{frame.index:06d}"
                 shutil.copy(frame.png.path, os.path.join(dir, f"{istr}.png"))
             input = os.path.join(dir, "%06d.png")
             output = os.path.join(dir, "output.webm")
+            logger.info(f"[{self.id}] generating...")
             subprocess.run(
-                ["ffmpeg", "-i", input, output],
+                ["ffmpeg", "-framerate", framerate, "-i", input, "-vf", "fps=30", output],
                 check=True,
                 capture_output=True,
             )
             logger.info(f"[{self.id}] generated file")
+            self.file_framerate = framerate
             with open(output, "rb") as f:
                 self.file.save(f"video-{self.id}.webm", f)
 
@@ -65,7 +76,7 @@ class VideoFrameManager(models.Manager):
 
         - `subprocess.CalledProcessError` if conversion fails.
         """
-        frame = self.create(*args, **kwargs)
+        frame = VideoFrame(*args, **kwargs)
         dir = tempfile.TemporaryDirectory(prefix="infographics-")
         svg_path = os.path.join(dir.name, "frame.svg")
         png_path = os.path.join(dir.name, "frame.png")
@@ -84,7 +95,7 @@ class VideoFrameManager(models.Manager):
             capture_output=True,
         )
         with open(png_path, "rb") as f:
-            frame.png.save(f"frame-{frame.id}.png", f)
+            frame.png.save("frame.png", f)
 
 
 class VideoFrame(models.Model):

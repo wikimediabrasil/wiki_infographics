@@ -183,23 +183,40 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData }) => {
   };
 
   const startDownloadAnimation = () => {
+    const frameEndpoint = `/video/${videoId}/frame/`;
     if (canIncreaseAnimationTick()) {
-      const frameEndpoint = `/video/${videoId}/frame/`;
       const transition = getTransition(animationDelay()).tween("capture", () => {
         return async (time) => {
           const ordering = currentKeyframeRef.current + 0.95 * time;
           const svgString = document.getElementById("container").getHTML();
-          await api.postForm(frameEndpoint, { ordering: ordering, svg: svgString }).then((response) => {
-            if (response.status == 201) {
-              console.log(`video ${videoId} / ordering ${ordering}`);
-            };
-          });
+          await api.postForm(frameEndpoint, { ordering: ordering, svg: svgString });
         };
       });
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 1.5);
+      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 1.1);
     } else {
-      stopDownload();
+      const svgString = document.getElementById("container").getHTML();
+      setTimeout(async () => {
+        await api.postForm(frameEndpoint, { ordering: currentKeyframeRef.current + 1, svg: svgString }).then(async (_) => {
+          const framerate = 36; // measured experimentally
+          await api.get(`/video/${videoId}/generate/?framerate=${framerate}`, { responseType: 'blob' }).then((response) => {
+            const fileNameMatch = response.headers["content-disposition"].match(/filename="(.+)"/);
+            let fileName = "video.webm";
+            if (fileNameMatch.length === 2) { fileName = fileNameMatch[1] };
+            // workaround to download files with axios
+            const link = document.createElement("a");
+            const href = URL.createObjectURL(response.data);
+            link.href = href;
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(href);
+            //
+            stopDownload();
+          });
+        });
+      }, 1000); // timeout to wait a bit for the other frames
     }
   };
 

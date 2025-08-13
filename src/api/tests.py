@@ -79,3 +79,20 @@ class VideoTests(TestCase):
         endpoint = "/api/video/0/frame/"
         res = self.client.post(endpoint, data={"ordering": 0.32, "svg": self.TEST_SVG})
         self.assertEqual(res.status_code, 404)
+
+    def test_generate(self):
+        self.client.post("/api/video/create/")
+        video = Video.objects.get()
+        endpoint = f"/api/video/{video.id}/frame/"
+        for i in range(50):
+            self.client.post(endpoint, data={"ordering": i, "svg": self.TEST_SVG})
+        self.assertEqual(video.frames.count(), 50)
+        endpoint = f"/api/video/{video.id}/generate/"
+        res = self.client.get(endpoint)
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(res.json(), {"msg": "missing parameters"})
+        res = self.client.get(f"{endpoint}?framerate=36")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res["Content-Disposition"], 'filename="video.webm"')
+        self.assertEqual(res["Access-Control-Expose-Headers"], "Content-Disposition")
+        self.assertEqual(res["Content-Type"], "video/webm")

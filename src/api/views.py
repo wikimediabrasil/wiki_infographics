@@ -4,9 +4,9 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
 from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from django.db.utils import IntegrityError
 from django.utils.datastructures import MultiValueDictKeyError
 
 from api.sparql import df_from_query
@@ -53,3 +53,20 @@ def post_video_frame(request, id):
     except CalledProcessError:
         return JsonResponse({"msg": "failed to convert svg to png"}, status=400)
     return HttpResponse(status=201)
+
+
+@csrf_exempt
+@require_GET
+def generate_video(request, id):
+    data = request.GET
+    try:
+        framerate = data["framerate"]
+    except MultiValueDictKeyError:
+        return JsonResponse({"msg": "missing parameters"}, status=400)
+    video = get_object_or_404(Video, id=id)
+    video.generate_video(framerate)
+    video_data = video.file.read()
+    res = HttpResponse(video_data, content_type="video/webm")
+    res["Content-Disposition"] = 'filename="video.webm"'
+    res["Access-Control-Expose-Headers"] = "Content-Disposition" # needed for axios to see it
+    return res
