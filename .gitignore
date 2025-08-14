@@ -5,8 +5,8 @@
 /media
 
 # Static files and templates from frontend code
-/src/web/static/frontend
-/src/web/templates/index.html
+/web/templates/index.html
+/web/static/frontend/assets
 
 .DS_*
 *.log
