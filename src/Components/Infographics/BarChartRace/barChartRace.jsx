@@ -238,7 +238,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
     // this is proportional to the amount of images generated;
     const videoCompilationTime = keyframeCount;
     // sum chart playing and video compilation
-    setDownloadTimeLeft(chartPlayingTime + videoCompilationTime);
+    setDownloadTimeLeft(3 * chartPlayingTime + videoCompilationTime);
     setTimeout(decreaseTimeLeft, 1000);
   }
 
