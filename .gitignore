@@ -1,8 +1,8 @@
 # Django collected static files
-/src/static
+/static
 
 # Generated files
-/src/media
+/media
 
 # Static files and templates from frontend code
 /src/web/static/frontend

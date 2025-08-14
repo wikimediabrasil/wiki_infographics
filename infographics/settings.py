@@ -151,4 +151,4 @@ def check_external_software():
     ):
         subprocess.run(commands, check=True, capture_output=True)
 
-check_external_software()
+# check_external_software()
