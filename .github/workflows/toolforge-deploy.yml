@@ -28,5 +28,6 @@ jobs:
             become infographics toolforge build clean -y
             become infographics toolforge build start https://github.com/wikimediabrasil/wiki_infographics
             become infographics toolforge jobs run --image tool-infographics/tool-infographics:latest --command "migrate" --no-filelog --wait --mount=all migrate
+            become infographics toolforge webservice stop
             become infographics toolforge webservice buildservice start --mount all
             become infographics toolforge webservice buildservice status
