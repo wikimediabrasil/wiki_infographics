@@ -23,18 +23,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ vars.SSH_PORT }}
           request_pty: true
+          command_timeout: 30m
           script: |
             set -xe
-            become infographics git -C ./www/python/src pull origin main
-            become infographics webservice node18 shell -- npm --prefix ./www/python/client/ install
-            become infographics webservice --mem 1Gi node18 shell -- npm --prefix ./www/python/client/ run build
-            become infographics mkdir -p ./www/python/src/web/templates
-            become infographics mkdir -p ./www/python/src/web/static/frontend
-            become infographics cp ./www/python/client/dist/index.html ./www/python/src/web/templates/index.html
-            become infographics rm -rf ./www/python/src/web/static/frontend/assets
-            become infographics cp -r ./www/python/client/dist/assets ./www/python/src/web/static/frontend/assets
-            become infographics webservice python3.11 shell -- webservice-python-bootstrap
-            become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
-            become infographics webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput --clear
-            become infographics webservice python3.11 restart
-            become infographics webservice python3.11 status
+            become infographics toolforge envvars create DEBUG "True"
+            become infographics toolforge envvars create MEDIA_ROOT "/data/project/infographics/media"
+            become infographics toolforge build clean -y
+            become infographics toolforge build start https://github.com/wikimediabrasil/wiki_infographics
+            become infographics toolforge jobs run --image tool-infographics/tool-infographics:latest --command "migrate" --no-filelog --wait --mount=all migrate
+            become infographics toolforge webservice stop
+            become infographics toolforge webservice buildservice start --mount all --mem 3Gi --cpu 2

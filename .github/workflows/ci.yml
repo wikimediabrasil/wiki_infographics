@@ -24,16 +24,19 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Install system dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y librsvg2-bin ffmpeg
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r src/requirements.txt
-        pip install -r src/requirements-dev.txt
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
 
     - name: Run tests
       env:
         SECRET_KEY: dummysecretkey
         DEBUG: True
-      run: |
-        cd src
-        python3 manage.py test
+      run: python3 manage.py test

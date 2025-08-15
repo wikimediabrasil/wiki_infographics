@@ -6,16 +6,64 @@ The tool is composed of a Django backend and a React frontend, both on this repo
 
 ## Running locally
 
-To run the tool locally, you need Docker and Docker Compose.
+To run the tool locally, have NodeJS, Python, `rsvg-convert` and `ffmpeg` installed. You need two terminals.
+
+In one of them, run the frontend
 
 ```bash
-docker-compose up --build
+npm install
+npm run dev
+```
+
+And open your browser at <http://localhost:5173/web/infographics/>.
+
+For the backend, run
+
+```bash
+python3 manage.py runserver
 ```
 
 Open the app at <http://localhost:7840>.
 
 If you make any changes, you can kill the process and run again, or restart the app container with `docker-compose up -d --build --force-recreate app`.
 
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/license/mit) - see the LICENSE file for details.
+
+## Toolforge deployment
+
+Since we need apt packages we are using [Toolforge's custom builds feature](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Building_container_images) so that we can have `ffmpeg` and `rsvg-convert` utilities installed.
+
+On toolforge, run the following to clean build space, build the image, run migrations and start the server.
+
+```bash
+toolforge build clean -y
+toolforge build start https://github.com/wikimediabrasil/wiki_infographics
+toolforge jobs run --image tool-infographics/tool-infographics:latest --command "migrate" --wait --mount=all migrate
+toolforge webservice buildservice restart --mount all
+```
+
+We are using `--mount=all` because we're still using SQLite and we need a directory to store the videos.
+
+Set environment variables with `toolforge envvars create <VARIABLE> <VALUE>`.
+
+## Running locally with buildpack
+
+This is the way to build the image locally:
+
+```bash
+sudo pack build --builder tools-harbor.wmcloud.org/toolforge/heroku-builder:22 --buildpack heroku/nodejs --buildpack heroku/python --buildpack heroku/procfile --buildpack fagiani/apt infographics
+sudo docker run -e PORT=8000 -e DEBUG=True -e SECRET_KEY=123 -p 8000:8000 -it  --entrypoint 'bash' infographics
+```
+
+Inside the container, you can run `migrate` or `web`. The binaries are not directly available to the path, these fixes are necessary when entering bash:
+
+```bash
+source /layers/fagiani_apt/apt/.profile.d/000_apt.sh
+cp -r /layers/fagiani_apt/apt/usr/lib/x86_64-linux-gnu/*/* /layers/fagiani_apt/apt/usr/lib/x86_64-linux-gnu/
+```
+
+Then it is possible to run `web` and have `ffmpeg` and `rsvg-convert` installed.
+
