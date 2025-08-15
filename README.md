@@ -60,7 +60,7 @@ Inside the container, you can run `migrate` or `web`. The binaries are not direc
 
 ```bash
 source /layers/fagiani_apt/apt/.profile.d/000_apt.sh
-cp /layers/fagiani_apt/apt/usr/lib/x86_64-linux-gnu/*/* /layers/fagiani_apt/apt/usr/lib/x86_64-linux-gnu/
+cp -r /layers/fagiani_apt/apt/usr/lib/x86_64-linux-gnu/*/* /layers/fagiani_apt/apt/usr/lib/x86_64-linux-gnu/
 ```
 
 Then it is possible to run `web` and have `ffmpeg` and `rsvg-convert` installed.

@@ -183,7 +183,11 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
 
   const startDownloadAnimation = () => {
     const frameEndpoint = `/video/${videoIdRef.current}/frame/`;
-    const tenSeconds = 10 * 1000;
+    const framerate = 36; // measured experimentally
+    // each keyframe will generate around (framerate / speed) frames
+    // 36 requests at once on Toolforge is taking up to 2 seconds
+    // since animationDelay is 1 second / speed, we can multiply it by 3
+    // to be safe when waiting.
     if (canIncreaseAnimationTick()) {
       const transition = getTransition(animationDelay()).tween("capture", () => {
         return async (time) => {
@@ -193,13 +197,12 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
         };
       });
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startDownloadAnimation, tenSeconds);
+      timeoutRef.current = setTimeout(startDownloadAnimation, 3 * animationDelay());
     } else {
       const svgString = document.getElementById("container").getHTML();
       abortControllerRef.current = new AbortController();
       setTimeout(async () => {
         await api.postForm(frameEndpoint, { ordering: currentKeyframeRef.current + 1, svg: svgString }).then(async (_) => {
-          const framerate = 36; // measured experimentally
           await api.get(`/video/${videoIdRef.current}/generate/?framerate=${framerate}`, { responseType: 'blob', signal: abortControllerRef.current.signal }).then((response) => {
             const fileNameMatch = response.headers["content-disposition"].match(/filename="(.+)"/);
             let fileName = "video.webm";
@@ -235,9 +238,9 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
 
   const startTimeLeft = () => {
     const keyframeCount = keyframesRef.current.length
-    const chartPlayingTime = 10 * keyframeCount;
+    // since we're waiting 3 * animationDelay() between each keyframe,
+    const chartPlayingTime = 3 * animationDelay() * keyframeCount;
     const videoCompilationTime = 2 * keyframeCount;
-    // sum chart playing and video compilation
     setDownloadTimeLeft(chartPlayingTime + videoCompilationTime);
     setTimeout(decreaseTimeLeft, 1000);
   }
