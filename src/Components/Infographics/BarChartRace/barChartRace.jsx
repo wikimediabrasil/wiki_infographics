@@ -183,6 +183,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
 
   const startDownloadAnimation = () => {
     const frameEndpoint = `/video/${videoIdRef.current}/frame/`;
+    const tenSeconds = 10 * 1000;
     if (canIncreaseAnimationTick()) {
       const transition = getTransition(animationDelay()).tween("capture", () => {
         return async (time) => {
@@ -192,7 +193,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
         };
       });
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 3);
+      timeoutRef.current = setTimeout(startDownloadAnimation, tenSeconds);
     } else {
       const svgString = document.getElementById("container").getHTML();
       abortControllerRef.current = new AbortController();
@@ -234,11 +235,10 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
 
   const startTimeLeft = () => {
     const keyframeCount = keyframesRef.current.length
-    const chartPlayingTime = Math.ceil(keyframeCount / speed);
-    // this is proportional to the amount of images generated;
-    const videoCompilationTime = keyframeCount;
+    const chartPlayingTime = 10 * keyframeCount;
+    const videoCompilationTime = 2 * keyframeCount;
     // sum chart playing and video compilation
-    setDownloadTimeLeft(4 * chartPlayingTime + videoCompilationTime);
+    setDownloadTimeLeft(chartPlayingTime + videoCompilationTime);
     setTimeout(decreaseTimeLeft, 1000);
   }
 
