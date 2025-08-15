@@ -192,7 +192,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
         };
       });
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 1.1);
+      timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 3);
     } else {
       const svgString = document.getElementById("container").getHTML();
       abortControllerRef.current = new AbortController();
@@ -238,7 +238,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
     // this is proportional to the amount of images generated;
     const videoCompilationTime = keyframeCount;
     // sum chart playing and video compilation
-    setDownloadTimeLeft(3 * chartPlayingTime + videoCompilationTime);
+    setDownloadTimeLeft(4 * chartPlayingTime + videoCompilationTime);
     setTimeout(decreaseTimeLeft, 1000);
   }
 
