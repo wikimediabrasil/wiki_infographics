@@ -39,6 +39,4 @@ jobs:
       env:
         SECRET_KEY: dummysecretkey
         DEBUG: True
-      run: |
-        cd src
-        python3 manage.py test
+      run: python3 manage.py test
