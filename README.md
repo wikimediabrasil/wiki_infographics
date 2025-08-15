@@ -45,7 +45,9 @@ toolforge jobs run --image tool-infographics/tool-infographics:latest --command 
 toolforge webservice buildservice restart --mount all
 ```
 
-We are using `--mount=all` because we're still using SQLite.
+We are using `--mount=all` because we're still using SQLite and we need a directory to store the videos.
+
+Set environment variables with `toolforge envvars create <VARIABLE> <VALUE>`.
 
 ## Running locally with buildpack
 

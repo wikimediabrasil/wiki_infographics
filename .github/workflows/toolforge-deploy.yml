@@ -25,9 +25,10 @@ jobs:
           request_pty: true
           script: |
             set -xe
+            become infographics toolforge envvars create DEBUG "True"
+            become infographics toolforge envvars create MEDIA_ROOT "/data/project/infographics/media"
             become infographics toolforge build clean -y
             become infographics toolforge build start https://github.com/wikimediabrasil/wiki_infographics
             become infographics toolforge jobs run --image tool-infographics/tool-infographics:latest --command "migrate" --no-filelog --wait --mount=all migrate
-            become infographics toolforge webservice stop
-            become infographics toolforge webservice buildservice start --mount all
-            become infographics toolforge webservice buildservice status
+            become infographics webservice stop
+            become infographics webservice buildservice start --mount all --mem 3Gi --cpu 2
