@@ -18,6 +18,7 @@ import api from '../../../api/axios';
  */
 const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVideo, setIsDownloadingVideo }) => {
   const DEFAULT_TRANSITION_DELAY = 250;
+  const DOWNLOAD_WAIT_MULTIPLIER = 4;
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
   const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
@@ -186,7 +187,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
     const framerate = 36; // measured experimentally
     // each keyframe will generate around (framerate / speed) frames
     // 36 requests at once on Toolforge is taking up to 2 seconds
-    // since animationDelay is 1 second / speed, we can multiply it by 3
+    // since animationDelay is 1 second / speed, we can multiply it by DOWNLOAD_WAIT_MULTIPLIER
     // to be safe when waiting.
     if (canIncreaseAnimationTick()) {
       const transition = getTransition(animationDelay()).tween("capture", () => {
@@ -197,7 +198,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
         };
       });
       increaseAnimationTick(transition);
-      timeoutRef.current = setTimeout(startDownloadAnimation, 3 * animationDelay());
+      timeoutRef.current = setTimeout(startDownloadAnimation, DOWNLOAD_WAIT_MULTIPLIER * animationDelay());
     } else {
       const svgString = document.getElementById("container").getHTML();
       abortControllerRef.current = new AbortController();
@@ -238,8 +239,8 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
 
   const startTimeLeft = () => {
     const keyframeCount = keyframesRef.current.length
-    // since we're waiting 3 * animationDelay() between each keyframe,
-    const chartPlayingTime = 3 * animationDelay() * keyframeCount;
+    // divide by 1000 because animationDelay is in miliseconds
+    const chartPlayingTime = Math.ceil(DOWNLOAD_WAIT_MULTIPLIER * animationDelay() * keyframeCount / 1000);
     const videoCompilationTime = 2 * keyframeCount;
     setDownloadTimeLeft(chartPlayingTime + videoCompilationTime);
     setTimeout(decreaseTimeLeft, 1000);
