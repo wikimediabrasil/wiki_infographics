@@ -23,6 +23,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ vars.SSH_PORT }}
           request_pty: true
+          command_timeout: 30m
           script: |
             set -xe
             become infographics toolforge envvars create DEBUG "True"
