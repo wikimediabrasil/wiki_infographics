@@ -40,9 +40,9 @@ On toolforge, run the following to clean build space, build the image, run migra
 
 ```bash
 toolforge build clean -y
-toolforge build start https://github.com/wikimediabrasil/wiki_infographics --ref toolforge
+toolforge build start https://github.com/wikimediabrasil/wiki_infographics
 toolforge jobs run --image tool-infographics/tool-infographics:latest --command "migrate" --wait --mount=all migrate
-toolforge webservice buildservice start --mount all
+toolforge webservice buildservice restart --mount all
 ```
 
 We are using `--mount=all` because we're still using SQLite.
