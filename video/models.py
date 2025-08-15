@@ -28,6 +28,9 @@ class Video(models.Model):
     )
     file_framerate = models.PositiveIntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return f"video {self.id}"
+
     def generate_video(self, framerate: int):
         """
         Generates the video using the png frames.
@@ -48,7 +51,7 @@ class Video(models.Model):
                 shutil.copy(frame.png.path, os.path.join(dir, f"{istr}.png"))
             input = os.path.join(dir, "%06d.png")
             output = os.path.join(dir, "output.webm")
-            logger.info(f"[{self.id}] generating...")
+            logger.info(f"[{self}] generating...")
             subprocess.run(
                 [
                     "ffmpeg",
@@ -67,7 +70,7 @@ class Video(models.Model):
                 check=True,
                 capture_output=True,
             )
-            logger.info(f"[{self.id}] generated file")
+            logger.info(f"[{self}] generated file")
             self.file_framerate = framerate
             with open(output, "rb") as f:
                 self.file.save(f"video-{self.id}.webm", f)
