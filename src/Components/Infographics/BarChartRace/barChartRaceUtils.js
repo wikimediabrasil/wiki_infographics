@@ -71,7 +71,7 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
 }
 
 // Function to update the chart
-export const updateChart = (keyframe, transition, inputRef, increment) => {
+export const updateChart = (keyframe, transition) => {
 
   // Update based on keyframe
   x.domain([0, keyframe[1][0].value]);
@@ -79,15 +79,6 @@ export const updateChart = (keyframe, transition, inputRef, increment) => {
   updateBars(keyframe, transition);
   updateLabels(keyframe, transition);
   updateTicker(keyframe, transition);
-
-  // Update range input value if increment is true and within bounds
-  if (increment) {
-    const newValue = parseInt(inputRef.current.value, 10) + increment;
-    if (newValue <= parseInt(inputRef.current.max, 10)) {
-      inputRef.current.value = newValue;
-    }
-  }
-
 };
 
 

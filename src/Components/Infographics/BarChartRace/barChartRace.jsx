@@ -8,7 +8,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import api from '../../../api/axios';
 
 /**
- * BarChartRace component visualizes a bar chart race with play/pause and year selection controls.
+ * BarChartRace component visualizes a bar chart race with play/pause and selection controls.
  *
  * @param {Object} props - Component props
  * @param {string} props.title - Title of the chart
@@ -22,31 +22,27 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
   const svgRef = useRef(null); // Reference to the SVG element
   const currentKeyframeRef = useRef(0); // Tracks the current keyframe
   const [isPlaying, setIsPlaying] = useState(false); // Play/pause state
-  const [startYear, setStartYear] = useState(0); // Minimum year in data
-  const [endYear, setEndYear] = useState(0); // Maximum year in data
-  const [year, setYear] = useState(startYear); // Current selected year
+  const [progressBarTick, setProgressBarTick] = useState(0);
+  const [progressBarMaxTick, setProgressBarMaxTick] = useState(0);
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
   const [downloadTimeLeft, setDownloadTimeLeft] = useState(null);
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
-  const inputRef = useRef(null); // Reference to range input
   const abortControllerRef = useRef(null);
   const videoIdRef = useRef(null);
 
   useEffect(() => {
     const fetchDataAsync = () => {
       if (barRaceData) {
+        var keyframes = barRaceData.values_by_date.map(d => [new Date(d.date), d.values]);
+
         const dataset = {
           "elements": barRaceData.elements,
-          "keyframes": barRaceData.values_by_date.map(d => [new Date(d.date), d.values])
-        }
+          "keyframes": keyframes
+        };
         setDataset(dataset);
-
-        // Find and set the minimum and maximum years
-        const years = dataset.keyframes.map(d => d[0].getFullYear());
-        setStartYear(Math.min(...years));
-        setEndYear(Math.max(...years));
+        setProgressBarMaxTick(keyframes.length - 1);
       }
     };
     fetchDataAsync();
@@ -73,9 +69,9 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
 
       // Initialize chart with the first keyframe.
       clearTimeout(timeoutRef.current);
-      setYear(startYear);
+      setProgressBarTick(0);
       currentKeyframeRef.current = 0;
-      updateChart(keyframes[0], svgRef.current.transition().duration(0), inputRef, null);
+      updateChart(keyframes[0], svgRef.current.transition().duration(0));
       setIsDownloadingVideo(false);
     }
     const currentSvg = svgRef.current;
@@ -110,13 +106,12 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
     if (canIncreaseAnimationTick()) {
       const keyframe = keyframesRef.current[currentKeyframeRef.current];
 
-      updateChart(keyframe, transition, inputRef, null);
-      currentKeyframeRef.current += 1;
+      updateChart(keyframe, transition);
       setCurrentKeyFrameState(keyframe);
 
       // Sync range input with keyframe
-      inputRef.current.value = keyframe[0].getFullYear();
-      setYear(keyframe[0].getFullYear());
+      setProgressBarTick(currentKeyframeRef.current);
+      currentKeyframeRef.current += 1;
       return true;
     } else {
       return false;
@@ -131,30 +126,30 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
     if (isPlaying) {
       clearTimeout(timeoutRef.current);
       const transition = getTransition(DEFAULT_TRANSITION_DELAY);
-      updateChart(currentKeyframeState, transition, inputRef, null);
+      updateChart(currentKeyframeState, transition);
     } else {
       startAnimation();
     }
     
-    if (!(year >= endYear)) {
+    if (!(progressBarTick >= progressBarMaxTick)) {
       setIsPlaying(!isPlaying);
     }
   };
 
   const onRangeChange = (event) => {
-    const selectedYear = parseInt(event.target.value, 10);
-    setAnimationToYear(selectedYear);
+    const selectedTick = parseInt(event.target.value, 10);
+    setAnimationToTick(selectedTick);
   };
 
-  const setAnimationToYear = (year) => {
-    const frameIndex = keyframesRef.current.findIndex(frame => frame[0].getFullYear() === year);
+  const setAnimationToTick = (tick) => {
+    const frameIndex = tick;
     if (frameIndex !== -1) {
       clearTimeout(timeoutRef.current);
       setIsPlaying(false);
-      setYear(year);
+      setProgressBarTick(tick);
       const transition = getTransition(DEFAULT_TRANSITION_DELAY);
       currentKeyframeRef.current = frameIndex; // Set current keyframe
-      updateChart(keyframesRef.current[frameIndex], transition, inputRef, null);
+      updateChart(keyframesRef.current[frameIndex], transition);
     }
   }
 
@@ -167,7 +162,7 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
       api.post('/video/create/').then((response) => {
         if (response.status == 201) {
           videoIdRef.current = response.data.id;
-          setAnimationToYear(startYear);
+          setAnimationToTick(0);
           startTimeLeft();
           timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 2);
         } else {
@@ -278,12 +273,11 @@ const BarChartRace = ({ title, speed, colorPalette, barRaceData, isDownloadingVi
         <input
           id="play-range"
           type="range"
-          value={year}
-          min={startYear}
-          max={endYear}
+          min="0"
+          value={progressBarTick}
+          max={progressBarMaxTick}
           className="ml-1"
           onChange={onRangeChange}
-          ref={inputRef}
         />
       </div>
       <div id="container"></div>
