@@ -12,9 +12,10 @@ export let color;
 
 // Variables
 let updateBars, updateAxis, updateLabels, updateTicker, x;
+let dateFormatter;
 
 // Function to initialize the chart
-export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray) => {
+export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray, timeUnit) => {
   const chartMargin = 30; // Adjust this value to increase the space
 
    // Create SVG element
@@ -61,6 +62,18 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
     color = (x) => scale(x.name);
   }
 
+  // define date format
+  let dateFormat = { year: "numeric" };
+
+  if (timeUnit === "day") {
+    dateFormat = { year: "numeric", month: "numeric", day: "numeric" };
+  } else if (timeUnit === "month") {
+    dateFormat = { year: "numeric", month: "long" };
+  };
+
+  // undefined uses the browser's default locale
+  dateFormatter = Intl.DateTimeFormat(undefined, dateFormat);
+
   // Initialize update functions
   updateBars = bars(svgRef.current, x, y, prev, next);
   updateAxis = axis(svgRef.current, x, y, width);
@@ -86,8 +99,6 @@ export const updateChart = (keyframe, transition) => {
 
 // Ticker function
 function ticker(svgRef, width, keyframes) {
-  const formatDate = d3.utcFormat("%Y");
-
   const now = svgRef
     .append("text")
     .style("font", `bold ${barSize}px var(--sans-serif)`)
@@ -96,10 +107,10 @@ function ticker(svgRef, width, keyframes) {
     .attr("x", width - 6)
     .attr("y", margin.top + barSize * (n - 0.45))
     .attr("dy", "0.32em")
-    .text(formatDate(keyframes[0][0]));
+    .text(dateFormatter.format(keyframes[0][0]));
 
   return ([date], transition) => {
-    transition.end().then(() => now.text(formatDate(date)));
+    transition.end().then(() => now.text(dateFormatter.format(date)));
   };  
 }
 

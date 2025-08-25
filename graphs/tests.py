@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 from numpy import nan
 from django.test import TestCase
 from django.utils.timezone import now
@@ -158,3 +159,27 @@ class QueryTests(TestCase):
                 2428708.0,
             ],
         )
+
+    def test_df_processor_month(self):
+        df = TestHelper.mock_df_bcr()
+        bdf = BaseDf(df).prepare()
+        proc = DfProcessor(bdf, time_unit="month")
+        ip = proc.interpolated_df()
+        self.assertEqual(ip["value"].count(), 57)
+        months_between = 6 + 12
+        self.assertEqual(len(ip["date"].unique()), 19)
+        self.assertEqual(len(ip["date"].unique()), months_between + 1)
+        vls = proc.values_by_date()
+        self.assertEqual(len(vls), 19)
+
+    def test_df_processor_day(self):
+        df = TestHelper.mock_df_bcr()
+        bdf = BaseDf(df).prepare()
+        proc = DfProcessor(bdf, time_unit="day")
+        ip = proc.interpolated_df()
+        self.assertEqual(ip["value"].count(), 1650)
+        days_between = (datetime(2022, 1, 1) - datetime(2020, 7, 1)).days
+        self.assertEqual(len(ip["date"].unique()), 550)
+        self.assertEqual(len(ip["date"].unique()), days_between + 1)
+        vls = proc.values_by_date()
+        self.assertEqual(len(vls), 550)

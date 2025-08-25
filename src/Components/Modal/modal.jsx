@@ -4,11 +4,12 @@ import { Button, Modal, TextInput, Label, Select, HelperText } from "flowbite-re
 import { useEffect, useState } from "react";
 
 
-export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed, handleChartColorPalette }) {
+export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed, handleChartColorPalette, handleChartTimeUnit }) {
   const [openModal, setOpenModal] = useState(false);
   const [chartTitle, setChartTitle] = useState("");
   const [chartSpeed, setChartSpeed] = useState(5);
   const [chartColorPalette, setChartColorPalette] = useState("");
+  const [chartTimeUnit, setChartTimeUnit] = useState("year");
 
   useEffect(() => {
     setOpenModal(currState);
@@ -29,6 +30,12 @@ export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleC
     var value = event.target.value;
     setChartColorPalette(value);
     handleChartColorPalette(value);
+  }
+
+  const handleTimeUnitChange = (event) => {
+    var value = event.target.value;
+    setChartTimeUnit(value);
+    handleChartTimeUnit(value);
   }
 
   const handleChartType = () => {
@@ -53,8 +60,10 @@ export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleC
               <div className="mb-2 block">
                 <Label htmlFor="chartUnit">Speed unit</Label>
               </div>
-              <Select id="chartUnit" required>
-                <option>Years</option>
+              <Select id="chartUnit" value={chartTimeUnit} onChange={handleTimeUnitChange} required>
+                <option value="year">Years</option>
+                {barRaceData?.hasOwnProperty("values_by_date_monthly") && <option value="month">Months</option>}
+                {barRaceData?.hasOwnProperty("values_by_date_daily") && <option value="day">Days</option>}
               </Select>
             </div>
 
@@ -62,7 +71,7 @@ export function InfoModal({ currState, onCloseModal, handleChartDisplay, handleC
               <div className="mb-2 block">
                 <Label htmlFor="chartSpeed">Speed in units per second</Label>
               </div>
-              <TextInput id="chartSpeed" type="number" min="1" max="10" placeholder="Speed in units per second" value={chartSpeed} onChange={handleSpeedChange} required />
+              <TextInput id="chartSpeed" type="number" min="1" max="50" placeholder="Speed in units per second" value={chartSpeed} onChange={handleSpeedChange} required />
             </div>
 
             <div className="max-w-md">
