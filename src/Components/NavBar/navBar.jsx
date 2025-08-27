@@ -1,10 +1,14 @@
 /* eslint-disable react/prop-types */
 "use client";
+import { useContext } from "react";
 import { Button, Navbar, Dropdown } from "flowbite-react";
 
 import { HiMiniLanguage } from "react-icons/hi2"
 
+import { DarkModeContext } from "../../context/DarkModeContext";
 import wiki_infographics_logo from "../../assets/wiki_infographics_logo.png"
+import moonImg from "../../assets/moon.svg";
+import sunImg from "../../assets/sun.svg";
 
 
 /**
@@ -12,6 +16,7 @@ import wiki_infographics_logo from "../../assets/wiki_infographics_logo.png"
  * @returns {JSX.Element} The NavBar component.
  */
 function NavBar({username}) {
+  const {darkMode, toggleDarkMode} = useContext(DarkModeContext);
   return (
 
     <Navbar fluid rounded className="bg-slate-200">
@@ -20,6 +25,8 @@ function NavBar({username}) {
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Wiki Infographics</span>
       </Navbar.Brand>
       <Navbar.Collapse>
+
+        <button onClick={toggleDarkMode} className="block py-2 pl-3 pr-4 md:p-0 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white"><img width="24px" height="24px" src={darkMode ? sunImg : moonImg}/></button>
 
         <Navbar.Link href="#">Examples</Navbar.Link>
 

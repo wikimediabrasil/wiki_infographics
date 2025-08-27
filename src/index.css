@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @import-normalize;
 
 :root {
   --sans-serif: -apple-system, BlinkMacSystemFont, "avenir next", avenir,
     helvetica, "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial,
     sans-serif;
+}
+
+body.dark {
+  background: rgb(55 65 81);
 }

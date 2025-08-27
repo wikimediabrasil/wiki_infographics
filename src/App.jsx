@@ -15,16 +15,18 @@ const App = () => {
 
   return (
 
-    <Router basename="/web">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/infographics"
-          element={ <Infographics /> }
-        />
-        
-      </Routes>
-    </Router>
+    <div className="bg-gray-100 dark:bg-gray-700">
+      <Router basename="/web">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/infographics"
+            element={<Infographics />}
+          />
+
+        </Routes>
+      </Router>
+    </div>
 
   )
 }
