@@ -26,7 +26,7 @@ function NavBar({username}) {
       </Navbar.Brand>
       <Navbar.Collapse>
 
-        <button onClick={toggleDarkMode} className="block py-2 pl-3 pr-4 md:p-0 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white"><img width="24px" height="24px" src={darkMode ? sunImg : moonImg}/></button>
+        <button onClick={toggleDarkMode} className="block py-2 pl-3 pr-4 md:p-0 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white"><img width="18px" height="18px" src={darkMode ? sunImg : moonImg}/></button>
 
         <Navbar.Link href="#">Examples</Navbar.Link>
 

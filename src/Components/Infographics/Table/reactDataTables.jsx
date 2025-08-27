@@ -1,29 +1,7 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import DataTable from 'react-data-table-component';
-
-
-// Custom styles for DataTable
-const customStyles = {
-  table: {
-    style: {
-      overflowY: 'hidden', // Hide vertical scrollbar
-    },
-  },
-  headCells: {
-    style: {
-      borderRight: '1px solid #e0e0e0',
-      borderTop: '1px solid #e0e0e0',
-      fontSize: '16px',
-    },
-  },
-  cells: {
-    style: {
-      borderRight: '1px solid #e0e0e0',
-      fontSize: '14px'
-    },
-  },
-};
+import { DarkModeContext } from "../../../context/DarkModeContext";
 
 
 /**
@@ -38,9 +16,9 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       placeholder="Search..."
       value={filterText}
       onChange={onFilter}
-      className="border p-2 rounded"
+      className="border dark:border-gray-800 p-2 rounded dark:bg-gray-700 dark:text-white"
     />
-    <button type="button" onClick={onClear} className="border p-2 rounded  text-white bg-cyan-700">
+    <button type="button" onClick={onClear} className="border dark:border-gray-800 p-2 rounded text-white bg-cyan-700 dark:bg-cyan-600">
       X
     </button>
   </div>
@@ -56,6 +34,7 @@ export function ReactDataTables({ columns, data, headers }) {
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
+  const {darkMode} = useContext(DarkModeContext);
 
   useEffect(() => {
     const filtered = data.filter(item => {
@@ -93,6 +72,7 @@ export function ReactDataTables({ columns, data, headers }) {
     <DataTable
       columns={columns}
       data={filteredData}
+      theme={darkMode ? 'dark' : 'light'}
       pagination
       paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
       highlightOnHover
@@ -101,7 +81,6 @@ export function ReactDataTables({ columns, data, headers }) {
       fixedHeader
       subHeader
       subHeaderComponent={subHeaderComponent}
-      customStyles={customStyles} // Apply custom styles
     />
   );
 }

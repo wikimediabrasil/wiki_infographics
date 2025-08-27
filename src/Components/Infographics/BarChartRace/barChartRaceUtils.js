@@ -214,7 +214,7 @@ function axis(svgRef, x, y, width) {
   return (_, transition) => {
     g.transition(transition).call(axis);
     g.select(".tick:first-of-type text").remove();
-    g.selectAll(".tick:not(:first-of-type) line").attr("stroke", "white");
+    g.selectAll(".tick:not(:first-of-type) line").attr("stroke-opacity", "0.33");
     g.select(".domain").remove();
   };
 }

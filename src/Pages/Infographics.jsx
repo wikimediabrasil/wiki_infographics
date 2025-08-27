@@ -131,16 +131,16 @@ const Infographics = () => {
     <>
 
       <NavBar username={username}/>
-      <div className="px-4 py-8 mx-auto bg-gray-100 container mt-4">
+      <div className="px-4 py-8 mx-auto bg-gray-100 dark:bg-gray-700 container mt-4">
         <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
-          <div className="lg:col-span-2 row-span-1 border overflow-x-auto bg-white max-h-[790px]">
+          <div className="lg:col-span-2 row-span-1 border dark:border-gray-800 overflow-x-auto bg-white dark:bg-gray-600 max-h-[790px]">
             <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading} errorMessage={error}/>
           </div>
-          <div className="lg:col-span-3 row-span-4 border relative overflow-x-auto bg-white">
+          <div className="lg:col-span-3 row-span-4 border dark:border-gray-800 relative overflow-x-auto bg-white dark:bg-gray-600">
             {isLoading && <Overlay />}
             {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={error} /></div>}
             {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={"No data available"} /></div>}
-            {chartData.table && <div className="flex justify-between items-center h-12 border-b-4 px-4 py-1">
+            {chartData.table && <div className="flex justify-between items-center h-12 border-b-4 dark:border-gray-700 px-4 py-1">
               <DropDownButton updateModalState={changeModalState} handleCDisplay={handleChartDisplay} isBarChartRaceEnabled={isBarChartRaceEnabled} chartType={chartType} disabled={isDownloadingVideo || isDownloadingCsv}/>
               <DownloadButtons handleDownloadCsv={handleDownloadCsv} isDownloadingCsv={isDownloadingCsv} handleDownloadVideo={handleDownloadVideo} isDownloadingVideo={isDownloadingVideo} chartType={chartType}/>
             </div>}

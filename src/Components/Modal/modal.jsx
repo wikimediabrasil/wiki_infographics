@@ -79,7 +79,7 @@ export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDis
                 <Label htmlFor="chartTitle">Color palette</Label>
               </div>
               <TextInput id="chartTitle" placeholder="#4e79a7,#f28e2c,#e15759,... (Optional)" value={chartColorPalette} onChange={handleColorPaletteChange} maxLength={300} />
-              <HelperText>In hex format, separated by commas.</HelperText>
+              <HelperText className="dark:text-white">In hex format, separated by commas.</HelperText>
             </div>
 
           </div>

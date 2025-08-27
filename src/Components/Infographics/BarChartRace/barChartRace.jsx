@@ -272,7 +272,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
       <div id="play-controls" className="flex items-center mb-4">
         <button
           id="play-pause-button"
-          className={`fa ${isPlaying ? "fa-pause" : "fa-play"}`}
+          className={`bg-cyan-700 hover:bg-cyan-800 dark:bg-cyan-600 dark:hover:bg-cyan-800 fa ${isPlaying ? "fa-pause" : "fa-play"}`}
           title="play"
           onClick={playPause}
         ></button>
@@ -282,7 +282,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
           min="0"
           value={progressBarTick}
           max={progressBarMaxTick}
-          className="ml-1"
+          className="ml-1 w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
           onChange={onRangeChange}
         />
       </div>

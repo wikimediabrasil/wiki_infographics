@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import Editor from "@monaco-editor/react";
 import { HiPlay, HiStop } from "react-icons/hi";
 import { useSearchParams } from 'react-router-dom';
 import "./codeEditor.css";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 /**
  * A code editor component with syntax highlighting and error decoration.
@@ -18,6 +19,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
   const monacoRef = useRef(null);
   const decorationsRef = useRef([]);
   const [searchParams, _] = useSearchParams();
+  const {darkMode} = useContext(DarkModeContext);
 
   useEffect(() => {
     const queryParam = searchParams.get("query")
@@ -124,7 +126,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
         <Editor
           height="60vh"
           language="sparql"
-          theme="light"
+          theme={darkMode ? 'vs-dark' : 'light'}
           onChange={handleValueChange}
           onMount={handleEditorDidMount}
           defaultValue={`# Write your SPARQL query here...
@@ -142,7 +144,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           }}
         />
       </div>
-      <div className="flex mt-2 mb-2 pl-2 text-4xl cursor-pointer" style={{justifyContent: "flex-end"}}>
+      <div className="flex mt-2 mb-2 pl-2 text-4xl cursor-pointer dark:text-white" style={{justifyContent: "flex-end"}}>
         {isLoading ? <HiStop /> : <HiPlay onClick={handleFetchChartData} />}  
       </div>
     </>
