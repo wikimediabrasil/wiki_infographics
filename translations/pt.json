@@ -2,6 +2,7 @@
   "navbar-help": "Ajuda",
   "navbar-examples": "Exemplos",
   "navbar-title": "Wiki Infográficos",
+  "navbar-repository": "Repositório",
   "preview-no-data": "Não há dados disponíveis",
   "preview-error-fetching-data": "Erro ao carregar os dados",
   "preview-error-timeout": "A query demorou muito para processar: Wikidata Query Service timeout",
@@ -10,5 +11,16 @@
   "button-download-video": "Baixar vídeo",
   "table-search-bar": "Pesquisar...",
   "graphic-table-title": "Tabela",
-  "graphic-bar-chart-race-title": "Corrida de barras"
+  "graphic-bar-chart-race-title": "Gráfico de corrida de barras",
+  "bar-chart-race-setup-display": "Configuração do gráfico de corrida de barras",
+  "bar-chart-race-setup-create": "Criar gráfico de corrida de barras",
+  "bar-chart-race-setup-title": "Título",
+  "bar-chart-race-setup-optional": "Opcional",
+  "bar-chart-race-setup-speed-unit": "Unidade da velocidade",
+  "bar-chart-race-setup-speed-unit-years": "Anos",
+  "bar-chart-race-setup-speed-unit-months": "Meses",
+  "bar-chart-race-setup-speed-unit-seconds": "Segundos",
+  "bar-chart-race-setup-speed-in-units-per-second": "Velocidade em unidades por segundo",
+  "bar-chart-race-setup-color-palette": "Paleta de cores",
+  "bar-chart-race-setup-color-palette-help": "Em formato hexadecimal, separado por vírgulas."
 }

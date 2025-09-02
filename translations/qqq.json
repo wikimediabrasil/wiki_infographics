@@ -2,6 +2,7 @@
   "navbar-help": "'Help' navbar section",
   "navbar-examples": "'Examples' navbar section",
   "navbar-title": "Wiki Infographics title in navbar",
+  "navbar-repository": "'Repository' navbar section",
   "preview-no-data": "Information message shown when no data is available yet",
   "preview-error-fetching-data": "Error message shown when data failed to be fetched from the server",
   "preview-error-timeout": "Error message shown when Wikidata Query Service timeouts to the query",
@@ -10,5 +11,16 @@
   "button-download-video": "Download video button",
   "table-search-bar": "Placeholder text on the table search bar",
   "graphic-table-title": "Title of the table graphic",
-  "graphic-bar-chart-race-title": "Title of the bar chart race graphic"
+  "graphic-bar-chart-race-title": "Title of the bar chart race graphic",
+  "bar-chart-race-setup-display": "Title of the bar chart race setup modal",
+  "bar-chart-race-setup-create": "Button to create bar chart race",
+  "bar-chart-race-setup-title": "Bar chart race setup form element: title",
+  "bar-chart-race-setup-optional": "Optional mark in bar chart race setup form",
+  "bar-chart-race-setup-speed-unit": "Bar chart race setup form element: speed unit",
+  "bar-chart-race-setup-speed-unit-years": "Bar chart race setup speed unit: years",
+  "bar-chart-race-setup-speed-unit-months": "Bar chart race setup speed unit: months",
+  "bar-chart-race-setup-speed-unit-seconds": "Bar chart race setup speed unit: seconds",
+  "bar-chart-race-setup-speed-in-units-per-second": "Bar chart race setup form element: speed in units per second",
+  "bar-chart-race-setup-color-palette": "Bar chart race setup form element: color palette",
+  "bar-chart-race-setup-color-palette-help": "Color palette form element help text in bar chat race setup"
 }

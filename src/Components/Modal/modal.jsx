@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Button, Modal, TextInput, Label, Select, HelperText } from "flowbite-react";
 // Components documentation: https://flowbite-react.com/docs/components/forms
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { LanguageContext } from "../../context/LanguageContext";
 
 
 export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed, handleChartColorPalette, handleChartTimeUnit }) {
@@ -10,6 +11,7 @@ export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDis
   const [chartSpeed, setChartSpeed] = useState(5);
   const [chartColorPalette, setChartColorPalette] = useState("");
   const [chartTimeUnit, setChartTimeUnit] = useState("year");
+  const { getContent } = useContext(LanguageContext);
 
   useEffect(() => {
     setOpenModal(currState);
@@ -45,47 +47,47 @@ export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDis
   return (
     <>
       <Modal show={openModal} size="sm" onClose={() => { setOpenModal(false); onCloseModal() }}>
-        <Modal.Header>Bar chart race setup</Modal.Header>
+        <Modal.Header>{getContent("bar-chart-race-setup-display")}</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
 
             <div className="max-w-md">
               <div className="mb-2 block">
-                <Label htmlFor="chartTitle">Title</Label>
+                <Label htmlFor="chartTitle">{getContent("bar-chart-race-setup-title")}</Label>
               </div>
-              <TextInput id="chartTitle" placeholder="Optional" value={chartTitle} onChange={handleTitleChange} maxLength={50} />
+              <TextInput id="chartTitle" placeholder={getContent("bar-chart-race-setup-optional")} value={chartTitle} onChange={handleTitleChange} maxLength={50} />
             </div>
 
             <div className="max-w-md">
               <div className="mb-2 block">
-                <Label htmlFor="chartUnit">Speed unit</Label>
+                <Label htmlFor="chartUnit">{getContent("bar-chart-race-setup-speed-unit")}</Label>
               </div>
               <Select id="chartUnit" value={chartTimeUnit} onChange={handleTimeUnitChange} required>
-                <option value="year">Years</option>
-                {barRaceData?.hasOwnProperty("values_by_date_monthly") && <option value="month">Months</option>}
-                {barRaceData?.hasOwnProperty("values_by_date_daily") && <option value="day">Days</option>}
+                <option value="year">{getContent("bar-chart-race-setup-speed-unit-years")}</option>
+                {barRaceData?.hasOwnProperty("values_by_date_monthly") && <option value="month">{getContent("bar-chart-race-setup-speed-unit-months")}</option>}
+                {barRaceData?.hasOwnProperty("values_by_date_daily") && <option value="day">{getContent("bar-chart-race-setup-speed-unit-seconds")}</option>}
               </Select>
             </div>
 
             <div className="max-w-md">
               <div className="mb-2 block">
-                <Label htmlFor="chartSpeed">Speed in units per second</Label>
+                <Label htmlFor="chartSpeed">{getContent("bar-chart-race-setup-speed-in-units-per-second")}</Label>
               </div>
-              <TextInput id="chartSpeed" type="number" min="1" max="50" placeholder="Speed in units per second" value={chartSpeed} onChange={handleSpeedChange} required />
+              <TextInput id="chartSpeed" type="number" min="1" max="50" placeholder={getContent("bar-chart-race-setup-speed-in-units-per-second")} value={chartSpeed} onChange={handleSpeedChange} required />
             </div>
 
             <div className="max-w-md">
               <div className="mb-2 block">
-                <Label htmlFor="chartTitle">Color palette</Label>
+                <Label htmlFor="chartTitle">{getContent("bar-chart-race-setup-color-palette")}</Label>
               </div>
-              <TextInput id="chartTitle" placeholder="#4e79a7,#f28e2c,#e15759,... (Optional)" value={chartColorPalette} onChange={handleColorPaletteChange} maxLength={300} />
-              <HelperText className="dark:text-white">In hex format, separated by commas.</HelperText>
+              <TextInput id="chartTitle" placeholder="#4e79a7,#f28e2c,#e15759,..." value={chartColorPalette} onChange={handleColorPaletteChange} maxLength={300} />
+              <HelperText className="dark:text-white">{getContent("bar-chart-race-setup-color-palette-help")}</HelperText>
             </div>
 
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => { handleChartType(); setOpenModal(false); onCloseModal(); }}>Create bar chart race</Button>
+          <Button onClick={() => { handleChartType(); setOpenModal(false); onCloseModal(); }}>{getContent("bar-chart-race-setup-create")}</Button>
         </Modal.Footer>
       </Modal>
     </>
