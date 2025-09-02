@@ -1,0 +1,14 @@
+{
+  "navbar-help": "'Help' navbar section",
+  "navbar-examples": "'Examples' navbar section",
+  "navbar-title": "Wiki Infographics title in navbar",
+  "preview-no-data": "Information message shown when no data is available yet",
+  "preview-error-fetching-data": "Error message shown when data failed to be fetched from the server",
+  "preview-error-timeout": "Error message shown when Wikidata Query Service timeouts to the query",
+  "preview-error-general": "Error message shown when something unknown happened while processing the query",
+  "button-download-csv": "Download CSV button",
+  "button-download-video": "Download video button",
+  "table-search-bar": "Placeholder text on the table search bar",
+  "graphic-table-title": "Title of the table graphic",
+  "graphic-bar-chart-race-title": "Title of the bar chart race graphic"
+}

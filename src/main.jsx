@@ -1,10 +1,13 @@
 import ReactDOM from 'react-dom/client'
 import { DarkModeProvider } from "./context/DarkModeContext";
+import { LanguageProvider } from "./context/LanguageContext";
 import App from './App.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <DarkModeProvider>
-    <App />
-  </DarkModeProvider>
+  <LanguageProvider>
+    <DarkModeProvider>
+      <App />
+    </DarkModeProvider>
+  </LanguageProvider>
 )
