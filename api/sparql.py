@@ -18,12 +18,12 @@ def df_from_query(sparql_string):
         return {"error": error_response}
 
     if "java.util.concurrent.TimeoutException" in response.text:
-        return {"error": "Wikidata Query Service Timeout"}
+        return {"error": "preview-error-timeout"}
 
     try:
         data = response.json()
     except JSONDecodeError:
-        return {"error": "Something went wrong"}
+        return {"error": "preview-error-general"}
 
     results = data["results"]["bindings"]
     variables = data["head"]["vars"]
