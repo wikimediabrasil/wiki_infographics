@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from 'react';
 import DataTable from 'react-data-table-component';
 import { DarkModeContext } from "../../../context/DarkModeContext";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 
 /**
@@ -9,11 +10,13 @@ import { DarkModeContext } from "../../../context/DarkModeContext";
  * @param {Object} props - The props for the FilterComponent.
  * @returns {JSX.Element} The FilterComponent.
  */
-const FilterComponent = ({ filterText, onFilter, onClear }) => (
+const FilterComponent = ({ filterText, onFilter, onClear }) => {
+  const { getContent } = useContext(LanguageContext);
+  return (
   <div className="search-bar">
     <input
       type="text"
-      placeholder="Search..."
+      placeholder={getContent("table-search-bar")}
       value={filterText}
       onChange={onFilter}
       className="border dark:border-gray-800 p-2 rounded dark:bg-gray-700 dark:text-white"
@@ -22,7 +25,8 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       X
     </button>
   </div>
-);
+  );
+};
 
 
 /**

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import api from '../api/axios';
 
 import NavBar from '../Components/NavBar/navBar';
@@ -10,6 +10,7 @@ import { InfoAlert, ErrorAlert } from "../Components/Alert/alert";
 import { DownloadButtons, DropDownButton } from "../Components/Button/button"
 import { downloadCSV } from '../Components/Infographics/Table/tableUtils';
 import { InfoModal } from '../Components/Modal/modal';
+import { LanguageContext } from "../context/LanguageContext";
 
 
 /**
@@ -38,6 +39,7 @@ const Infographics = () => {
   const [chartColorPalette, setChartColorPalette] = useState("");
   const [chartTimeUnit, setChartTimeUnit] = useState("year");
   const [isBarChartRaceEnabled, setIsBarChartRaceEnabled] = useState(false)
+  const { getContent } = useContext(LanguageContext);
 
   useEffect(() => {
     if(Object.keys(chartData).length > 0){
@@ -76,7 +78,7 @@ const Infographics = () => {
       setChartTimeUnit("year");
     } catch (error) {
       handleClearError()
-      setError(error?.response?.data?.error || "Error fetching data")
+      setError(error?.response?.data?.error || "preview-error-fetching-data")
       setChartData({})
       console.error(error?.response?.data?.error || error);
     } finally {
@@ -138,8 +140,8 @@ const Infographics = () => {
           </div>
           <div className="lg:col-span-3 row-span-4 border dark:border-gray-800 relative overflow-x-auto bg-white dark:bg-gray-600">
             {isLoading && <Overlay />}
-            {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={error} /></div>}
-            {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={"No data available"} /></div>}
+            {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={getContent(error) || error} /></div>}
+            {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={getContent("preview-no-data")} /></div>}
             {chartData.table && <div className="flex justify-between items-center h-12 border-b-4 dark:border-gray-700 px-4 py-1">
               <DropDownButton updateModalState={changeModalState} handleCDisplay={handleChartDisplay} isBarChartRaceEnabled={isBarChartRaceEnabled} chartType={chartType} disabled={isDownloadingVideo || isDownloadingCsv}/>
               <DownloadButtons handleDownloadCsv={handleDownloadCsv} isDownloadingCsv={isDownloadingCsv} handleDownloadVideo={handleDownloadVideo} isDownloadingVideo={isDownloadingVideo} chartType={chartType}/>
