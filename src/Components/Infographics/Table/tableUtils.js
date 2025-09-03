@@ -16,26 +16,14 @@ export const formatURL = (url) => {
 };
 
 
-/**
- * Formats an ISO date string into a human-readable format.
- *
- * Converts a date string in the ISO 8601 format (e.g., "1872-01-01T00:00:00Z") 
- * into a more readable format (e.g., "1 January 1872").
- *
- * @param {string} dateString - The ISO date string to format.
- * @returns {string} - The formatted date string in the form "1 August 2000".
- *
- * @example
- * formatDate("1872-01-01T00:00:00Z");
- * // returns "1 January 1872"
- */
-export function formatDate(dateString) {
+export function formatDate(dateString, locale) {
   const date = new Date(dateString);
 
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
 
   // Format the date using the specified options and return the formatted date string
-  return date.toLocaleDateString('en-US', options);
+  const dateFormatted = date.toLocaleDateString(locale, options);
+  return dateFormatted;
 }
 
 

@@ -7,7 +7,6 @@ import "./barChartRace.css";
 import 'font-awesome/css/font-awesome.min.css';
 import api from '../../../api/axios';
 import { LanguageContext } from "../../../context/LanguageContext";
-import languageToLocaleMap from '../../../utils/locale.js';
 
 /**
  * BarChartRace component visualizes a bar chart race with play/pause and selection controls.
@@ -33,7 +32,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   const timeoutRef = useRef(null); // Handles animation timing
   const abortControllerRef = useRef(null);
   const videoIdRef = useRef(null);
-  const { language } = useContext(LanguageContext);
+  const { locale } = useContext(LanguageContext);
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -73,8 +72,6 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
       };
 
       const width = container.clientWidth;
-      // undefined uses the browser's default locale
-      const locale = languageToLocaleMap[language] || undefined;
       const keyframes = initializeChart(svgRef, dataset, width, title, colorPaletteArray, timeUnit, locale);
       keyframesRef.current = keyframes;
 
@@ -93,7 +90,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
       }
     };
 
-  }, [dataset, timeUnit, title, colorPalette, language]);
+  }, [dataset, timeUnit, title, colorPalette, locale]);
 
   const animationDelay = () => {
     return 1000 / speed;

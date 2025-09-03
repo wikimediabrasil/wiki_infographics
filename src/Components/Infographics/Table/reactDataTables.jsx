@@ -39,6 +39,7 @@ export function ReactDataTables({ columns, data, headers }) {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
   const {darkMode} = useContext(DarkModeContext);
+  const { getContent } = useContext(LanguageContext);
 
   useEffect(() => {
     const filtered = data.filter(item => {
@@ -72,6 +73,13 @@ export function ReactDataTables({ columns, data, headers }) {
     />
   );
 
+  // https://react-data-table-component.netlify.app/?path=/docs/api-props--docs
+  const paginationComponentOptions = {
+    rowsPerPageText: getContent("table-rows-per-page"),
+    rangeSeparatorText: getContent("table-range-separator"),
+  };
+  const noDataComponent = getContent("table-no-data");
+
   return (
     <DataTable
       columns={columns}
@@ -85,6 +93,8 @@ export function ReactDataTables({ columns, data, headers }) {
       fixedHeader
       subHeader
       subHeaderComponent={subHeaderComponent}
+      paginationComponentOptions={paginationComponentOptions}
+      noDataComponent={noDataComponent}
     />
   );
 }

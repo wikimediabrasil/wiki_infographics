@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import languageToLocaleMap from '../utils/locale.js';
 import content_en from "../../translations/en.json";
 import content_pt from "../../translations/pt.json";
 import content_qqq from "../../translations/qqq.json";
@@ -16,25 +17,23 @@ function LanguageProvider(props) {
 
   const [language, setLanguage] = useState(() => localStorage.language || DEFAULT_LANGUAGE);
   const [translatedContent, setTranslatedContent] = useState(CONTENTS[language]);
+  const [locale, setLocale] = useState(undefined);
 
   useEffect(() => {
     if (language) {
       localStorage.language = language;
       setTranslatedContent(CONTENTS[language]);
+      // undefined uses the browser's default locale
+      setLocale(languageToLocaleMap[language] || undefined);
     };
   }, [language]);
 
   const getContent = (key) => {
-    let value = translatedContent[key];
-    if (value) {
-      return value;
-    } else {
-      return CONTENTS[DEFAULT_LANGUAGE][key];
-    };
+    return translatedContent[key] || CONTENTS[DEFAULT_LANGUAGE][key];
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, availableLanguages, getContent }}>
+    <LanguageContext.Provider value={{ language, setLanguage, availableLanguages, getContent, locale }}>
       {props.children}
     </LanguageContext.Provider>
   )

@@ -4,6 +4,8 @@
 
 import ReactDataTables from "./reactDataTables";
 import { formatURL, formatDate } from "./tableUtils"; // Utility for URL formatting
+import { useContext } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 /**
  * ChartTable component for displaying data in a DataTable.
@@ -11,6 +13,7 @@ import { formatURL, formatDate } from "./tableUtils"; // Utility for URL formatt
  * @returns {JSX.Element} The ChartTable component.
  */
 export function ChartTable({ tableData }) {
+ const { locale } = useContext(LanguageContext);
 
   // Extract headers from list of columns
   const headers = tableData.columns;
@@ -26,7 +29,7 @@ export function ChartTable({ tableData }) {
         // Check if data is a valid ISO date string and format it
         const parsedDate = Date.parse(data);
         if (!isNaN(parsedDate)) {
-          return formatDate(data);
+          return formatDate(data, locale);
         }
       }
       return data;
