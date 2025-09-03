@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import languageToLocaleMap from '../utils/locale.js';
 import content_en from "../../translations/en.json";
-import content_pt from "../../translations/pt.json";
+import content_pt_br from "../../translations/pt-br.json";
 
 const LanguageContext = createContext();
 
@@ -9,7 +9,7 @@ function LanguageProvider(props) {
   const DEFAULT_LANGUAGE = "en";
   const CONTENTS = {
     "en": content_en,
-    "pt": content_pt,
+    "pt-br": content_pt_br,
   }
   const availableLanguages = Object.keys(CONTENTS);
 
