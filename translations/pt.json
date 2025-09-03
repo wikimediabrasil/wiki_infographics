@@ -3,6 +3,7 @@
   "navbar-examples": "Exemplos",
   "navbar-title": "Wiki Infográficos",
   "navbar-repository": "Repositório",
+  "navbar-help-translate": "Nos ajude a traduzir",
   "preview-no-data": "Não há dados disponíveis",
   "preview-error-fetching-data": "Erro ao carregar os dados",
   "preview-error-timeout": "A query demorou muito para processar: Wikidata Query Service timeout",
@@ -19,7 +20,7 @@
   "bar-chart-race-setup-speed-unit": "Unidade da velocidade",
   "bar-chart-race-setup-speed-unit-years": "Anos",
   "bar-chart-race-setup-speed-unit-months": "Meses",
-  "bar-chart-race-setup-speed-unit-seconds": "Segundos",
+  "bar-chart-race-setup-speed-unit-days": "Dias",
   "bar-chart-race-setup-speed-in-units-per-second": "Velocidade em unidades por segundo",
   "bar-chart-race-setup-color-palette": "Paleta de cores",
   "bar-chart-race-setup-color-palette-help": "Em formato hexadecimal, separado por vírgulas."

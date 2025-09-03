@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 import { useContext } from "react";
-import { Button, Navbar, Dropdown } from "flowbite-react";
+import { Navbar, Dropdown } from "flowbite-react";
 
 import { HiMiniLanguage } from "react-icons/hi2"
 
@@ -11,6 +11,9 @@ import wiki_infographics_logo from "../../assets/wiki_infographics_logo.png"
 import moonImg from "../../assets/moon.svg";
 import sunImg from "../../assets/sun.svg";
 
+// TODO:
+// Include the following when we are accepted on TranslateWiki
+// <Dropdown.Item key="help-translate" href="https://translatewiki.net/wiki/Translating:WikiInfographics">{getContent("navbar-help-translate")}</Dropdown.Item>
 
 /**
  * Navigation bar component.

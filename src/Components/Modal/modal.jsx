@@ -65,7 +65,7 @@ export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDis
               <Select id="chartUnit" value={chartTimeUnit} onChange={handleTimeUnitChange} required>
                 <option value="year">{getContent("bar-chart-race-setup-speed-unit-years")}</option>
                 {barRaceData?.hasOwnProperty("values_by_date_monthly") && <option value="month">{getContent("bar-chart-race-setup-speed-unit-months")}</option>}
-                {barRaceData?.hasOwnProperty("values_by_date_daily") && <option value="day">{getContent("bar-chart-race-setup-speed-unit-seconds")}</option>}
+                {barRaceData?.hasOwnProperty("values_by_date_daily") && <option value="day">{getContent("bar-chart-race-setup-speed-unit-days")}</option>}
               </Select>
             </div>
 

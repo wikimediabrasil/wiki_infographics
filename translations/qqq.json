@@ -3,6 +3,7 @@
   "navbar-examples": "'Examples' navbar section",
   "navbar-title": "Wiki Infographics title in navbar",
   "navbar-repository": "'Repository' navbar section",
+  "navbar-help-translate": "'Help us translate' in languages navbar section",
   "preview-no-data": "Information message shown when no data is available yet",
   "preview-error-fetching-data": "Error message shown when data failed to be fetched from the server",
   "preview-error-timeout": "Error message shown when Wikidata Query Service timeouts to the query",
@@ -19,7 +20,7 @@
   "bar-chart-race-setup-speed-unit": "Bar chart race setup form element: speed unit",
   "bar-chart-race-setup-speed-unit-years": "Bar chart race setup speed unit: years",
   "bar-chart-race-setup-speed-unit-months": "Bar chart race setup speed unit: months",
-  "bar-chart-race-setup-speed-unit-seconds": "Bar chart race setup speed unit: seconds",
+  "bar-chart-race-setup-speed-unit-days": "Bar chart race setup speed unit: days",
   "bar-chart-race-setup-speed-in-units-per-second": "Bar chart race setup form element: speed in units per second",
   "bar-chart-race-setup-color-palette": "Bar chart race setup form element: color palette",
   "bar-chart-race-setup-color-palette-help": "Color palette form element help text in bar chat race setup"
