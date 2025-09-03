@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { Alert } from "flowbite-react";
 import { initializeChart, updateChart } from "./barChartRaceUtils";
 import * as d3 from "d3";
 import "./barChartRace.css";
 import 'font-awesome/css/font-awesome.min.css';
 import api from '../../../api/axios';
+import { LanguageContext } from "../../../context/LanguageContext";
+import languageToLocaleMap from '../../../utils/locale.js';
 
 /**
  * BarChartRace component visualizes a bar chart race with play/pause and selection controls.
@@ -31,6 +33,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   const timeoutRef = useRef(null); // Handles animation timing
   const abortControllerRef = useRef(null);
   const videoIdRef = useRef(null);
+  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     const fetchDataAsync = () => {
@@ -70,7 +73,9 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
       };
 
       const width = container.clientWidth;
-      const keyframes = initializeChart(svgRef, dataset, width, title, colorPaletteArray, timeUnit);
+      // undefined uses the browser's default locale
+      const locale = languageToLocaleMap[language] || undefined;
+      const keyframes = initializeChart(svgRef, dataset, width, title, colorPaletteArray, timeUnit, locale);
       keyframesRef.current = keyframes;
 
       // Initialize chart with the first keyframe.
@@ -88,7 +93,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
       }
     };
 
-  }, [dataset, timeUnit, title, colorPalette]);
+  }, [dataset, timeUnit, title, colorPalette, language]);
 
   const animationDelay = () => {
     return 1000 / speed;

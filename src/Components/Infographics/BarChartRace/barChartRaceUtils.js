@@ -15,7 +15,7 @@ let updateBars, updateAxis, updateLabels, updateTicker, x;
 let dateFormatter;
 
 // Function to initialize the chart
-export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray, timeUnit) => {
+export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray, timeUnit, locale) => {
   const chartMargin = 30; // Adjust this value to increase the space
 
    // Create SVG element
@@ -71,8 +71,7 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
     dateFormat = { year: "numeric", month: "long" };
   };
 
-  // undefined uses the browser's default locale
-  dateFormatter = Intl.DateTimeFormat(undefined, dateFormat);
+  dateFormatter = Intl.DateTimeFormat(locale, dateFormat);
 
   // Initialize update functions
   updateBars = bars(svgRef.current, x, y, prev, next);
