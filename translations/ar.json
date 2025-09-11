@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mohammed Qays"
+		]
+	},
+	"navbar-help": "مساعدة",
+	"navbar-examples": "أمثلة",
+	"navbar-title": "ويكي مخططات بيانية",
+	"navbar-repository": "المستودع",
+	"navbar-help-translate": "ساعدنا في الترجمة",
+	"preview-no-data": "لا تتوفر بيانات",
+	"preview-error-fetching-data": "خطأ في جلب البيانات",
+	"button-download-video": "تنزيل الفيديو",
+	"table-search-bar": "بحث...",
+	"table-range-separator": "من",
+	"table-rows-per-page": "عدد الصفوف في الصفحة:",
+	"graphic-table-title": "جدول",
+	"bar-chart-race-setup-speed-unit-years": "سنوات",
+	"bar-chart-race-setup-speed-unit-months": "أشهر",
+	"bar-chart-race-setup-speed-unit-days": "أيام",
+	"bar-chart-race-setup-color-palette": "لوحة الألوان"
+}

@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"navbar-help": "도움말",
+	"navbar-examples": "예시",
+	"navbar-title": "위키 인포그래픽스",
+	"navbar-repository": "저장소",
+	"preview-no-data": "이용 가능한 데이터 없음",
+	"button-download-csv": "CSV 다운로드",
+	"button-download-video": "비디오 다운로드",
+	"table-search-bar": "검색...",
+	"graphic-table-title": "표",
+	"bar-chart-race-setup-optional": "선택 사항",
+	"bar-chart-race-setup-color-palette": "컬러 팔레트"
+}

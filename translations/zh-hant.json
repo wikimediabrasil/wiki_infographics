@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"navbar-help": "幫助",
+	"navbar-examples": "範例",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "儲存庫",
+	"navbar-help-translate": "幫助我們翻譯",
+	"preview-no-data": "沒有可用的資料",
+	"preview-error-fetching-data": "取得資料時發生錯誤",
+	"preview-error-timeout": "查詢處理時間過長：維基數據查詢服務逾時",
+	"preview-error-general": "處理查詢時出現錯誤",
+	"button-download-csv": "下載 CSV",
+	"button-download-video": "下載影片",
+	"table-search-bar": "搜尋…",
+	"table-no-data": "暫無可顯示的紀錄",
+	"table-range-separator": "/",
+	"table-rows-per-page": "每頁列數：",
+	"graphic-table-title": "表格",
+	"graphic-bar-chart-race-title": "長條圖競賽",
+	"bar-chart-race-setup-display": "長條圖競賽設定",
+	"bar-chart-race-setup-create": "建立長條圖競賽",
+	"bar-chart-race-setup-title": "標題",
+	"bar-chart-race-setup-optional": "選填",
+	"bar-chart-race-setup-speed-unit": "速度單位",
+	"bar-chart-race-setup-speed-unit-years": "年",
+	"bar-chart-race-setup-speed-unit-months": "月",
+	"bar-chart-race-setup-speed-unit-days": "日",
+	"bar-chart-race-setup-speed-in-units-per-second": "速度（單位為秒）",
+	"bar-chart-race-setup-color-palette": "調色盤",
+	"bar-chart-race-setup-color-palette-help": "採用十六進位格式，以逗號分隔。"
+}

@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Volvox"
+		]
+	},
+	"navbar-help": "Hëllef",
+	"navbar-examples": "Beispiller",
+	"navbar-title": "Wiki Infographics",
+	"navbar-help-translate": "Hëlleft eis mam Iwwersetzen",
+	"preview-no-data": "Keng Donnéeën disponibel",
+	"button-download-csv": "CSV eroflueden",
+	"button-download-video": "Video eroflueden",
+	"table-search-bar": "Sichen…",
+	"table-range-separator": "vu(n)",
+	"table-rows-per-page": "Zeile pro Säit:",
+	"graphic-table-title": "Tabell",
+	"bar-chart-race-setup-title": "Titel",
+	"bar-chart-race-setup-optional": "Fakultativ",
+	"bar-chart-race-setup-speed-unit-years": "Joer",
+	"bar-chart-race-setup-speed-unit-months": "Méint",
+	"bar-chart-race-setup-speed-unit-days": "Deeg",
+	"bar-chart-race-setup-color-palette": "Faarfpallett",
+	"bar-chart-race-setup-color-palette-help": "Am Hexadezimalformat, duerch Kommae getrennt."
+}

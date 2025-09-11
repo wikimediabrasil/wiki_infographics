@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Milicevic01"
+		]
+	},
+	"navbar-help": "Помоћ",
+	"navbar-examples": "Примери",
+	"navbar-help-translate": "Помозите у превођењу",
+	"preview-no-data": "Нема података",
+	"button-download-csv": "Преузми CSV",
+	"button-download-video": "Преузми видео",
+	"table-search-bar": "Претрага...",
+	"graphic-table-title": "Табела",
+	"bar-chart-race-setup-optional": "Необавезно",
+	"bar-chart-race-setup-speed-unit": "Јединица за брзину",
+	"bar-chart-race-setup-speed-unit-years": "године",
+	"bar-chart-race-setup-speed-unit-months": "месеци",
+	"bar-chart-race-setup-speed-unit-days": "дани"
+}

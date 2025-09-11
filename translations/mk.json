@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"navbar-help": "Помош",
+	"navbar-examples": "Примери",
+	"navbar-title": "Викиинфографика",
+	"navbar-repository": "Складиште",
+	"navbar-help-translate": "Помогнете со преводот",
+	"preview-no-data": "Нема податоци",
+	"preview-error-fetching-data": "Грешка при преземање на податоците",
+	"preview-error-timeout": "Барањето за обработка траеше предолго: Истече времето на Службата за побарувања до Википодатоците",
+	"preview-error-general": "Нешто тргна наопаку при обработката на барањето",
+	"button-download-csv": "Преземи CSV",
+	"button-download-video": "Преземи видео",
+	"table-search-bar": "Пребарај...",
+	"table-no-data": "Нема записи за прикажување",
+	"table-range-separator": "од",
+	"table-rows-per-page": "Редови по страница:",
+	"graphic-table-title": "Табела",
+	"graphic-bar-chart-race-title": "Трка на столбен графикон",
+	"bar-chart-race-setup-display": "Поставување на трка на столбен графикон",
+	"bar-chart-race-setup-create": "Создај трка на столбен графикон",
+	"bar-chart-race-setup-title": "Наслов",
+	"bar-chart-race-setup-optional": "Незадолжително",
+	"bar-chart-race-setup-speed-unit": "Единица за брзина",
+	"bar-chart-race-setup-speed-unit-years": "Години",
+	"bar-chart-race-setup-speed-unit-months": "Месеци",
+	"bar-chart-race-setup-speed-unit-days": "Денови",
+	"bar-chart-race-setup-speed-in-units-per-second": "Брзина во единици во секунда",
+	"bar-chart-race-setup-color-palette": "Бојна палета",
+	"bar-chart-race-setup-color-palette-help": "Во хексадецимален формат, одделени со запирки."
+}
