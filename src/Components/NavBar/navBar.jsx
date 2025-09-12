@@ -11,10 +11,6 @@ import wiki_infographics_logo from "../../assets/wiki_infographics_logo.png"
 import moonImg from "../../assets/moon.svg";
 import sunImg from "../../assets/sun.svg";
 
-// TODO:
-// Include the following when we are accepted on TranslateWiki
-// <Dropdown.Item key="help-translate" href="https://translatewiki.net/wiki/Translating:WikiInfographics">{getContent("navbar-help-translate")}</Dropdown.Item>
-
 /**
  * Navigation bar component.
  * @returns {JSX.Element} The NavBar component.
@@ -45,6 +41,7 @@ function NavBar({ username }) {
           <div className="flex">
             <HiMiniLanguage className="text-xl mr-1" />
             <Dropdown label={language} inline>
+            <Dropdown.Item key="help-translate" target="_blank" href="https://translatewiki.net/wiki/Translating:Wiki_infographics">{getContent("navbar-help-translate")}</Dropdown.Item>
               {
                 availableLanguages.map((lang) => {
                   return <Dropdown.Item key={lang} onClick={() => setLanguage(lang)}>{lang}</Dropdown.Item>
