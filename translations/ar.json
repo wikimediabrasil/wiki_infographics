@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Meno25",
 			"Mohammed Qays"
 		]
 	},
@@ -11,13 +12,25 @@
 	"navbar-help-translate": "ساعدنا في الترجمة",
 	"preview-no-data": "لا تتوفر بيانات",
 	"preview-error-fetching-data": "خطأ في جلب البيانات",
+	"preview-error-timeout": "استغرق الاستعلام وقتًا طويلاً للمعالجة: انتهت مهلة خدمة استعلام Wikidata",
+	"preview-error-general": "حدث خطأ ما أثناء معالجة الاستعلام",
+	"button-download-csv": "تنزيل ملف CSV",
 	"button-download-video": "تنزيل الفيديو",
 	"table-search-bar": "بحث...",
+	"table-no-data": "لا توجد سجلات لعرضها",
 	"table-range-separator": "من",
 	"table-rows-per-page": "عدد الصفوف في الصفحة:",
 	"graphic-table-title": "جدول",
+	"graphic-bar-chart-race-title": "سباق الرسم البياني الشريطي",
+	"bar-chart-race-setup-display": "إعداد سباق الرسم البياني الشريطي",
+	"bar-chart-race-setup-create": "إنشاء سباق مخطط شريطي",
+	"bar-chart-race-setup-title": "العنوان",
+	"bar-chart-race-setup-optional": "خياري",
+	"bar-chart-race-setup-speed-unit": "وحدة السرعة",
 	"bar-chart-race-setup-speed-unit-years": "سنوات",
 	"bar-chart-race-setup-speed-unit-months": "أشهر",
 	"bar-chart-race-setup-speed-unit-days": "أيام",
-	"bar-chart-race-setup-color-palette": "لوحة الألوان"
+	"bar-chart-race-setup-speed-in-units-per-second": "السرعة بوحدات في الثانية",
+	"bar-chart-race-setup-color-palette": "لوحة الألوان",
+	"bar-chart-race-setup-color-palette-help": "بتنسيق سداسي عشري، مفصول بفاصلات."
 }
