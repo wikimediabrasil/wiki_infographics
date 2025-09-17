@@ -23,11 +23,11 @@ from django.views.generic.base import RedirectView
 from web import urls as web_urls
 from api import urls as api_urls
 
-redirect_to_web = RedirectView.as_view(url="/web/")
+redirect_to_infographics = RedirectView.as_view(url="/web/infographics/")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", redirect_to_web),
+    path("", redirect_to_infographics),
     path("web/", include(web_urls)),
     path("api/", include(api_urls)),
 ]
