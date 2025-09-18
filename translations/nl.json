@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"navbar-help": "Hulp",
+	"navbar-examples": "Voorbeelden",
+	"navbar-title": "Wiki-infographics",
+	"navbar-repository": "Opslagplaats",
+	"navbar-help-translate": "Help ons met vertalen",
+	"preview-no-data": "Geen gegevens beschikbaar",
+	"preview-error-fetching-data": "Fout bij het ophalen van gegevens",
+	"preview-error-timeout": "De opdracht duurde te lang om te verwerken: Wikidata Query Service time-out",
+	"preview-error-general": "Er is iets misgegaan tijdens het verwerken van de opdracht",
+	"button-download-csv": "Downloaden in CSV",
+	"button-download-video": "Video downloaden",
+	"table-search-bar": "Zoeken…",
+	"table-no-data": "Er zijn geen records om weer te geven",
+	"table-range-separator": "van de",
+	"table-rows-per-page": "Rijen per pagina:",
+	"graphic-table-title": "Tabel",
+	"graphic-bar-chart-race-title": "Staafdiagramrace",
+	"bar-chart-race-setup-display": "Opstelling van een staafdiagramrace",
+	"bar-chart-race-setup-create": "Staafdiagramrace maken",
+	"bar-chart-race-setup-title": "Titel",
+	"bar-chart-race-setup-optional": "Optioneel",
+	"bar-chart-race-setup-speed-unit": "Snelheidseenheid",
+	"bar-chart-race-setup-speed-unit-years": "Jaren",
+	"bar-chart-race-setup-speed-unit-months": "Maanden",
+	"bar-chart-race-setup-speed-unit-days": "Dagen",
+	"bar-chart-race-setup-speed-in-units-per-second": "Snelheid in eenheden per seconde",
+	"bar-chart-race-setup-color-palette": "Kleurenpalet",
+	"bar-chart-race-setup-color-palette-help": "In hexadecimale vorm, gescheiden door komma's."
+}
