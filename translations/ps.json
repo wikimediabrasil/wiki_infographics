@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"navbar-help": "لارښود",
+	"navbar-examples": "بېلگې",
+	"navbar-title": "ويکي مالومات‌گراپيکس",
+	"navbar-repository": "زېرمتون",
+	"navbar-help-translate": "ژباړلو کې له موږ سره مرسته وکړئ",
+	"preview-no-data": "هېڅ اومتوکي د لاسرسي وړ نه دي",
+	"preview-error-fetching-data": "اومتوک راوړلو کې تېروتنه",
+	"preview-error-timeout": "تپوس کولو ډېر وخت ونيو: ويکي‌اومتوک تپوس چوپړ پای ته ورسېد",
+	"preview-error-general": "تپوس پرمهال يو څه وران پېښ شول",
+	"button-download-csv": "سي‌اېس‌وي راکښته‌کول",
+	"button-download-video": "ويډيو راکښته‌کول",
+	"table-search-bar": "پلټل...",
+	"table-no-data": "ښودلو لپاره هېڅ ريکارډ نشته",
+	"table-range-separator": "د",
+	"table-rows-per-page": "کتارونه هر مخ کې:",
+	"graphic-table-title": "لښتيال",
+	"bar-chart-race-setup-title": "سرليک",
+	"bar-chart-race-setup-optional": "ستاسې په خوښه",
+	"bar-chart-race-setup-speed-unit": "چټکتيا يوون",
+	"bar-chart-race-setup-speed-unit-years": "کلونه",
+	"bar-chart-race-setup-speed-unit-months": "مياشتې",
+	"bar-chart-race-setup-speed-unit-days": "ورځې",
+	"bar-chart-race-setup-speed-in-units-per-second": "چټکتيا په يوون کې پر ثانيه",
+	"bar-chart-race-setup-color-palette": "رنگ دړه"
+}

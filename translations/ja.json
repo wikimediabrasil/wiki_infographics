@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Largestone"
+		]
+	},
+	"navbar-help": "ヘルプ",
+	"navbar-examples": "例",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "リポジトリ",
+	"navbar-help-translate": "翻訳を手伝ってください",
+	"preview-no-data": "利用できるデータがありません",
+	"preview-error-fetching-data": "データの取得中にエラーが発生しました",
+	"button-download-csv": "CSVをダウンロード",
+	"button-download-video": "ビデオをダウンロード",
+	"table-search-bar": "検索...",
+	"table-range-separator": "の",
+	"table-rows-per-page": "ページあたりの行数:",
+	"graphic-table-title": "表",
+	"bar-chart-race-setup-title": "タイトル",
+	"bar-chart-race-setup-optional": "省略可能",
+	"bar-chart-race-setup-speed-unit": "速度の単位",
+	"bar-chart-race-setup-speed-unit-years": "年",
+	"bar-chart-race-setup-speed-unit-months": "月",
+	"bar-chart-race-setup-speed-unit-days": "日",
+	"bar-chart-race-setup-color-palette": "カラーパレット"
+}

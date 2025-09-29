@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"GuoPC"
+		]
+	},
+	"navbar-help": "帮助",
+	"navbar-examples": "示例",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "存储库",
+	"navbar-help-translate": "帮助我们翻译",
+	"preview-no-data": "无可用数据",
+	"preview-error-fetching-data": "获取数据时出错",
+	"preview-error-timeout": "查询处理时间过长：维基数据查询服务超时",
+	"preview-error-general": "处理查询时出现错误",
+	"button-download-csv": "下载CSV",
+	"button-download-video": "下载视频",
+	"table-search-bar": "搜索…",
+	"table-no-data": "没有可显示的记录",
+	"table-range-separator": "/",
+	"table-rows-per-page": "每页行数：",
+	"graphic-table-title": "表格",
+	"graphic-bar-chart-race-title": "条形图竞赛",
+	"bar-chart-race-setup-display": "条形图竞赛设置",
+	"bar-chart-race-setup-create": "创建条形图竞赛",
+	"bar-chart-race-setup-title": "标题",
+	"bar-chart-race-setup-optional": "可选",
+	"bar-chart-race-setup-speed-unit": "速度单位",
+	"bar-chart-race-setup-speed-unit-years": "年",
+	"bar-chart-race-setup-speed-unit-months": "月",
+	"bar-chart-race-setup-speed-unit-days": "日",
+	"bar-chart-race-setup-speed-in-units-per-second": "速度（单位为秒）",
+	"bar-chart-race-setup-color-palette": "调色板",
+	"bar-chart-race-setup-color-palette-help": "使用十六进制格式，以逗号分隔。"
+}
