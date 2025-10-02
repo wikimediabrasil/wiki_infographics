@@ -5,9 +5,8 @@ import * as d3 from "d3";
 
 // Constants
 export const margin = { top: 32, right: 16, bottom: 32, left: 0 }; // Added padding/margin
-export const n = 12;
-export const max_rank = n;
 export const barSize = 48;
+export const maxNumberVisible = 12;
 export let color;
 
 // Variables
@@ -22,7 +21,7 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
   svgRef.current = d3
     .select("#container")
     .append("svg")
-    .attr("viewBox", [0, -chartMargin, width, margin.top + barSize * n + margin.bottom + chartMargin]);
+    .attr("viewBox", [0, -chartMargin, width, margin.top + barSize * maxNumberVisible + margin.bottom + chartMargin]);
 
   // Add a title to the SVG
   svgRef.current.append("text")
@@ -49,8 +48,8 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
   x = d3.scaleLinear([0, 1], [margin.left, width - margin.right]);
   const y = d3
         .scaleBand()
-        .domain(d3.range(max_rank + 2))
-        .rangeRound([margin.top, margin.top + barSize * (n + 1 + 0.1)])
+        .domain(d3.range(maxNumberVisible + 2))
+        .rangeRound([margin.top, margin.top + barSize * (maxNumberVisible + 1 + 0.1)])
         .padding(0.1);
 
   const scale = d3.scaleOrdinal(colorPaletteArray);
@@ -104,7 +103,7 @@ function ticker(svgRef, width, keyframes) {
     .style("font-variant-numeric", "tabular-nums")
     .attr("text-anchor", "end")
     .attr("x", width - 6)
-    .attr("y", margin.top + barSize * (n - 0.45))
+    .attr("y", margin.top + barSize * (maxNumberVisible - 0.45))
     .attr("dy", "0.32em")
     .text(dateFormatter.format(keyframes[0][0]));
 
@@ -114,7 +113,7 @@ function ticker(svgRef, width, keyframes) {
 }
 
 function cap_at_max_rank(rank) {
-  return Math.min(rank, max_rank);
+  return Math.min(rank, maxNumberVisible);
 }
 
 // Labels function
@@ -128,7 +127,7 @@ function labels(svgRef, x, y, prev, next) {
 
   return ([, data], transition) =>
     (label = label
-      .data(data.slice(0, n), (d) => d.name)
+      .data(data.slice(0, maxNumberVisible), (d) => d.name)
       .join(
         (enter) =>
           enter
@@ -208,7 +207,7 @@ function axis(svgRef, x, y, width) {
     .axisTop(x)
     .ticks(width / 160, tickFormat)
     .tickSizeOuter(0)
-    .tickSizeInner(-barSize * (n + y.padding()));
+    .tickSizeInner(-barSize * (maxNumberVisible + y.padding()));
 
   return (_, transition) => {
     g.transition(transition).call(axis);
@@ -227,7 +226,7 @@ function bars(svgRef, x, y, prev, next) {
 
   return ([, data], transition) =>
     (bar = bar
-      .data(data.slice(0, max_rank), (d) => d.name)
+      .data(data.slice(0, maxNumberVisible), (d) => d.name)
       .join(
         (enter) =>
           enter
