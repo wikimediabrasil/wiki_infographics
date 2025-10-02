@@ -9,6 +9,8 @@ from pandas.errors import ParserError
 
 logger = logging.getLogger("django")
 
+MAX_ELEMENTS_SCREEN = 12
+
 
 class BaseDf:
     def __init__(self, df: pd.DataFrame):
@@ -79,7 +81,6 @@ class DfProcessor:
     def __init__(self, bdf: BaseDf, time_unit: str = "year"):
         self.df = bdf.df.copy()
         self.time_unit = time_unit
-        self.max_elements_screen = 12
         if self.time_unit == "year":
             self.df["date"] = self.df["date"].dt.strftime("%Y-01-01")
         elif self.time_unit == "month":
@@ -180,7 +181,7 @@ class DfProcessor:
             ip.set_index("date")
             .sort_values("rank")
             .groupby(level=0)
-            .head(self.max_elements_screen * 2) # times 2 to be safe
+            .head(MAX_ELEMENTS_SCREEN * 2) # times 2 to be safe
             .groupby(level=0)
         ):
             values = grouped.to_dict(orient="records")
