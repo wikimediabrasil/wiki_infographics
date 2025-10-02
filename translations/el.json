@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jimkats"
+		]
+	},
+	"navbar-help": "Βοήθεια",
+	"navbar-examples": "Παραδείγματα",
+	"navbar-repository": "Αποθετήριο",
+	"navbar-help-translate": "Βοηθήστε μας στη μετάφραση",
+	"preview-no-data": "Δεν υπάρχουν διαθέσιμα δεδομένα",
+	"preview-error-fetching-data": "Σφάλμα κατά την ανάκτηση δεδομένων",
+	"preview-error-timeout": "Η επεξεργασία του ερωτήματος άργησε πολύ: Λήξη χρονικού ορίου Υπηρεσίας Ερωτημάτων Wikidata",
+	"preview-error-general": "Παρουσιάστηκε κάποιο πρόβλημα κατά την επεξεργασία του ερωτήματος",
+	"button-download-csv": "Λήψη CSV",
+	"button-download-video": "Λήψη βίντεο",
+	"table-search-bar": "Αναζητήστε...",
+	"table-no-data": "Δεν υπάρχουν εγγραφές για εμφάνιση",
+	"table-range-separator": "από",
+	"table-rows-per-page": "Γραμμές ανά σελίδα:",
+	"graphic-table-title": "Πίνακας",
+	"bar-chart-race-setup-title": "Τίτλος",
+	"bar-chart-race-setup-optional": "Προαιρετικό",
+	"bar-chart-race-setup-speed-unit": "Μονάδα ταχύτητας",
+	"bar-chart-race-setup-speed-unit-years": "Χρόνια",
+	"bar-chart-race-setup-speed-unit-months": "Μήνες",
+	"bar-chart-race-setup-speed-unit-days": "Ημέρες",
+	"bar-chart-race-setup-speed-in-units-per-second": "Ταχύτητα σε μονάδες ανά δευτερόλεπτο",
+	"bar-chart-race-setup-color-palette": "Παλέτα χρωμάτων",
+	"bar-chart-race-setup-color-palette-help": "Σε δεκαεξαδική μορφή, διαχωρισμένα με κόμματα."
+}
