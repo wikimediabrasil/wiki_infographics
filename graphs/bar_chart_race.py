@@ -79,6 +79,7 @@ class DfProcessor:
     def __init__(self, bdf: BaseDf, time_unit: str = "year"):
         self.df = bdf.df.copy()
         self.time_unit = time_unit
+        self.max_elements_screen = 12
         if self.time_unit == "year":
             self.df["date"] = self.df["date"].dt.strftime("%Y-01-01")
         elif self.time_unit == "month":
@@ -175,8 +176,14 @@ class DfProcessor:
     def values_by_date(self):
         ip = self.interpolated_df()
         vl = []
-        for date, grouped in ip.set_index("date").groupby(level=0):
-            values = grouped.sort_values("rank").to_dict(orient="records")
+        for date, grouped in (
+            ip.set_index("date")
+            .sort_values("rank")
+            .groupby(level=0)
+            .head(self.max_elements_screen * 2) # times 2 to be safe
+            .groupby(level=0)
+        ):
+            values = grouped.to_dict(orient="records")
             vl.append({"date": date, "values": values})
         return vl
 
