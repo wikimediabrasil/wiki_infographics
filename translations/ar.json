@@ -12,7 +12,7 @@
 	"navbar-help-translate": "ساعدنا في الترجمة",
 	"preview-no-data": "لا تتوفر بيانات",
 	"preview-error-fetching-data": "خطأ في جلب البيانات",
-	"preview-error-timeout": "استغرق الاستعلام وقتًا طويلاً للمعالجة: انتهت مهلة خدمة استعلام Wikidata",
+	"preview-error-timeout": "استغرق الاستعلام وقتًا طويلاً للمعالجة: انتهت مهلة خدمة استعلام ويكي بيانات",
 	"preview-error-general": "حدث خطأ ما أثناء معالجة الاستعلام",
 	"button-download-csv": "تنزيل ملف CSV",
 	"button-download-video": "تنزيل الفيديو",
