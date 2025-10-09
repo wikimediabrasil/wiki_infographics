@@ -176,16 +176,28 @@ class DfProcessor:
 
     def values_by_date(self):
         ip = self.interpolated_df()
+        head = MAX_ELEMENTS_SCREEN * 2  # times 2 to be safe
         vl = []
+        last = None
         for date, grouped in (
-            ip.set_index("date")
-            .sort_values("rank")
-            .groupby(level=0)
-            .head(MAX_ELEMENTS_SCREEN * 2) # times 2 to be safe
-            .groupby(level=0)
+            ip.sort_values(["date", "rank"], ascending=[False, True])
+            .groupby("date", sort=False)
+            .head(head)
+            .groupby("date", sort=False)
         ):
+            if last is not None:
+                last = last[~last.name.isin(grouped["name"])]
+                if last.shape[0] > 0:
+                    last["rank"] = (
+                        last["value"].rank(method="dense", ascending=False)
+                        + grouped[grouped["value"] > 0 ]["rank"].max()
+                    )
+                    last["value"] = 0.0
+                    grouped = pd.concat([grouped, last])
             values = grouped.to_dict(orient="records")
             vl.append({"date": date, "values": values})
+            last = grouped[grouped["value"] > 0]
+        vl.reverse()
         return vl
 
 
