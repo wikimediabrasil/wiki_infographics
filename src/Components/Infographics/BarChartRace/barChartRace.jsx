@@ -271,7 +271,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   return (
     <div id="parent-container" className="relative p-4">
       <TimeLeftAlert/>
-      <div id="play-controls" className="flex items-center mb-4">
+      <div id="play-controls" className="flex items-center">
         <button
           id="play-pause-button"
           className={`bg-cyan-700 hover:bg-cyan-800 dark:bg-cyan-600 dark:hover:bg-cyan-800 fa ${isPlaying ? "fa-pause" : "fa-play"}`}

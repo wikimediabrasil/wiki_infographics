@@ -124,7 +124,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
     <>
       <div>
         <Editor
-          height="60vh"
+          height="80vh"
           language="sparql"
           theme={darkMode ? 'vs-dark' : 'light'}
           onChange={handleValueChange}

@@ -133,12 +133,12 @@ const Infographics = () => {
     <>
 
       <NavBar username={username}/>
-      <div className="px-4 py-8 mx-auto bg-gray-100 dark:bg-gray-700 container mt-4">
-        <div className="grid grid-rows-5 gap-4 lg:grid-cols-5 lg:grid-rows-1 lg:gap-4">
-          <div className="lg:col-span-2 row-span-1 border dark:border-gray-800 overflow-x-auto bg-white dark:bg-gray-600 max-h-[790px]">
+      <div className="mx-auto bg-gray-100 dark:bg-gray-700 container mt-2">
+        <div className="flex flex-col gap-4 lg:flex-row">
+          <div className="flex-1 border dark:border-gray-800 overflow-x-auto bg-white dark:bg-gray-600 max-h-[790px]">
             <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading} errorMessage={error}/>
           </div>
-          <div className="lg:col-span-3 row-span-4 border dark:border-gray-800 relative overflow-x-auto bg-white dark:bg-gray-600">
+          <div style={{minHeight: "90vh"}} className="flex-1 border dark:border-gray-800 relative overflow-x-auto bg-white dark:bg-gray-600">
             {isLoading && <Overlay />}
             {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={getContent(error) || error} /></div>}
             {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={getContent("preview-no-data")} /></div>}

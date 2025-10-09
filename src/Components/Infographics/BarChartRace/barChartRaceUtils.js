@@ -4,8 +4,8 @@ import * as d3 from "d3";
 
 
 // Constants
-export const margin = { top: 32, right: 16, bottom: 32, left: 0 }; // Added padding/margin
-export const barSize = 48;
+export const margin = { top: 16, right: 16, bottom: 16, left: 0 }; // Added padding/margin
+export const barSize = 38;
 export const maxNumberVisible = 12;
 export let color;
 
@@ -15,20 +15,21 @@ let dateFormatter;
 
 // Function to initialize the chart
 export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray, timeUnit, locale) => {
-  const chartMargin = 30; // Adjust this value to increase the space
+  const chartMarginTop = 30;
+  const chartMarginBottom = 12;
 
    // Create SVG element
   svgRef.current = d3
     .select("#container")
     .append("svg")
-    .attr("viewBox", [0, -chartMargin, width, margin.top + barSize * maxNumberVisible + margin.bottom + chartMargin]);
+    .attr("viewBox", [0, -chartMarginTop, width, margin.top + barSize * maxNumberVisible + margin.bottom + chartMarginBottom]);
 
   // Add a title to the SVG
   svgRef.current.append("text")
     .attr("x", width / 2)  // Center horizontally
-    .attr("y", -11)  // Adjust this value to move the title up
+    .attr("y", -12)  // Adjust this value to move the title up
     .attr("text-anchor", "middle")  // Center the text
-    .attr("font-size", "24px")
+    .attr("font-size", "16px")
     .attr("font-weight", "bold")
     .text(title || "");
 
@@ -49,7 +50,7 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
   const y = d3
         .scaleBand()
         .domain(d3.range(maxNumberVisible + 2))
-        .rangeRound([margin.top, margin.top + barSize * (maxNumberVisible + 1 + 0.1)])
+        .rangeRound([-16, barSize * (maxNumberVisible + 1.3)])
         .padding(0.1);
 
   const scale = d3.scaleOrdinal(colorPaletteArray);
@@ -120,7 +121,7 @@ function cap_at_max_rank(rank) {
 function labels(svgRef, x, y, prev, next) {
   let label = svgRef
     .append("g")
-    .style("font", "bold 12px var(--sans-serif)")
+    .style("font", "bold 11px var(--sans-serif)")
     .style("font-variant-numeric", "tabular-nums")
     .attr("text-anchor", "end")
     .selectAll("text");
