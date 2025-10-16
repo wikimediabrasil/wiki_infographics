@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"navbar-help": "Axuda",
+	"navbar-examples": "Exemplos",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "Repositorio",
+	"navbar-help-translate": "Axúdanos coas traducións",
+	"preview-no-data": "Non hai datos dispoñibles",
+	"preview-error-fetching-data": "Produciuse un erro ao obter os datos",
+	"preview-error-timeout": "A consulta tardou demasiado en procesarse: esgotouse o tempo de espera do servizo de consultas de Wikidata",
+	"preview-error-general": "Produciuse un erro ao procesar a consulta",
+	"button-download-csv": "Descargar o CSV",
+	"button-download-video": "Descargar o vídeo",
+	"table-search-bar": "Procurar...",
+	"table-no-data": "Non hai rexistros para mostrar",
+	"table-range-separator": "de",
+	"table-rows-per-page": "Filas por páxina:",
+	"graphic-table-title": "Táboa",
+	"graphic-bar-chart-race-title": "Carreira de gráficos de barras",
+	"bar-chart-race-setup-display": "Configuración da carreira do gráfico de barras",
+	"bar-chart-race-setup-create": "Crear unha carreira de gráficos de barras",
+	"bar-chart-race-setup-title": "Título",
+	"bar-chart-race-setup-optional": "Opcional",
+	"bar-chart-race-setup-speed-unit": "Unidade de velocidade",
+	"bar-chart-race-setup-speed-unit-years": "Anos",
+	"bar-chart-race-setup-speed-unit-months": "Meses",
+	"bar-chart-race-setup-speed-unit-days": "Días",
+	"bar-chart-race-setup-speed-in-units-per-second": "Velocidade en unidades por segundo",
+	"bar-chart-race-setup-color-palette": "Paleta de cores",
+	"bar-chart-race-setup-color-palette-help": "En formato hexadecimal, separados por comas."
+}
