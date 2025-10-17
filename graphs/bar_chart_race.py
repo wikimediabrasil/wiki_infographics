@@ -51,7 +51,7 @@ class BaseDf:
         renamer = {}
         for column in self.df.columns[:-2]:
             first = self.df[column][0]
-            if re.match(r"^https?://.*", first):
+            if re.match(r"^https?://.*", first) and "url" not in renamer.values():
                 renamer[column] = "url"
                 continue
             if "name" in renamer.values():
@@ -101,6 +101,12 @@ class DfProcessor:
             .to_dict("records")
         )
 
+    def name_to_category(self):
+        if "category" in self.df.columns:
+            return self.df[["name", "category"]].drop_duplicates().set_index("name")["category"].to_dict()
+        else:
+            return {}
+
     def year_count(self):
         min_year = int(self.df["date"].min()[:4])
         max_year = int(self.df["date"].max()[:4])
@@ -126,6 +132,9 @@ class DfProcessor:
         )
         df["value"] = df["value"].fillna(0)
         df["rank"] = df.groupby("date")["value"].rank(method="dense", ascending=False)
+        if "category" in self.df.columns:
+            mapper = self.name_to_category()
+            df["category"] = df["name"].apply(lambda name: mapper.get(name))
         return df
 
     def all_time_units(self):
