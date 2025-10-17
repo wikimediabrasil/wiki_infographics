@@ -6,7 +6,7 @@ import logging
 
 from django.db import models
 
-logger = logging.getLogger("django")
+logger = logging.getLogger("infographics")
 
 
 def video_file_path(video, filename):
@@ -108,6 +108,9 @@ class VideoFrameManager(models.Manager):
                 png_path,
                 "--background-color",
                 "white",
+                "--width",
+                "1280",
+                "--keep-aspect-ratio",
             ],
             check=True,
             capture_output=True,
