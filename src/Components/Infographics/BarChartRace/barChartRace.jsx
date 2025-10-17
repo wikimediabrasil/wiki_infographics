@@ -27,7 +27,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   const [progressBarMaxTick, setProgressBarMaxTick] = useState(0);
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
-  const [downloadTimeLeft, setDownloadTimeLeft] = useState(null);
+  const [downloadPercentage, setDownloadPercentage] = useState(null);
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const abortControllerRef = useRef(null);
@@ -171,7 +171,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
         if (response.status == 201) {
           videoIdRef.current = response.data.id;
           setAnimationToTick(0);
-          startTimeLeft();
+          setDownloadPercentage(0);
           timeoutRef.current = setTimeout(startDownloadAnimation, animationDelay() * 2);
         } else {
           stopDownload();
@@ -201,6 +201,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
         };
       });
       increaseAnimationTick(transition);
+      updateDownloadPercentage();
       timeoutRef.current = setTimeout(startDownloadAnimation, DOWNLOAD_WAIT_MULTIPLIER * animationDelay());
     } else {
       const svgString = document.getElementById("container").getHTML();
@@ -232,7 +233,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
     clearTimeout(timeoutRef.current);
     setIsPlaying(false);
     setIsDownloadingVideo(false);
-    setDownloadTimeLeft(null);
+    setDownloadPercentage(null);
     videoIdRef.current = null;
     if (abortControllerRef.current !== null) {
       abortControllerRef.current.abort();
@@ -240,37 +241,22 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
     };
   }
 
-  const startTimeLeft = () => {
-    const keyframeCount = keyframesRef.current.length
-    // divide by 1000 because animationDelay is in miliseconds
-    const chartPlayingTime = Math.ceil(DOWNLOAD_WAIT_MULTIPLIER * animationDelay() * keyframeCount / 1000);
-    const videoCompilationTime = 2 * keyframeCount;
-    setDownloadTimeLeft(chartPlayingTime + videoCompilationTime);
-    setTimeout(decreaseTimeLeft, 1000);
-  }
+  const updateDownloadPercentage = () => {
+    // so that the last 1% is compiling the frames
+    setDownloadPercentage(99 * currentKeyframeRef.current / keyframesRef.current.length);
+  };
 
-  const decreaseTimeLeft = () => {
-    setDownloadTimeLeft(t => {
-      if (t >= 1) {
-        setTimeout(decreaseTimeLeft, 1000);
-        return t - 1;
-      } else {
-        return null;
-      }
-    });
-  }
-
-  const TimeLeftAlert = () =>{
-    if (downloadTimeLeft !== null && downloadTimeLeft >= 0) {
+  const DownloadingAlert = () =>{
+    if (downloadPercentage !== null && downloadPercentage >= 0) {
       return (
-        <Alert><span className="font-medium">Your video is being compiled, please wait {downloadTimeLeft} seconds...</span></Alert>
+        <Alert><span className="font-medium">Your video is being compiled ({Math.round(downloadPercentage)}%)...</span></Alert>
       )
     }
   }
 
   return (
     <div id="parent-container" className="relative p-4">
-      <TimeLeftAlert/>
+      <DownloadingAlert/>
       <div id="play-controls" className="flex items-center">
         <button
           id="play-pause-button"
