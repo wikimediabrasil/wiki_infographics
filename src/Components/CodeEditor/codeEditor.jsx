@@ -129,10 +129,7 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           theme={darkMode ? 'vs-dark' : 'light'}
           onChange={handleValueChange}
           onMount={handleEditorDidMount}
-          defaultValue={`# Write your SPARQL query here...
-# Note! Bar chart race requires the table structure like | itemName(category)
-# | subPropertyName(name) | Numeric value(value) | Date(1872-01-01T00:00:00Z) |
-`}
+          defaultValue={`# Write your SPARQL query here...`}
           value={code}
           options={{
             inlineSuggest: true,
