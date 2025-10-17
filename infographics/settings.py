@@ -105,6 +105,31 @@ DATABASES = {
 }
 
 
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "django": {"format": "%(asctime)s %(levelname)s: %(message)s"},
+    },
+    "handlers": {
+        "django": {
+            "class": "logging.StreamHandler",
+            "formatter": "django",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["django"],
+            "level": "INFO",
+        },
+        "infographics": {
+            "handlers": ["django"],
+            "level": os.environ.get("LOG_LEVEL", "DEBUG"),
+        },
+    },
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

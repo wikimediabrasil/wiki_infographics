@@ -1,3 +1,4 @@
+import logging
 from subprocess import CalledProcessError
 
 from django.http import JsonResponse
@@ -14,6 +15,8 @@ from graphs.utils import charts_from_df
 from video.models import Video
 from video.models import VideoFrame
 
+logger = logging.getLogger("infographics")
+
 
 @require_safe
 def run_query(request):
@@ -21,10 +24,12 @@ def run_query(request):
     if not query:
         return HttpResponse(status=400)
 
+    logger.debug(f"running query: {query.replace("\n", "\\n")}")
     df = df_from_query(query)
 
     if isinstance(df, dict) and "error" in df:
         return JsonResponse(df, status=500)
+    logger.debug(f"obtained successful df: {df}")
 
     charts_data = charts_from_df(df)
 
