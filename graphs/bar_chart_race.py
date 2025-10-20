@@ -13,11 +13,14 @@ MAX_ELEMENTS_SCREEN = 12
 
 
 class BaseDf:
+    UNKNOWN = "http://www.wikidata.org/.well-known/genid"
+
     def __init__(self, df: pd.DataFrame):
         self.df = df
 
     def prepare(self) -> "BaseDf":
         self.verify_column_count()
+        self.remove_uknowns()
         self.prepare_date_column()
         self.prepare_value_column()
         self.prepare_identifier_columns()
@@ -28,6 +31,12 @@ class BaseDf:
     def verify_column_count(self):
         if not (3 <= self.df.shape[1] <= 5):
             raise BaseDfException("number of columns must be between 3 and 5")
+
+    def remove_uknowns(self):
+        for col in self.df.columns:
+            unknowns = self.df[col].astype(str).str.startswith(self.UNKNOWN)
+            if unknowns.sum() > 0:
+                self.df = self.df[~unknowns]
 
     def prepare_date_column(self):
         original_name = self.df.columns[-1]
