@@ -5,7 +5,6 @@ import * as d3 from "d3";
 
 // Constants
 export const margin = { top: 16, right: 16, bottom: 16, left: 0 }; // Added padding/margin
-export const barSize = 38;
 export const maxNumberVisible = 12;
 export let color;
 
@@ -14,9 +13,10 @@ let updateBars, updateAxis, updateLabels, updateTicker, x;
 let dateFormatter;
 
 // Function to initialize the chart
-export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray, timeUnit, locale) => {
+export const initializeChart = (svgRef, dataset, width, maxHeight, title, colorPaletteArray, timeUnit, locale) => {
   const chartMarginTop = 30;
   const chartMarginBottom = 12;
+  const barSize = 0.8 * (maxHeight - margin.top - margin.bottom - chartMarginBottom)/maxNumberVisible;
 
    // Create SVG element
   svgRef.current = d3
@@ -75,9 +75,9 @@ export const initializeChart = (svgRef, dataset, width, title, colorPaletteArray
 
   // Initialize update functions
   updateBars = bars(svgRef.current, x, y, prev, next);
-  updateAxis = axis(svgRef.current, x, y, width);
+  updateAxis = axis(svgRef.current, x, y, width, barSize);
   updateLabels = labels(svgRef.current, x, y, prev, next);
-  updateTicker = ticker(svgRef.current, width, keyframes);
+  updateTicker = ticker(svgRef.current, width, keyframes, barSize);
 
   return keyframes;
 }
@@ -97,7 +97,7 @@ export const updateChart = (keyframe, transition) => {
 // Helper functions
 
 // Ticker function
-function ticker(svgRef, width, keyframes) {
+function ticker(svgRef, width, keyframes, barSize) {
   const now = svgRef
     .append("text")
     .style("font", `bold ${barSize}px var(--sans-serif)`)
@@ -198,7 +198,7 @@ function textTween(a, b) {
 }
 
 // Axis function
-function axis(svgRef, x, y, width) {
+function axis(svgRef, x, y, width, barSize) {
   const g = svgRef
     .append("g")
     .attr("transform", `translate(0,${margin.top})`);

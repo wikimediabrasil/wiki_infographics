@@ -28,6 +28,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   const [dataset, setDataset] = useState(null); // Processed data
   const [currentKeyframeState, setCurrentKeyFrameState] = useState(0); // Current keyframe state
   const [downloadPercentage, setDownloadPercentage] = useState(null);
+  const [graphicsPanelHeight, setGraphicsPanelHeight] = useState(getGraphicsPanelHeight());
   const keyframesRef = useRef([]); // Stores all keyframes
   const timeoutRef = useRef(null); // Handles animation timing
   const abortControllerRef = useRef(null);
@@ -72,7 +73,8 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
       };
 
       const width = container.clientWidth;
-      const keyframes = initializeChart(svgRef, dataset, width, title, colorPaletteArray, timeUnit, locale);
+      const maxHeight = graphicsPanelHeight;
+      const keyframes = initializeChart(svgRef, dataset, width, maxHeight, title, colorPaletteArray, timeUnit, locale);
       keyframesRef.current = keyframes;
 
       // Initialize chart with the first keyframe.
@@ -89,8 +91,20 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
         currentSvg.remove();
       }
     };
+  }, [dataset, timeUnit, title, colorPalette, locale, graphicsPanelHeight]);
 
-  }, [dataset, timeUnit, title, colorPalette, locale]);
+  function getGraphicsPanelHeight() {
+    return document.getElementById("graphicsPanel").clientHeight;
+  };
+
+  useEffect(() => {
+    function handleResize() {
+      setGraphicsPanelHeight(getGraphicsPanelHeight());
+    }
+    window.addEventListener('resize', handleResize);
+    // cleanup:
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const animationDelay = () => {
     return 1000 / speed;
@@ -255,7 +269,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   }
 
   return (
-    <div id="parent-container" className="relative p-4">
+    <div id="parent-container" className="relative p-4" style={{height: "90%"}}>
       <DownloadingAlert/>
       <div id="play-controls" className="flex items-center">
         <button
@@ -274,7 +288,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
           onChange={onRangeChange}
         />
       </div>
-      <div id="container"></div>
+      <div id="container" style={{height: "95%"}}></div>
     </div>
   );
 };
