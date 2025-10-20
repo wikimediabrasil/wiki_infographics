@@ -24,7 +24,7 @@ def run_query(request):
     if not query:
         return HttpResponse(status=400)
 
-    logger.debug(f"running query: {query.replace("\n", "\\n")}")
+    logger.debug(f"running query: {query.replace('\n', '\\n')}")
     df = df_from_query(query)
 
     if isinstance(df, dict) and "error" in df:
