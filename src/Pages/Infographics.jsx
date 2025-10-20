@@ -138,7 +138,7 @@ const Infographics = () => {
           <div style={{minHeight: "82vh"}} className="flex-1 border dark:border-gray-800 bg-white dark:bg-gray-600">
             <CodeEditor onCodeChange={handleCodeChange} handleFetchChartData={getChartData} isLoading={isLoading} errorMessage={error}/>
           </div>
-          <div style={{minHeight: "82vh"}} className="flex-1 border dark:border-gray-800 relative overflow-x-auto bg-white dark:bg-gray-600">
+          <div style={{minHeight: "82vh", minWidth: "50%" }} className="flex-1 border dark:border-gray-800 relative overflow-x-auto bg-white dark:bg-gray-600">
             {isLoading && <Overlay />}
             {error && <div className="flex items-center justify-center mt-7"><ErrorAlert alertText={getContent(error) || error} /></div>}
             {Object.keys(chartData).length < 1 && !error && <div className="flex items-center justify-center mt-7"><InfoAlert alertText={getContent("preview-no-data")} /></div>}
