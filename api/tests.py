@@ -123,5 +123,5 @@ class ShortLinkTests(TestCase):
         self.assertEqual(res.status_code, 302)
         self.assertEqual(
             res.headers["Location"],
-            "/web/infographics/?query=SELECT%0A?abc",
+            "/web/infographics/?query=SELECT%0A%3Fabc",
         )
