@@ -3,6 +3,7 @@ from django.test import TestCase
 
 from api.sparql import df_from_query
 from video.models import Video
+from shortlink.models import ShortLink
 
 
 class TestHelper:
@@ -109,3 +110,18 @@ class VideoTests(TestCase):
         video.refresh_from_db()
         self.assertIsNotNone(video.file)
         self.assertEqual(video.file_framerate, 36)
+
+class ShortLinkTests(TestCase):
+    def test_generate(self):
+        query = "SELECT\n?abc"
+        res = self.client.post("/api/shortlink/generate/", {"query": query})
+        self.assertEqual(res.status_code, 201)
+        encoded = ShortLink.objects.encoded_id_from_query(query)
+        url = f"/s/{encoded}/"
+        self.assertEqual(res.json(), {"url": url})
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(
+            res.headers["Location"],
+            "/web/infographics/?query=SELECT%0A?abc",
+        )

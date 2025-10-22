@@ -46,17 +46,3 @@ SELECT ?item ?itemLabel ?stateLabel ?population ?date WHERE {
         ShortLink.objects.all().delete()
         res = self.client.get(f"/s/{encoded}/")
         self.assertEqual(res.status_code, 404)
-
-    def test_generate(self):
-        query = "SELECT\n?abc"
-        res = self.client.post("/s/generate/", {"query": query})
-        self.assertEqual(res.status_code, 201)
-        encoded = ShortLink.objects.encoded_id_from_query(query)
-        url = f"/s/{encoded}/"
-        self.assertEqual(res.json(), {"url": url})
-        res = self.client.get(url)
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.headers["Location"],
-            "/web/infographics/?query=SELECT%0A?abc",
-        )

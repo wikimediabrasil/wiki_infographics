@@ -8,12 +8,14 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
+from django.shortcuts import reverse
 from django.utils.datastructures import MultiValueDictKeyError
 
 from api.sparql import df_from_query
 from graphs.utils import charts_from_df
 from video.models import Video
 from video.models import VideoFrame
+from shortlink.models import ShortLink
 
 logger = logging.getLogger("infographics")
 
@@ -78,3 +80,12 @@ def generate_video(request, id):
     res["Content-Disposition"] = 'filename="video.webm"'
     res["Access-Control-Expose-Headers"] = "Content-Disposition" # needed for axios to see it
     return res
+
+
+@csrf_exempt
+@require_POST
+def generate_short_link(request):
+    query = request.POST["query"]
+    encoded = ShortLink.objects.encoded_id_from_query(query)
+    url = reverse("shortlink", kwargs={"encoded_id": encoded})
+    return JsonResponse({"url": url}, status=201)
