@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'web',
     'graphs',
     'video',
+    'shortlink',
 ]
 
 MIDDLEWARE = [
