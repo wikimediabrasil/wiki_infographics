@@ -31,6 +31,5 @@ urlpatterns = [
     path("", redirect_to_infographics),
     path("web/", include(web_urls)),
     path("api/", include(api_urls)),
-    path("api2/", include(api_urls)),
     path("s/", include(shortlink_urls)),
 ]
