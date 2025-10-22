@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef, useEffect, useContext } from "react";
 import Editor from "@monaco-editor/react";
-import { HiPlay, HiStop } from "react-icons/hi";
+import { Button, Modal, TextInput, Label, Select, HelperText } from "flowbite-react";
+import { HiPlay, HiStop, HiLink } from "react-icons/hi";
 import { useSearchParams } from 'react-router-dom';
 import "./codeEditor.css";
 import { DarkModeContext } from "../../context/DarkModeContext";
+import api from '../../api/axios';
 
 /**
  * A code editor component with syntax highlighting and error decoration.
@@ -18,15 +20,16 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
   const decorationsRef = useRef([]);
-  const [searchParams, _] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {darkMode} = useContext(DarkModeContext);
+  const shortLinkTimeoutRef = useRef(null);
 
   useEffect(() => {
     const queryParam = searchParams.get("query")
     if (queryParam !== '')  {
       handleValueChange(queryParam);
     };
-  }, [searchParams]);
+  }, []);
 
   /**
    * Handles changes in code and clears previous error decorations.
@@ -39,7 +42,9 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
     // Clear previous decorations
     if (editorRef.current) {
       decorationsRef.current = editorRef.current.deltaDecorations(decorationsRef.current, []);
-    }
+    };
+
+    setSearchParams({query: newCode});
   };
 
   /**
@@ -120,6 +125,29 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
     }
   }, [errorMessage]);
 
+  const getShortLink = () => {
+    clearTimeout(shortLinkTimeoutRef.current);
+    api.postForm("/shortlink/generate/", {query: code}).then((response) => {
+      if (response.status == 201) {
+        const base = window.location.origin;
+        const url = response.data.url;
+        const finalUrl = `${base}${url}`;
+        const shortLinkInput = document.getElementById("shortLinkInput");
+        shortLinkInput.style.display = "block";
+        shortLinkInput.value = finalUrl;
+        shortLinkInput.select();
+        shortLinkTimeoutRef.current = setTimeout(() => {
+          shortLinkInput.style.display = "none";
+        }, 5000);
+      };
+    });
+  };
+
+  useEffect(() => {
+    const shortLinkInput = document.getElementById("shortLinkInput");
+    shortLinkInput.addEventListener("focus", () => shortLinkInput.select());
+  }, []);
+
   return (
     <>
       <div>
@@ -141,7 +169,9 @@ function CodeEditor({ onCodeChange, handleFetchChartData, isLoading, errorMessag
           }}
         />
       </div>
-      <div className="flex mt-2 mb-2 pl-2 text-4xl cursor-pointer dark:text-white" style={{justifyContent: "flex-end"}}>
+      <div className="flex mt-2 mb-2 pl-2 gap-1 text-4xl cursor-pointer dark:text-white" style={{justifyContent: "flex-end", alignItems: "center"}}>
+        <TextInput id="shortLinkInput" sizing="sm" readOnly style={{display:"none", height:"2em", textAlign:"right"}}/>
+        <HiLink style={{height:"0.8em"}} onClick={getShortLink}/>
         {isLoading ? <HiStop /> : <HiPlay onClick={handleFetchChartData} />}  
       </div>
     </>

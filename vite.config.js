@@ -12,8 +12,14 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         // the proxy only happens in development, because
-        // django is handling the requests and gets /api to it
+        // django is handling the requests and gets these routes to it
+        // in django, only /web/ and /web/infographics/ is handled to React
         '/api': {
+          target: "http://127.0.0.1:8000",
+          changeOrigin: true,
+          secure: false,
+        },
+        '/s/': {
           target: "http://127.0.0.1:8000",
           changeOrigin: true,
           secure: false,
