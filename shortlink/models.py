@@ -17,6 +17,12 @@ class ShortLinkManager(models.Manager):
         return self.encode(short_link.id)
 
     def query_from_encoded_id(self, encoded):
+        """
+        Can raise
+
+        - ShortLink.DoesNotExist
+        - IndexError
+        """
         id = self.decode(encoded)
         return self.get(id=id).query
 
@@ -25,3 +31,6 @@ class ShortLink(models.Model):
     query = models.TextField()
 
     objects = ShortLinkManager()
+
+    def encoded_id(self):
+        return ShortLink.objects.encode(self.id)

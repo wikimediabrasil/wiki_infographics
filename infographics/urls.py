@@ -22,6 +22,7 @@ from django.views.generic.base import RedirectView
 
 from web import urls as web_urls
 from api import urls as api_urls
+from shortlink import urls as shortlink_urls
 
 redirect_to_infographics = RedirectView.as_view(url="/web/infographics/")
 
@@ -30,4 +31,6 @@ urlpatterns = [
     path("", redirect_to_infographics),
     path("web/", include(web_urls)),
     path("api/", include(api_urls)),
+    path("api2/", include(api_urls)),
+    path("s/", include(shortlink_urls)),
 ]
