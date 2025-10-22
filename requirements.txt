@@ -4,3 +4,4 @@ pandas==2.2.3
 python-dotenv==1.1.0
 gunicorn==22.0.0
 whitenoise==6.9.0
+sqids==0.5.2
