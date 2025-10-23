@@ -140,7 +140,7 @@ class DfProcessor:
             .reset_index()
         )
         df["value"] = df["value"].fillna(0)
-        df["rank"] = df.groupby("date")["value"].rank(method="dense", ascending=False)
+        df["rank"] = df.groupby("date")["value"].rank(method="first", ascending=False)
         if "category" in self.df.columns:
             mapper = self.name_to_category()
             df["category"] = df["name"].apply(lambda name: mapper.get(name))
@@ -207,7 +207,7 @@ class DfProcessor:
                 last = last[~last.name.isin(grouped["name"])]
                 if last.shape[0] > 0:
                     last["rank"] = (
-                        last["value"].rank(method="dense", ascending=False)
+                        last["value"].rank(method="first", ascending=False)
                         + grouped[grouped["value"] > 0 ]["rank"].max()
                     )
                     last["value"] = 0.0
