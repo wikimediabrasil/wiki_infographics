@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jelican9"
+		]
+	},
+	"navbar-help": "Yardım",
+	"navbar-examples": "Örnekler",
+	"navbar-repository": "Depo",
+	"navbar-help-translate": "Çeviriye yardım edin",
+	"preview-no-data": "Veri yok",
+	"preview-error-fetching-data": "Verileri alırken hata oluştu",
+	"preview-error-timeout": "Sorgu işlenmesi çok uzun sürdü: Vikiveri Sorgu Hizmeti zaman aşımı",
+	"preview-error-general": "Sorgu işlenirken bir sorun oluştu",
+	"button-download-csv": "CSV'yi indir",
+	"button-download-video": "Videoyu indir",
+	"table-search-bar": "Ara...",
+	"table-no-data": "Görüntülenecek kayıt yok",
+	"table-rows-per-page": "Sayfa başına satır sayısı:",
+	"graphic-table-title": "Tablo",
+	"bar-chart-race-setup-title": "Başlık",
+	"bar-chart-race-setup-optional": "İsteğe bağlı",
+	"bar-chart-race-setup-speed-unit-years": "Yıl",
+	"bar-chart-race-setup-speed-unit-months": "Ay",
+	"bar-chart-race-setup-speed-unit-days": "Gün",
+	"bar-chart-race-setup-color-palette": "Renk paleti"
+}
