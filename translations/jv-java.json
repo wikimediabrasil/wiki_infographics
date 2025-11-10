@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bennylin"
+		]
+	},
+	"navbar-help": "ꦥꦶꦠꦸꦭꦸꦁ",
+	"navbar-examples": "ꦕꦺꦴꦤ꧀ꦠꦺꦴ",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "ꦫꦺꦥꦺꦴꦱꦶꦠꦺꦴꦫꦶ",
+	"navbar-help-translate": "ꦠꦸꦭꦸꦁꦔꦶ​ꦩꦼꦂꦠꦭ꧀",
+	"preview-no-data": "ꦲꦺꦴꦫ​ꦢꦸꦮꦺ​ꦢꦠ",
+	"preview-error-fetching-data": "ꦒꦭꦠ꧀​ꦚ꧀ꦗꦸꦥꦸꦏ꧀ꦢꦠ",
+	"preview-error-timeout": "The query took to long to process: Wikidata Query Service timeout",
+	"preview-error-general": "ꦲꦤ​ꦩꦱꦭꦃ​ꦥꦱ꧀ꦩꦿꦺꦴꦱꦺꦱ꧀ꦏꦸꦮꦺꦫꦶ",
+	"button-download-csv": "ꦲꦸꦤ꧀ꦝꦸꦃCSV",
+	"button-download-video": "ꦲꦸꦤ꧀ꦝꦸꦃ​ꦥ꦳ꦶꦢꦺꦪꦺꦴ",
+	"table-search-bar": "ꦒꦺꦴꦭꦺꦏ꧀…",
+	"table-no-data": "ꦲꦺꦴꦫ​ꦲꦤ​ꦫꦺꦏꦩꦤ꧀ꦱꦶꦁ​ꦲꦶꦱ​ꦢꦶꦠꦸꦢꦸꦃꦲꦏꦺ",
+	"table-range-separator": "ꦱꦏ",
+	"table-rows-per-page": "ꦧꦫꦶꦱ꧀ꦥꦼꦂ​ꦏꦕ꧇",
+	"graphic-table-title": "ꦠꦧꦺꦭ꧀",
+	"graphic-bar-chart-race-title": "Bar chart race",
+	"bar-chart-race-setup-display": "Bar chart race setup",
+	"bar-chart-race-setup-create": "Create bar chart race",
+	"bar-chart-race-setup-title": "ꦱꦼꦱꦶꦫꦃ",
+	"bar-chart-race-setup-optional": "ꦲꦺꦴꦫꦏꦸꦢꦸ",
+	"bar-chart-race-setup-speed-unit": "Speed unit",
+	"bar-chart-race-setup-speed-unit-years": "ꦠꦲꦸꦤ꧀",
+	"bar-chart-race-setup-speed-unit-months": "ꦮꦸꦭꦤ꧀",
+	"bar-chart-race-setup-speed-unit-days": "ꦢꦶꦤ",
+	"bar-chart-race-setup-speed-in-units-per-second": "Speed in units per second",
+	"bar-chart-race-setup-color-palette": "Color palette",
+	"bar-chart-race-setup-color-palette-help": "In hex format, separated by commas."
+}
