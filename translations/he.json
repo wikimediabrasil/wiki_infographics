@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"YaronSh"
+		]
+	},
+	"navbar-help": "עזרה",
+	"navbar-examples": "דוגמאות",
+	"navbar-title": "ויקי אינפוגרפיקות",
+	"navbar-repository": "מאגר",
+	"navbar-help-translate": "נשמח לעזרה בתרגום",
+	"preview-no-data": "אין נתונים זמינים",
+	"preview-error-fetching-data": "שגיאה במשיכת הנתונים",
+	"preview-error-timeout": "עיבוד השאילתה לקח יותר מדי זמן: תום זמן משירות התשאול של ויקינתונים",
+	"preview-error-general": "משהו השתבש במהלך עיבוד השאילתה",
+	"button-download-csv": "הורדת CSV",
+	"button-download-video": "הורדת וידאו",
+	"table-search-bar": "חיפוש...",
+	"table-no-data": "אין רשומות לתצוגה",
+	"table-range-separator": "מתוך",
+	"table-rows-per-page": "שורות בדף:",
+	"graphic-table-title": "טבלה",
+	"graphic-bar-chart-race-title": "מרוץ תרשים עמודות",
+	"bar-chart-race-setup-display": "הגדרת מרוץ תרשים עמודות",
+	"bar-chart-race-setup-create": "יצירת מרוץ תרשים עמודות",
+	"bar-chart-race-setup-title": "כותרת",
+	"bar-chart-race-setup-optional": "רשות",
+	"bar-chart-race-setup-speed-unit": "יחידת מהירות",
+	"bar-chart-race-setup-speed-unit-years": "שנים",
+	"bar-chart-race-setup-speed-unit-months": "חודשים",
+	"bar-chart-race-setup-speed-unit-days": "ימים",
+	"bar-chart-race-setup-speed-in-units-per-second": "מהירות ביחידות לשנייה",
+	"bar-chart-race-setup-color-palette": "ערכת צבעים",
+	"bar-chart-race-setup-color-palette-help": "בתבנית הקסדצימלית, עם פסיקים מפרידים."
+}
