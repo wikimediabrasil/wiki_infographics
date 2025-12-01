@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Amire80",
 			"YaronSh"
 		]
 	},
@@ -10,8 +11,8 @@
 	"navbar-repository": "מאגר",
 	"navbar-help-translate": "נשמח לעזרה בתרגום",
 	"preview-no-data": "אין נתונים זמינים",
-	"preview-error-fetching-data": "שגיאה במשיכת הנתונים",
-	"preview-error-timeout": "עיבוד השאילתה לקח יותר מדי זמן: תום זמן משירות התשאול של ויקינתונים",
+	"preview-error-fetching-data": "שגיאה בשליפת נתונים",
+	"preview-error-timeout": "עיבוד השאילתה לקח יותר מדי זמן: תפוגת זמן בשירות השאילתות של ויקינתונים",
 	"preview-error-general": "משהו השתבש במהלך עיבוד השאילתה",
 	"button-download-csv": "הורדת CSV",
 	"button-download-video": "הורדת וידאו",
