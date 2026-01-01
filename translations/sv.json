@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Stefan2255"
+		]
+	},
+	"navbar-help": "Hjälp",
+	"navbar-examples": "Exempel",
+	"navbar-title": "Wiki-infografik",
+	"navbar-repository": "Förvaring",
+	"navbar-help-translate": "Hjälp till att översätta",
+	"preview-no-data": "Ingen tillgänglig data",
+	"preview-error-fetching-data": "Fel vid hämtning av data",
+	"preview-error-timeout": "Frågan tog för lång tid att bearbeta: Wikidata Query Service timeout",
+	"preview-error-general": "Något fel uppstod när frågan bearbetades",
+	"button-download-csv": "Ladda ned CSV",
+	"button-download-video": "Ladda ner video",
+	"table-search-bar": "Sök ...",
+	"table-no-data": "Det finns inga poster att visa",
+	"table-range-separator": "av",
+	"table-rows-per-page": "Rader per sida:",
+	"graphic-table-title": "Tabell",
+	"graphic-bar-chart-race-title": "Stapeldiagramkapplöpning",
+	"bar-chart-race-setup-display": "Stapeldiagramsuppsättning",
+	"bar-chart-race-setup-create": "Skapa stapeldiagramskappläpning",
+	"bar-chart-race-setup-title": "Titel",
+	"bar-chart-race-setup-optional": "Valfritt",
+	"bar-chart-race-setup-speed-unit": "Hastighetsenhet",
+	"bar-chart-race-setup-speed-unit-years": "År",
+	"bar-chart-race-setup-speed-unit-months": "Månader",
+	"bar-chart-race-setup-speed-unit-days": "Dagar",
+	"bar-chart-race-setup-speed-in-units-per-second": "Hastighet i enheter per sekund",
+	"bar-chart-race-setup-color-palette": "Färgpalett",
+	"bar-chart-race-setup-color-palette-help": "I hexadecimalformat, separerade med kommatecken."
+}
