@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aindriu80"
+		]
+	},
+	"navbar-help": "Cabhair",
+	"navbar-examples": "Samplaí",
+	"navbar-title": "Infografaic Vicí",
+	"navbar-repository": "Stór",
+	"navbar-help-translate": "Cabhraigh linn aistriú",
+	"preview-no-data": "Níl aon sonraí ar fáil",
+	"preview-error-fetching-data": "Earráid ag fáil sonraí",
+	"preview-error-timeout": "Thóg an t-iarratas ró-fhada le próiseáil: Am críochnaithe Seirbhís Iarratais Wikidata",
+	"preview-error-general": "Thóg an t-iarratas ró-fhada le próiseáil: Am Seirbhís Iarratais críochnaitheach Wikidata",
+	"button-download-csv": "Íoslódáil CSV",
+	"button-download-video": "Íoslódáil físeán",
+	"table-search-bar": "Cuardaigh...",
+	"table-no-data": "Níl aon taifid le taispeáint",
+	"table-range-separator": "de",
+	"table-rows-per-page": "Sraitheanna in aghaidh an leathanaigh:",
+	"graphic-table-title": "Tábla",
+	"graphic-bar-chart-race-title": "Rás chairt barra",
+	"bar-chart-race-setup-display": "Socrú rása chairt barra",
+	"bar-chart-race-setup-create": "Cruthaigh rás barrachairte",
+	"bar-chart-race-setup-title": "Teideal",
+	"bar-chart-race-setup-optional": "Roghnach",
+	"bar-chart-race-setup-speed-unit": "Aonad luais",
+	"bar-chart-race-setup-speed-unit-years": "Blianta",
+	"bar-chart-race-setup-speed-unit-months": "Míonna",
+	"bar-chart-race-setup-speed-unit-days": "Laethanta",
+	"bar-chart-race-setup-speed-in-units-per-second": "Luas in aonaid in aghaidh an tsoicind",
+	"bar-chart-race-setup-color-palette": "Pailéad dathanna",
+	"bar-chart-race-setup-color-palette-help": "I bhformáid heicsidheachúlach, scartha le camóga."
+}
