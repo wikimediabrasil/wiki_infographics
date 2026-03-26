@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lenchanteur"
+		]
+	},
+	"navbar-help": "Aide",
+	"navbar-examples": "Exemples",
+	"navbar-title": "Wiki Infographiques",
+	"navbar-repository": "Dépôt",
+	"navbar-help-translate": "Aidez-nous à traduire",
+	"preview-no-data": "Aucune donnée disponible",
+	"preview-error-fetching-data": "Erreur lors de la récupération des données",
+	"preview-error-timeout": "Le traitement de la requête a pris trop de temps: Wikidata Query Service timeout",
+	"preview-error-general": "Une erreur s'est produite lors du traitement de la requête.",
+	"button-download-csv": "Télécharger le fichier CVS",
+	"button-download-video": "Télécharger la vidéo",
+	"table-search-bar": "Recherche...",
+	"table-no-data": "Il n'y a aucun enregistrement à aficher",
+	"table-range-separator": "de",
+	"table-rows-per-page": "Lignes par page:",
+	"graphic-table-title": "Tableau",
+	"graphic-bar-chart-race-title": "course de graphiques à barres",
+	"bar-chart-race-setup-display": "Configuration de course de graphique à barres",
+	"bar-chart-race-setup-create": "Créer une course de graphique à barres",
+	"bar-chart-race-setup-title": "Titre",
+	"bar-chart-race-setup-optional": "Facultatif",
+	"bar-chart-race-setup-speed-unit": "Unité de vitesse",
+	"bar-chart-race-setup-speed-unit-years": "Années",
+	"bar-chart-race-setup-speed-unit-months": "Mois",
+	"bar-chart-race-setup-speed-unit-days": "Jours",
+	"bar-chart-race-setup-speed-in-units-per-second": "Vitesse en unités par seconde",
+	"bar-chart-race-setup-color-palette": "Palette de couleur",
+	"bar-chart-race-setup-color-palette-help": "Au format hexadécimal, séparés par des virgules."
+}
