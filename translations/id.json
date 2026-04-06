@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bayahiu"
+		]
+	},
+	"navbar-help": "Bantuan",
+	"navbar-examples": "Contoh",
+	"navbar-title": "Wiki Infografik",
+	"navbar-repository": "Repositori",
+	"navbar-help-translate": "Bantu kami terjemahkan",
+	"preview-no-data": "Tiada data tersedia",
+	"preview-error-fetching-data": "Galat saat mengambil data",
+	"preview-error-timeout": "Kueri ini memakan waktu terlalu lama untuk diolah: Layanan Permintaan Wikidata habis waktu.",
+	"preview-error-general": "Terjadi kesalahan saat mengolah kueri",
+	"button-download-csv": "Unduh CSV",
+	"button-download-video": "Unduh video",
+	"table-search-bar": "Cari...",
+	"table-no-data": "Tiada rekaman yang dapat ditampilkan",
+	"table-range-separator": "dari",
+	"table-rows-per-page": "Baris per halaman:",
+	"graphic-table-title": "Tabel",
+	"graphic-bar-chart-race-title": "Lomba bagan batang",
+	"bar-chart-race-setup-display": "Penyetelan lomba bagan batang",
+	"bar-chart-race-setup-create": "Ciptakan lomba bagan batang",
+	"bar-chart-race-setup-title": "Judul",
+	"bar-chart-race-setup-optional": "Tak wajib",
+	"bar-chart-race-setup-speed-unit": "Satuan kecepatan",
+	"bar-chart-race-setup-speed-unit-years": "Tahun",
+	"bar-chart-race-setup-speed-unit-months": "Bulan",
+	"bar-chart-race-setup-speed-unit-days": "Hari",
+	"bar-chart-race-setup-speed-in-units-per-second": "Kecepatan dalam satuan per detik",
+	"bar-chart-race-setup-color-palette": "Palet warna",
+	"bar-chart-race-setup-color-palette-help": "Dalam format heks, berpisahkan koma."
+}
