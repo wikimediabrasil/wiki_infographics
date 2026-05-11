@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Shem.iz"
+		]
+	},
+	"navbar-help": "സഹായം",
+	"navbar-examples": "ഉദാഹരണങ്ങൾ",
+	"navbar-title": "വിക്കി ഇൻഫോഗ്രാഫിക്സ്",
+	"navbar-repository": "റെപ്പോസിറ്ററി",
+	"navbar-help-translate": "വിവർത്തനം ചെയ്യാൻ ഞങ്ങളെ സഹായിക്കൂ",
+	"preview-no-data": "വിവരങ്ങളൊന്നും ലഭ്യമല്ല",
+	"preview-error-fetching-data": "ഡാറ്റ ലഭ്യമാക്കുന്നതിൽ പിശക്",
+	"preview-error-general": "ചോദ്യം പ്രോസസ്സ് ചെയ്യുമ്പോൾ എന്തോ കുഴപ്പം സംഭവിച്ചു.",
+	"button-download-csv": "CSV ഡൗൺലോഡ് ചെയ്യുക",
+	"button-download-video": "വീഡിയോ ഡൌൺലോഡ് ചെയ്യുക",
+	"table-search-bar": "തിരയുക...",
+	"table-no-data": "പ്രദർശിപ്പിക്കാൻ രേഖകളൊന്നുമില്ല.",
+	"table-range-separator": "യുടെ",
+	"table-rows-per-page": "പേജിലെ വരികൾ:",
+	"graphic-table-title": "പട്ടിക",
+	"graphic-bar-chart-race-title": "ബാർ ചാർട്ട് റേസ്",
+	"bar-chart-race-setup-display": "ബാർ ചാർട്ട് റേസ് സജ്ജീകരണം",
+	"bar-chart-race-setup-create": "ബാർ ചാർട്ട് റേസ് സൃഷ്ടിക്കുക",
+	"bar-chart-race-setup-title": "തലക്കെട്ട്",
+	"bar-chart-race-setup-speed-unit-years": "വർഷങ്ങൾ",
+	"bar-chart-race-setup-speed-unit-months": "മാസങ്ങൾ",
+	"bar-chart-race-setup-speed-unit-days": "ദിവസങ്ങൾ",
+	"bar-chart-race-setup-color-palette": "കളർ പാലറ്റ്",
+	"bar-chart-race-setup-color-palette-help": "ഹെക്സ് ഫോർമാറ്റിൽ, കോമകളാൽ വേർതിരിച്ചിരിച്ച്."
+}
