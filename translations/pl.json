@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"G3raltJJ"
+		]
+	},
+	"navbar-help": "Pomoc",
+	"navbar-examples": "Przykłady",
+	"navbar-title": "Infografika Wiki",
+	"navbar-repository": "Repozytorium",
+	"navbar-help-translate": "Pomóż w tłumaczeniu",
+	"preview-no-data": "Brak dostępnych danych",
+	"preview-error-fetching-data": "Błąd podczas pobierania danych",
+	"preview-error-timeout": "Zapytanie trwało zbyt długo: przekroczono limit czasu Wikidata Query Service",
+	"preview-error-general": "Coś poszło nie tak podczas przetwarzania zapytania",
+	"button-download-csv": "Pobierz CSV",
+	"button-download-video": "Pobierz film",
+	"table-search-bar": "Wyszukaj...",
+	"table-no-data": "Nie ma żadnych wpisów do wyświetlenia",
+	"table-range-separator": "z",
+	"table-rows-per-page": "Rzędy na stronę:",
+	"graphic-table-title": "Tabela",
+	"graphic-bar-chart-race-title": "Wyścig wykresów słupkowych",
+	"bar-chart-race-setup-display": "Konfiguracja wyścigu wykresów słupkowych",
+	"bar-chart-race-setup-create": "Utwórz wyścig wykresów słupkowych",
+	"bar-chart-race-setup-title": "Tytuł",
+	"bar-chart-race-setup-optional": "Opcjonalne",
+	"bar-chart-race-setup-speed-unit": "Jednostka prędkości",
+	"bar-chart-race-setup-speed-unit-years": "Lata",
+	"bar-chart-race-setup-speed-unit-months": "Miesięcy",
+	"bar-chart-race-setup-speed-unit-days": "Dni",
+	"bar-chart-race-setup-speed-in-units-per-second": "Prędkość w jednostkach na sekundę",
+	"bar-chart-race-setup-color-palette": "Paleta kolorów",
+	"bar-chart-race-setup-color-palette-help": "W formacie szesnastkowym, oddzielone przecinkami."
+}
