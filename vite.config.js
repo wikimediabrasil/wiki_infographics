@@ -5,11 +5,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
   const base = env.VITE_DEV === "True" ? "" : "/static/frontend";
+  const port = env.VITE_PORT || 5173;
 
   return {
     base: base,
     plugins: [react()],
     server: {
+      port: port,
       proxy: {
         // the proxy only happens in development, because
         // django is handling the requests and gets these routes to it
