@@ -62,15 +62,12 @@ export const initializeChart = (svgRef, dataset, width, maxHeight, title, colorP
     color = (x) => scale(x.name);
   }
 
-  // define date format
-  let dateFormat = { year: "numeric" };
-
-  if (timeUnit === "day") {
-    dateFormat = { year: "numeric", month: "numeric", day: "numeric" };
-  } else if (timeUnit === "month") {
-    dateFormat = { year: "numeric", month: "long" };
+  let dateFormat = {
+    timeZone: "UTC",
+    year: "numeric",
+    ...(timeUnit === "month" && { month: "long" }),
+    ...(timeUnit === "day" && { month: "numeric", day: "numeric"})
   };
-
   dateFormatter = Intl.DateTimeFormat(locale, dateFormat);
 
   // Initialize update functions
