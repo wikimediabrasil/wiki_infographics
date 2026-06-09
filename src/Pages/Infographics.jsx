@@ -38,6 +38,7 @@ const Infographics = () => {
   const [chartSpeed, setChartSpeed] = useState(5);
   const [chartColorPalette, setChartColorPalette] = useState("");
   const [chartTimeUnit, setChartTimeUnit] = useState("year");
+  const [chartOnlyOriginalTimeUnits, setChartOnlyOriginalTimeUnits] = useState(false);
   const [isBarChartRaceEnabled, setIsBarChartRaceEnabled] = useState(false)
   const { getContent } = useContext(LanguageContext);
 
@@ -76,6 +77,7 @@ const Infographics = () => {
       setChartData(response.data.data);
       setChartType("Table");
       setChartTimeUnit("year");
+      setChartOnlyOriginalTimeUnits(false);
     } catch (error) {
       handleClearError()
       setError(error?.response?.data?.error || "preview-error-fetching-data")
@@ -124,6 +126,10 @@ const Infographics = () => {
     setChartTimeUnit(timeUnit);
   }
 
+  const handleChartOnlyOriginalTimeUnits = (onlyOriginalTimeUnits) => {
+    setChartOnlyOriginalTimeUnits(onlyOriginalTimeUnits);
+  }
+
   const handleClearError = () => {
     setError("");
   }
@@ -146,9 +152,9 @@ const Infographics = () => {
               <DropDownButton updateModalState={changeModalState} handleCDisplay={handleChartDisplay} isBarChartRaceEnabled={isBarChartRaceEnabled} chartType={chartType} disabled={isDownloadingVideo || isDownloadingCsv}/>
               <DownloadButtons handleDownloadCsv={handleDownloadCsv} isDownloadingCsv={isDownloadingCsv} handleDownloadVideo={handleDownloadVideo} isDownloadingVideo={isDownloadingVideo} chartType={chartType}/>
             </div>}
-            <InfoModal barRaceData={chartData.bar_chart_race} currState={openModal} onCloseModal={onCloseModal} handleChartDisplay={handleChartDisplay} handleChartTitle={handleChartTitle} handleChartSpeed={handleChartSpeed} handleChartColorPalette={handleChartColorPalette} handleChartTimeUnit={handleChartTimeUnit}/>
+            <InfoModal barRaceData={chartData.bar_chart_race} currState={openModal} onCloseModal={onCloseModal} handleChartDisplay={handleChartDisplay} handleChartTitle={handleChartTitle} handleChartSpeed={handleChartSpeed} handleChartColorPalette={handleChartColorPalette} handleChartTimeUnit={handleChartTimeUnit} handleChartOnlyOriginalTimeUnits={handleChartOnlyOriginalTimeUnits} />
             {chartData.table && chartType == "Table" && <ChartTable tableData={chartData.table} />}
-            {chartType == "Bar chart race" && !error && Object.keys(chartData).length > 0 && <BarChartRace title={chartTitle} speed={chartSpeed} colorPalette={chartColorPalette} timeUnit={chartTimeUnit} barRaceData={chartData.bar_chart_race} isDownloadingVideo={isDownloadingVideo} setIsDownloadingVideo={setIsDownloadingVideo} />}
+            {chartType == "Bar chart race" && !error && Object.keys(chartData).length > 0 && <BarChartRace title={chartTitle} speed={chartSpeed} colorPalette={chartColorPalette} timeUnit={chartTimeUnit} barRaceData={chartData.bar_chart_race} isDownloadingVideo={isDownloadingVideo} setIsDownloadingVideo={setIsDownloadingVideo} onlyOriginalTimeUnits={chartOnlyOriginalTimeUnits} />}
           </div>
         </div>
       </div>

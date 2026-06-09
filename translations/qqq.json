@@ -28,6 +28,7 @@
 	"bar-chart-race-setup-speed-unit-months": "Bar chart race setup speed unit: months",
 	"bar-chart-race-setup-speed-unit-days": "Bar chart race setup speed unit: days",
 	"bar-chart-race-setup-speed-in-units-per-second": "Bar chart race setup form element: speed in units per second",
+	"bar-chart-race-setup-only-original-time-units": "Bar chart race setup form element: use only time units of original query",
 	"bar-chart-race-setup-color-palette": "Bar chart race setup form element: color palette",
 	"bar-chart-race-setup-color-palette-help": "Color palette form element help text in bar chat race setup"
 }

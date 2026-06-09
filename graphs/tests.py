@@ -1,6 +1,5 @@
 import pandas as pd
 from datetime import datetime
-from numpy import nan
 from django.test import TestCase
 from django.utils.timezone import now
 
@@ -183,3 +182,13 @@ class QueryTests(TestCase):
         self.assertEqual(len(ip["date"].unique()), days_between + 1)
         vls = proc.values_by_date()
         self.assertEqual(len(vls), 550)
+
+    def test_original_units(self):
+        df = TestHelper.mock_df_bcr()
+        bdf = BaseDf(df).prepare()
+        proc = DfProcessor(bdf)
+        proc.interpolated_df() # just to be sure this does not interfere
+        original = proc.original_time_units()
+        self.assertEqual(original, ["2020-01-01", "2022-01-01"])
+        original = DfProcessor(bdf, time_unit="day").original_time_units()
+        self.assertEqual(original, ["2020-07-01", "2022-01-01"])

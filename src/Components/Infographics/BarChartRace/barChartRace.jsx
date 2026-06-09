@@ -17,7 +17,7 @@ import { LanguageContext } from "../../../context/LanguageContext";
  * @param {string} props.colorPalette - List of colors for the chart
  * @param {Array} props.barRaceData - Data for the bar chart race
  */
-const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDownloadingVideo, setIsDownloadingVideo }) => {
+const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDownloadingVideo, setIsDownloadingVideo, onlyOriginalTimeUnits }) => {
   const DEFAULT_TRANSITION_DELAY = 250;
   const DOWNLOAD_WAIT_MULTIPLIER = 4;
   const svgRef = useRef(null); // Reference to the SVG element
@@ -36,7 +36,7 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
   const { locale } = useContext(LanguageContext);
 
   useEffect(() => {
-    const fetchDataAsync = () => {
+    const prepareDataset = () => {
       if (barRaceData) {
         var data_to_use = barRaceData.values_by_date;
         if (timeUnit === "day") {
@@ -44,6 +44,12 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
         } else if (timeUnit === "month") {
           data_to_use = barRaceData.values_by_date_monthly;
         };
+
+        var original_time_units = new Set(barRaceData.original_time_units);
+        if (onlyOriginalTimeUnits) {
+          data_to_use = data_to_use.filter(d => original_time_units.has(d.date));
+        };
+
         var keyframes = data_to_use.map(d => [new Date(d.date), d.values]);
 
         const dataset = {
@@ -54,8 +60,8 @@ const BarChartRace = ({ title, speed, colorPalette, timeUnit, barRaceData, isDow
         setProgressBarMaxTick(keyframes.length - 1);
       }
     };
-    fetchDataAsync();
-  }, [barRaceData, timeUnit]);
+    prepareDataset();
+  }, [barRaceData, timeUnit, onlyOriginalTimeUnits]);
 
   useEffect(() => {
     if (dataset) {

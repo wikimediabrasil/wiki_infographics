@@ -28,6 +28,7 @@
 	"bar-chart-race-setup-speed-unit-months": "Meses",
 	"bar-chart-race-setup-speed-unit-days": "Dias",
 	"bar-chart-race-setup-speed-in-units-per-second": "Velocidade em unidades por segundo",
+	"bar-chart-race-setup-only-original-time-units": "Usar somente unidades de tempo da query original",
 	"bar-chart-race-setup-color-palette": "Paleta de cores",
 	"bar-chart-race-setup-color-palette-help": "Em formato hexadecimal, separado por vírgulas."
 }

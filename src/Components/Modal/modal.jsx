@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
-import { Button, Modal, TextInput, Label, Select, HelperText } from "flowbite-react";
+import { Button, Modal, TextInput, Label, Select, Checkbox, HelperText } from "flowbite-react";
 // Components documentation: https://flowbite-react.com/docs/components/forms
 import { useEffect, useState, useContext } from "react";
 import { LanguageContext } from "../../context/LanguageContext";
 
 
-export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed, handleChartColorPalette, handleChartTimeUnit }) {
+export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDisplay, handleChartTitle, handleChartSpeed, handleChartColorPalette, handleChartTimeUnit, handleChartOnlyOriginalTimeUnits }) {
   const [openModal, setOpenModal] = useState(false);
   const [chartTitle, setChartTitle] = useState("");
   const [chartSpeed, setChartSpeed] = useState(5);
   const [chartColorPalette, setChartColorPalette] = useState("");
   const [chartTimeUnit, setChartTimeUnit] = useState("year");
+  const [chartOnlyOriginalTimeUnits, setChartOnlyOriginalTimeUnits] = useState(false);
   const { getContent } = useContext(LanguageContext);
 
   useEffect(() => {
@@ -38,6 +39,11 @@ export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDis
     var value = event.target.value;
     setChartTimeUnit(value);
     handleChartTimeUnit(value);
+  }
+
+  const handleOnlyOriginalTimeUnitsChange = (event) => {
+    setChartOnlyOriginalTimeUnits(event.target.checked);
+    handleChartOnlyOriginalTimeUnits(event.target.checked);
   }
 
   const handleChartType = () => {
@@ -74,6 +80,13 @@ export function InfoModal({ barRaceData, currState, onCloseModal, handleChartDis
                 <Label htmlFor="chartSpeed">{getContent("bar-chart-race-setup-speed-in-units-per-second")}</Label>
               </div>
               <TextInput id="chartSpeed" type="number" min="1" max="50" placeholder={getContent("bar-chart-race-setup-speed-in-units-per-second")} value={chartSpeed} onChange={handleSpeedChange} required />
+            </div>
+
+            <div className="max-w-md">
+              <div className="mb-2 block">
+                <Checkbox id="chartOnlyOriginalTimeUnits" checked={chartOnlyOriginalTimeUnits} onChange={handleOnlyOriginalTimeUnitsChange} />
+                <Label htmlFor="chartOnlyOriginalTimeUnits"> {getContent("bar-chart-race-setup-only-original-time-units")}</Label>
+              </div>
             </div>
 
             <div className="max-w-md">

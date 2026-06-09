@@ -192,6 +192,11 @@ class DfProcessor:
                 days_index.append(date.strftime("%Y-%m-%d"))
             return days_index
 
+    def original_time_units(self):
+        units = list(self.df["date"].unique())
+        units.reverse()
+        return units
+
     def values_by_date(self):
         ip = self.interpolated_df()
         head = MAX_ELEMENTS_SCREEN * 2  # times 2 to be safe
@@ -240,4 +245,5 @@ def process_bar_chart_race(df):
         data["values_by_date_monthly"] = t_monthly.result()
         if run_daily:
             data["values_by_date_daily"] = t_daily.result()
+    data["original_time_units"] = proc.original_time_units()
     return data
