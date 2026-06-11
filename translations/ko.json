@@ -31,6 +31,7 @@
 	"bar-chart-race-setup-speed-unit-months": "월",
 	"bar-chart-race-setup-speed-unit-days": "일",
 	"bar-chart-race-setup-speed-in-units-per-second": "속도 (초당)",
+	"bar-chart-race-setup-only-original-time-units": "원래 쿼리의 시간 단위만 사용",
 	"bar-chart-race-setup-color-palette": "컬러 팔레트",
 	"bar-chart-race-setup-color-palette-help": "16진수 형식, 쉼표로 구분하여 입력하세요."
 }

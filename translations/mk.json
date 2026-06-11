@@ -30,6 +30,7 @@
 	"bar-chart-race-setup-speed-unit-months": "Месеци",
 	"bar-chart-race-setup-speed-unit-days": "Денови",
 	"bar-chart-race-setup-speed-in-units-per-second": "Брзина во единици во секунда",
+	"bar-chart-race-setup-only-original-time-units": "Користи само временски единици од изворното побарување",
 	"bar-chart-race-setup-color-palette": "Бојна палета",
 	"bar-chart-race-setup-color-palette-help": "Во хексадецимален формат, одделени со запирки."
 }

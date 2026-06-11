@@ -30,6 +30,7 @@
 	"bar-chart-race-setup-speed-unit-months": "月",
 	"bar-chart-race-setup-speed-unit-days": "日",
 	"bar-chart-race-setup-speed-in-units-per-second": "速度（单位为秒）",
+	"bar-chart-race-setup-only-original-time-units": "仅使用原始查询的时间单位",
 	"bar-chart-race-setup-color-palette": "调色板",
 	"bar-chart-race-setup-color-palette-help": "使用十六进制格式，以逗号分隔。"
 }

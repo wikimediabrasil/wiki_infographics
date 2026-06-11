@@ -30,6 +30,7 @@
 	"bar-chart-race-setup-speed-unit-months": "月",
 	"bar-chart-race-setup-speed-unit-days": "日",
 	"bar-chart-race-setup-speed-in-units-per-second": "速度（單位為秒）",
+	"bar-chart-race-setup-only-original-time-units": "僅使用原始查詢的時間單位",
 	"bar-chart-race-setup-color-palette": "調色盤",
 	"bar-chart-race-setup-color-palette-help": "採用十六進位格式，以逗號分隔。"
 }
