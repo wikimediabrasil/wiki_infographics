@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"navbar-help": "Pomocník",
+	"navbar-examples": "Príklady",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "Repozitár",
+	"navbar-help-translate": "Pomôžte nám prekladať",
+	"preview-no-data": "Nie sú dostupné žiadne údaje",
+	"preview-error-fetching-data": "Chyba pri načítavaní údajov",
+	"preview-error-timeout": "Spracovanie dopytu trvalo príliš dlho: vypršal časový limit služby Wikidata Query Service",
+	"preview-error-general": "Pri spracovaní dopytu sa niečo pokazilo",
+	"button-download-csv": "Stiahnuť CSV",
+	"button-download-video": "Stiahnuť video",
+	"table-search-bar": "Hľadať...",
+	"table-no-data": "Nie sú k dispozícii žiadne záznamy na zobrazenie",
+	"table-range-separator": "z",
+	"table-rows-per-page": "Riadkov na stránku:",
+	"graphic-table-title": "Tabuľka",
+	"graphic-bar-chart-race-title": "Preteky stĺpcového grafu",
+	"bar-chart-race-setup-display": "Nastavenie pretekov stĺpcového grafu",
+	"bar-chart-race-setup-create": "Vytvoriť preteky stĺpcového grafu",
+	"bar-chart-race-setup-title": "Názov",
+	"bar-chart-race-setup-optional": "Voliteľné",
+	"bar-chart-race-setup-speed-unit": "Jednotka rýchlosti",
+	"bar-chart-race-setup-speed-unit-years": "Roky",
+	"bar-chart-race-setup-speed-unit-months": "Mesiace",
+	"bar-chart-race-setup-speed-unit-days": "Dni",
+	"bar-chart-race-setup-speed-in-units-per-second": "Rýchlosť v jednotkách za sekundu",
+	"bar-chart-race-setup-only-original-time-units": "Použiť iba časové jednotky pôvodného dopytu",
+	"bar-chart-race-setup-color-palette": "Farebná paleta",
+	"bar-chart-race-setup-color-palette-help": "V hexadecimálnom formáte, oddelené čiarkami."
+}
