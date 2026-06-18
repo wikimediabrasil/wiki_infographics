@@ -31,6 +31,7 @@
 	"bar-chart-race-setup-speed-unit-months": "أشهر",
 	"bar-chart-race-setup-speed-unit-days": "أيام",
 	"bar-chart-race-setup-speed-in-units-per-second": "السرعة بوحدات في الثانية",
+	"bar-chart-race-setup-only-original-time-units": "استخدم فقط وحدات زمنية من الاستعلام الأصلي",
 	"bar-chart-race-setup-color-palette": "لوحة الألوان",
 	"bar-chart-race-setup-color-palette-help": "بتنسيق سداسي عشري، مفصول بفاصلات."
 }
