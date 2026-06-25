@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Hedda",
 			"Jelican9",
 			"Leo"
 		]
@@ -31,6 +32,7 @@
 	"bar-chart-race-setup-speed-unit-months": "Ay",
 	"bar-chart-race-setup-speed-unit-days": "Gün",
 	"bar-chart-race-setup-speed-in-units-per-second": "Saniyede birim cinsinden hız",
+	"bar-chart-race-setup-only-original-time-units": "Yalnızca özgün sorgudaki zaman birimlerini kullanın",
 	"bar-chart-race-setup-color-palette": "Renk paleti",
 	"bar-chart-race-setup-color-palette-help": "Virgülle ayrılmış şekilde onaltılık formatta."
 }
