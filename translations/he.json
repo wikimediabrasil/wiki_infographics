@@ -31,6 +31,7 @@
 	"bar-chart-race-setup-speed-unit-months": "חודשים",
 	"bar-chart-race-setup-speed-unit-days": "ימים",
 	"bar-chart-race-setup-speed-in-units-per-second": "מהירות ביחידות לשנייה",
+	"bar-chart-race-setup-only-original-time-units": "להשתמש ביחידות הזמן של השאילתה המקורית בלבד",
 	"bar-chart-race-setup-color-palette": "ערכת צבעים",
 	"bar-chart-race-setup-color-palette-help": "בתבנית הקסדצימלית, עם פסיקים מפרידים."
 }

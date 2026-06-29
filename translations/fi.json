@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wikipeedikko"
+		]
+	},
+	"navbar-help": "Ohje",
+	"navbar-examples": "Esimerkkejä",
+	"navbar-title": "Wikin infografiikka",
+	"navbar-repository": "Tietovaranto",
+	"navbar-help-translate": "Auta kääntämisessä",
+	"preview-no-data": "Tietoja ei ole saatavilla",
+	"preview-error-fetching-data": "Tietojen noutamisessa tapahtui virhe",
+	"preview-error-timeout": "Kyselyn käsittely kesti liian kauan: Wikidata-kyselypalvelun aikakatkaisu",
+	"preview-error-general": "Kyselyn käsittelyssä tapahtui virhe",
+	"button-download-csv": "Lataa CSV",
+	"button-download-video": "Lataa video",
+	"table-search-bar": "Hae...",
+	"table-no-data": "Näytettäviä tietueita ei ole",
+	"table-range-separator": "/",
+	"table-rows-per-page": "Rivejä sivulla:",
+	"graphic-table-title": "Taulukko",
+	"bar-chart-race-setup-title": "Nimi",
+	"bar-chart-race-setup-optional": "Valinnainen",
+	"bar-chart-race-setup-speed-unit": "Nopeuden yksikkö",
+	"bar-chart-race-setup-speed-unit-years": "vuodet",
+	"bar-chart-race-setup-speed-unit-months": "kuukaudet",
+	"bar-chart-race-setup-speed-unit-days": "päivät",
+	"bar-chart-race-setup-speed-in-units-per-second": "Nopeus yksikköinä sekunnissa",
+	"bar-chart-race-setup-only-original-time-units": "Käytä vain alkuperäisen kyselyn aikayksikköjä",
+	"bar-chart-race-setup-color-palette": "Väripaletti",
+	"bar-chart-race-setup-color-palette-help": "Heksadesimaalimuodossa ja pilkuin erotettuina."
+}
