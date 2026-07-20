@@ -26,6 +26,7 @@
 	"bar-chart-race-setup-speed-unit-months": "Μήνες",
 	"bar-chart-race-setup-speed-unit-days": "Ημέρες",
 	"bar-chart-race-setup-speed-in-units-per-second": "Ταχύτητα σε μονάδες ανά δευτερόλεπτο",
+	"bar-chart-race-setup-only-original-time-units": "Να γίνει χρήση μόνο των μονάδων χρόνου του αρχικού ερωτήματος",
 	"bar-chart-race-setup-color-palette": "Παλέτα χρωμάτων",
 	"bar-chart-race-setup-color-palette-help": "Σε δεκαεξαδική μορφή, διαχωρισμένα με κόμματα."
 }
