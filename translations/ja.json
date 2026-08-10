@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Dacchi Hii",
 			"Largestone"
 		]
 	},
@@ -11,17 +12,26 @@
 	"navbar-help-translate": "翻訳を手伝ってください",
 	"preview-no-data": "利用できるデータがありません",
 	"preview-error-fetching-data": "データの取得中にエラーが発生しました",
+	"preview-error-timeout": "クエリの処理に時間がかかりすぎました：Wikidataクエリサービスがタイムアウトしました",
+	"preview-error-general": "クエリの処理中に問題が発生しました",
 	"button-download-csv": "CSVをダウンロード",
 	"button-download-video": "ビデオをダウンロード",
 	"table-search-bar": "検索...",
+	"table-no-data": "表示する記録がありません",
 	"table-range-separator": "の",
 	"table-rows-per-page": "ページあたりの行数:",
 	"graphic-table-title": "表",
+	"graphic-bar-chart-race-title": "棒グラフレース",
+	"bar-chart-race-setup-display": "棒グラフレースの設定",
+	"bar-chart-race-setup-create": "棒グラフレースを作成",
 	"bar-chart-race-setup-title": "タイトル",
 	"bar-chart-race-setup-optional": "省略可能",
 	"bar-chart-race-setup-speed-unit": "速度の単位",
 	"bar-chart-race-setup-speed-unit-years": "年",
 	"bar-chart-race-setup-speed-unit-months": "月",
 	"bar-chart-race-setup-speed-unit-days": "日",
-	"bar-chart-race-setup-color-palette": "カラーパレット"
+	"bar-chart-race-setup-speed-in-units-per-second": "1秒あたりの変化量",
+	"bar-chart-race-setup-only-original-time-units": "元のクエリの時間の単位のみを使用してください",
+	"bar-chart-race-setup-color-palette": "カラーパレット",
+	"bar-chart-race-setup-color-palette-help": "16進数形式で、カンマで区切ってください。"
 }
