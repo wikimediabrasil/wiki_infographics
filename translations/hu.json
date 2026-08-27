@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"EmeseToth"
+		]
+	},
+	"navbar-help": "Súgó",
+	"navbar-examples": "Példák",
+	"navbar-title": "Wiki Infographics",
+	"navbar-repository": "Tároló",
+	"navbar-help-translate": "Segítsen nekünk lefordítani",
+	"preview-no-data": "Nincs elérhető adat",
+	"preview-error-fetching-data": "Hiba az adatok lekérésekor",
+	"preview-error-timeout": "A lekérdezés feldolgozása túl sokáig tartott: Wikidata lekérdezési szolgáltatás időtúllépése",
+	"preview-error-general": "Hiba történt a lekérdezés feldolgozása során",
+	"button-download-csv": "CSV letöltése",
+	"button-download-video": "Videó letöltése",
+	"table-search-bar": "Keresés…",
+	"table-no-data": "Nincsenek megjeleníthető rekordok",
+	"table-range-separator": "innen",
+	"table-rows-per-page": "Sorok laponként:",
+	"graphic-table-title": "Táblázat",
+	"graphic-bar-chart-race-title": "Oszlopdiagram-verseny",
+	"bar-chart-race-setup-display": "Oszlopdiagram-verseny beállítása",
+	"bar-chart-race-setup-create": "Oszlopdiagram-verseny létrehozása",
+	"bar-chart-race-setup-title": "Cím",
+	"bar-chart-race-setup-optional": "Nem kötelező",
+	"bar-chart-race-setup-speed-unit": "Sebesség mértékegysége",
+	"bar-chart-race-setup-speed-unit-years": "Évek",
+	"bar-chart-race-setup-speed-unit-months": "Hónapok",
+	"bar-chart-race-setup-speed-unit-days": "Napok",
+	"bar-chart-race-setup-speed-in-units-per-second": "Sebesség másodpercenkénti egységben",
+	"bar-chart-race-setup-only-original-time-units": "Csak az eredeti lekérdezés időegységeit használja",
+	"bar-chart-race-setup-color-palette": "Színskála",
+	"bar-chart-race-setup-color-palette-help": "Hexadecimális formátumban, vesszővel elválasztva."
+}
