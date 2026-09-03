@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bayahiu"
+			"Bayahiu",
+			"Bennylin"
 		]
 	},
 	"navbar-help": "Bantuan",
@@ -24,7 +25,7 @@
 	"bar-chart-race-setup-display": "Penyetelan lomba bagan batang",
 	"bar-chart-race-setup-create": "Ciptakan lomba bagan batang",
 	"bar-chart-race-setup-title": "Judul",
-	"bar-chart-race-setup-optional": "Tak wajib",
+	"bar-chart-race-setup-optional": "Opsional",
 	"bar-chart-race-setup-speed-unit": "Satuan kecepatan",
 	"bar-chart-race-setup-speed-unit-years": "Tahun",
 	"bar-chart-race-setup-speed-unit-months": "Bulan",
