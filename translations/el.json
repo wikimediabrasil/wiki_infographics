@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"Geraki",
 			"Jimkats"
 		]
 	},
 	"navbar-help": "Βοήθεια",
 	"navbar-examples": "Παραδείγματα",
+	"navbar-title": "Πληροφοριακά γραφήματα Wiki",
 	"navbar-repository": "Αποθετήριο",
 	"navbar-help-translate": "Βοηθήστε μας στη μετάφραση",
 	"preview-no-data": "Δεν υπάρχουν διαθέσιμα δεδομένα",
