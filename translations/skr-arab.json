@@ -1,17 +1,37 @@
 {
 	"@metadata": {
 		"authors": [
-			"Saraiki"
+			"Saraiki",
+			"Tauqeerkhansurani"
 		]
 	},
 	"navbar-help": "مدد",
 	"navbar-examples": "مثالاں",
+	"navbar-title": "Wiki Infographics",
 	"navbar-repository": "مخزن",
+	"navbar-help-translate": "ترجمے وچ ساݙی مدد کرو",
+	"preview-no-data": "کوئی ڈیٹا دستیاب نی",
+	"preview-error-fetching-data": "ڈیٹا گھنݨ وچ غلطی",
+	"preview-error-timeout": "کوئری دی پراسیسنگ وچ ٻہوں وقت لڳیا: Wikidata Query Service ٹائم آؤٹ",
+	"preview-error-general": "کوئری دی پراسیسنگ دوران کجھ غلط تھی ڳیا",
+	"button-download-csv": "CSV ڈاؤن لوڈ کرو",
 	"button-download-video": "وڈیو ڈاؤن لوڈ کرو",
+	"table-search-bar": "ڳولو...",
+	"table-no-data": "ݙکھاوݨ کیتے کوئی ریکارڈ نی",
 	"table-range-separator": "دا",
+	"table-rows-per-page": "فی صفحہ قطاراں:",
 	"graphic-table-title": "ٹیبل",
+	"graphic-bar-chart-race-title": "بار چارٹ ریس",
+	"bar-chart-race-setup-display": "بار چارٹ ریس سیٹ اپ",
+	"bar-chart-race-setup-create": "بار چارٹ ریس بݨاؤ",
+	"bar-chart-race-setup-title": "عنوان",
 	"bar-chart-race-setup-optional": "اختیاری",
+	"bar-chart-race-setup-speed-unit": "رفتار دی اکائی",
 	"bar-chart-race-setup-speed-unit-years": "سال",
 	"bar-chart-race-setup-speed-unit-months": "مہینے",
-	"bar-chart-race-setup-speed-unit-days": "ݙیہاڑے"
+	"bar-chart-race-setup-speed-unit-days": "ݙیہاڑے",
+	"bar-chart-race-setup-speed-in-units-per-second": "فی سیکنڈ اکائیاں وچ رفتار",
+	"bar-chart-race-setup-only-original-time-units": "صرف اصل کوئری دیاں وقتی اکائیاں استعمال کرو",
+	"bar-chart-race-setup-color-palette": "رنگ پیلیٹ",
+	"bar-chart-race-setup-color-palette-help": "ہیکس فارمیٹ وچ، کامے نال انج کیتے ہوئے۔"
 }
